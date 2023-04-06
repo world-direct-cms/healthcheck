@@ -7,7 +7,7 @@ use WorldDirect\Healthcheck\Probe\ProbeInterface;
 
 class DummyProbe extends ProbeBase implements ProbeInterface
 {
-    public function run(array $result): array
+    public function run(): array
     {
         return $result;
     }
