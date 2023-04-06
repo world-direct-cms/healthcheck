@@ -1,0 +1,12 @@
+
+# cat=features/enable/1; type=string; label=LLL:EXT:healthcheck/Resources/Private/Language/locallang_db.xlf:extConf.secret.description
+secret = this-is-a-secret
+
+# cat=features/enable/2; type=string; label=LLL:EXT:healthcheck/Resources/Private/Language/locallang_db.xlf:extConf.pathSegment.description
+pathSegment = healthcheck
+
+# cat=features/enable/3; type=string; label=LLL:EXT:healthcheck/Resources/Private/Language/locallang_db.xlf:extConf.allowedIps.description
+allowedIps = *
+
+# cat=features/enable/4; type=boolean; label=LLL:EXT:healthcheck/Resources/Private/Language/locallang_db.xlf:extConf.enableDebug.description
+enableDebug = 1

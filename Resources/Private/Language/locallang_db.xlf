@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2023-04-06T08:27:11Z" product-name="healthcheck">
+        <header/>
+        <body>
+            <!-- Extension configuration -->
+            <trans-unit id="extConf.secret.description">
+                <source>Secret:Provide a secret to secure the endpoint. 10 chars minimum!</source>
+            </trans-unit>
+            <trans-unit id="extConf.pathSegment.description">
+                <source>Path segment:The segment of the path the Middleware should use to show the healthcheck result.</source>
+            </trans-unit>
+            <trans-unit id="extConf.allowedIps.description">
+                <source>Allowed IPs:Restrict the endpoint to specific IPs. Comma separated lists are possible.</source>
+            </trans-unit>
+            <trans-unit id="extConf.enableDebug.description">
+                <source>Enable debugging messages:Show debugging messages in the frontend or not.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

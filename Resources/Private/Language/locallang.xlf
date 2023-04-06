@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2023-04-06T08:27:11Z" product-name="healthcheck">
+        <header/>
+        <body>
+            <!-- Debugging error messages -->
+            <!-- secret -->
+            <trans-unit id="error.secret.isEmpty">
+                <source>You need to set a secret with minimum 10 characters in the extension configuration in order for this to work. This setting is mandatory.</source>
+            </trans-unit>
+            <trans-unit id="error.secret.isFalse">
+                <source>The given secret does not equal the configured secret.</source>
+            </trans-unit>
+            <!-- allowedIps -->
+            <trans-unit id="error.allowedIps.isEmpty">
+                <source>You need to set allowedIps in the extension configuration in order for this to work. This setting is mandatory.</source>
+            </trans-unit>
+            <trans-unit id="error.allowedIps.dontMatch">
+                <source>The allowed IPs entered in the extension configuration do not match with the current IP.</source>
+            </trans-unit>
+            <!-- probes -->
+            <trans-unit id="error.probes.isEmpty">
+                <source>There are no probes configured. You need to set probes for this to work.</source>
+            </trans-unit>
+            <trans-unit id="error.probes.wrongType">
+                <source>There is at least one configured Probe, which does not implement the ProbeInterface.</source>
+            </trans-unit>
+
+            <!-- Probe errors -->
+            <!-- Database probe -->
+            <trans-unit id="probe.database.error.notConnected">
+                <source>Cannot connect to the database. Check the credentials.</source>
+            </trans-unit>
+            <trans-unit id="probe.database.success">
+                <source>The database operates as expected.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
