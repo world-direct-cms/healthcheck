@@ -1,0 +1,28 @@
+{
+	"folders": [
+        {
+            "name": "EXT:healthcheck",
+            "path": "."
+        },
+        {
+            "name": "TYPO3 for testing",
+            "path": "../../../.."
+        }        
+    ],
+    "settings": {
+        // PHP STAN
+        "phpstan.configFile": ".phpstan.neon",
+        "phpstan.binPath": ".Build/bin/phpstan",
+
+         // RUN ON SAVE
+        "emeraldwalk.runonsave": {
+            "commands": [
+                // PHP-CS-FIXER
+                {
+                    "match": "\\.php$",
+                    "cmd": ".Build/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php ${file}"
+                }
+            ]
+        }
+	}
+}

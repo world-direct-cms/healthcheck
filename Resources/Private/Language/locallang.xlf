@@ -26,14 +26,34 @@
                 <source>There is at least one configured Probe, which does not implement the ProbeInterface.</source>
             </trans-unit>
 
-            <!-- Probe errors -->
             <!-- Database probe -->
+            <trans-unit id="probe.database.success">
+                <source>The database operates as expected.</source>
+            </trans-unit>
             <trans-unit id="probe.database.error.notConnected">
                 <source>Cannot connect to the database. Check the credentials.</source>
             </trans-unit>
-            <trans-unit id="probe.database.success">
-                <source>The database operates as expected.</source>
+
+            <!-- Scheduler probe -->
+            <trans-unit id="probe.scheduler.success">
+                <source>All scheduled tasks have completed succesfully!</source>
+            </trans-unit>
+            <trans-unit id="probe.scheduler.error.noDatabase">
+                <source>The database is not accessible. Not possible to fetch Scheduled Tasks.</source>
+            </trans-unit>
+            <trans-unit id="probe.scheduler.error.executionFailure">
+                <source>There is at least one task which excecuted with failures.</source>
+            </trans-unit>
+
+            <!-- Cache probe -->
+            <trans-unit id="probe.cache.success">
+                <source>All cache configurations were tested and could be written.</source>
+            </trans-unit>
+            <trans-unit id="probe.cache.error.notWriteable">
+                <source>At least one cache configuration (%s) is not writeable.</source>
             </trans-unit>
         </body>
     </file>
 </xliff>
+
+

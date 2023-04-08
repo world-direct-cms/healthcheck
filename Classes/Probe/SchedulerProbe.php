@@ -2,34 +2,81 @@
 
 namespace WorldDirect\Healthcheck\Probe;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use WorldDirect\Healthcheck\Probe\ProbeBase;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use WorldDirect\Healthcheck\Utility\BasicUtility;
+use WorldDirect\Healthcheck\Domain\Model\ProbeResult;
+use WorldDirect\Healthcheck\Utility\HealthcheckUtility;
+use WorldDirect\Healthcheck\Domain\Model\Status;
 
+/*
+ * This file is part of the TYPO3 extension "worlddirect/healthcheck".
+ *
+ * (c) Klaus Hörmann-Engl <klaus.hoermann-engl@world-direct.at>
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
+/**
+ * Scheduler probe checks for failed ScheduledTasks.
+ *
+ * @author Klaus Hörmann-Engl
+ * @package WorldDirect\Healthcheck\Probe
+ */
 class SchedulerProbe extends ProbeBase implements ProbeInterface
 {
-    public function run(): array
-    {
-        $result = [];
+    /**
+     * The scheduler table
+     */
+    const SCHEDULER_TABLE = 'tx_scheduler_task';
 
+    /**
+     * Run the scheduler probe. Check if there are any scheduled tasks
+     * which are in a error state.
+     *
+     * @return void The probes result
+     */
+    public function run(): void
+    {
         // Start the probe
         parent::start();
 
-        // Get the language service for the messages
-        $langService = BasicUtility::getLanguageService();
+        try {
+            /** @var ConnectionPool $connectionPool */
+            $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+            /** @var QueryBuilder $queryBuilder */
+            $queryBuilder = $connectionPool->getQueryBuilderForTable(self::SCHEDULER_TABLE);
 
-        // TODO: Try to make a database query, throw exception when it does not work
-        // Read all scheduled tasks from the database, especially their last status
-        // If there is a status of "error" the probe fails --> Return error message
-        // If everything is ok, return ok
+            // Get all tasks
+            $tasks = $queryBuilder
+                ->select('*')
+                ->from(self::SCHEDULER_TABLE)
+                ->executeQuery()
+                ->fetchAllAssociative();
 
-        // Get identifier
-        $probeId = strtolower($this->getShortClassName($this));
+            // Step through all tasks and check if they have "lastexecution_failure" set
+            foreach ($tasks as $task) {
+                if (isset($task['lastexecution_failure'])) {
+                    // TODO: Add id of scheduled task which failed
+                    $this->result->addErrorMessage($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.scheduler.error.executionFailure'));
+                } else {
+                    // TODO: Add success message
+                }
+            }
+        } catch(\Throwable $throwable) {
+            // Handle no connection error
+            $this->result->addErrorMessage($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.scheduler.error.noDatabase'));
+            ;
+        }
 
         // Stop the probe
         parent::stop();
-
-        // Add meta info to the result
-        $result = parent::addMetaInformation($result, $probeId);
-
-        return $result;
     }
 }

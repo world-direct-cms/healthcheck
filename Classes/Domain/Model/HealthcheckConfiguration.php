@@ -6,60 +6,72 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use WorldDirect\Healthcheck\Probe\ProbeInterface;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
+/*
+ * This file is part of the TYPO3 extension "worlddirect/healthcheck".
+ *
+ * (c) Klaus Hörmann-Engl <klaus.hoermann-engl@world-direct.at>
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
 /**
  * This class holds the configuration of the healthcheck as configured
  * in the extension configuration. Function uses default values for each
  * property. Only the secret is set to empty in order to force using one.
- * 
+ *
  * @author Klaus Hörmann-Engl
  * @package WorldDirect\Healthcheck\Domain\Model
  */
 class HealthcheckConfiguration
 {
     /**
-     * Constant holding the extension key
+     * Constant holding the extension key.
      */
-    CONST EXT_KEY = "healthcheck";
+    const EXT_KEY = 'healthcheck';
 
     /**
-     * secret is default empty, therefore we enforce the user to set it
-     * 
-     * @param string
+     * The secret is default empty, therefore we enforce the user to set it.
+     *
+     * @var string
      */
     protected $secret = '';
 
     /**
-     * pathSegment
-     * 
-     * @param string
+     * The pathSegment to check in the Middleware.
+     *
+     * @var string
      */
     protected $pathSegment = 'healthcheck';
 
     /**
-     * allowedIps is default empty, therefore we enforce the user to set it
-     * 
-     * @param string
+     * The allowedIps setting is default empty, therefore we enforce the user to set it.
+     *
+     * @var string
      */
     protected $allowedIps = '';
 
     /**
-     * enableDebug
-     * 
-     * @param bool
+     * Whether to enable debug output or not. Default not.
+     *
+     * @var bool
      */
     protected $enableDebug = false;
 
     /**
      * The probes to check.
-     * 
-     * @var array
+     *
+     * @var array<string>
      */
     protected $probes = [];
 
     /**
-     * Construct a new HealthcheckConfiguration using the extension configuration
-     * 
-     * @return void 
+     * Construct a new HealthcheckConfiguration using the extension configuration.
+     *
+     * @return void
      */
     public function __construct()
     {
@@ -83,14 +95,15 @@ class HealthcheckConfiguration
             }
 
             // Get all configured probes
-            $this->probes = (array)$GLOBALS['TYPO3_CONF_VARS']['EXT']['healthcheck']['probe'] ?? [];
+            $this->probes = (array)$GLOBALS['TYPO3_CONF_VARS']['EXT']['healthcheck']['probe'];
         } catch (\Exception $exception) {
             // Do nothing, use the default set property values
         }
     }
 
     /**
-     * Return the secret value
+     * Return the secret value.
+     *
      * @return string The secret
      */
     public function getSecret(): string
@@ -99,8 +112,8 @@ class HealthcheckConfiguration
     }
 
     /**
-     * Return the pathSegment from the configuration
-     * 
+     * Return the pathSegment from the configuration.
+     *
      * @return string The path segment
      */
     public function getPathSegment(): string
@@ -109,8 +122,8 @@ class HealthcheckConfiguration
     }
 
     /**
-     * Returns the allowed IPs
-     * 
+     * Returns the allowed IPs setting.
+     *
      * @return string List of allowed IPs
      */
     public function getAllowedIps(): string
@@ -119,8 +132,8 @@ class HealthcheckConfiguration
     }
 
     /**
-     * Returns whether debugging is enabled or not
-     * 
+     * Returns whether debugging is enabled or not.
+     *
      * @return bool Enabled debug?
      */
     public function isDebugEnabled(): bool
@@ -129,9 +142,9 @@ class HealthcheckConfiguration
     }
 
     /**
-     * Returns the probes array
-     * 
-     * @return array<ProbeInterface> Array with probes
+     * Returns the probes array.
+     *
+     * @return array<string> Array with probe classes
      */
     public function getProbes(): array
     {

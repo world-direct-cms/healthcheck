@@ -1,8 +1,8 @@
 <?php
 
-namespace WorldDirect\Healthcheck\Probe;
+namespace WorldDirect\Healthcheck\Output;
 
-use WorldDirect\Healthcheck\Domain\Model\ProbeResult;
+use WorldDirect\Healthcheck\Domain\Model\HealthcheckResult;
 
 /*
  * This file is part of the TYPO3 extension "worlddirect/healthcheck".
@@ -17,19 +17,14 @@ use WorldDirect\Healthcheck\Domain\Model\ProbeResult;
  * LICENSE file that was distributed with this source code.
  */
 
-/**
- * This is the interface for probes to implement. You can build your own probes.
- * They only must implement the "run" function and return an array.
- *
- * @author Klaus Hörmann-Engl
- * @package WorldDirect\Healthcheck\Check
- */
-interface ProbeInterface
+interface OutputInterface
 {
     /**
-     * Execute the probe and return the probeResult.
+     * Function renders the given results in the appropriate format.
      *
-     * @return void
+     * @param HealthcheckResult The healthcheck result to output.
+     *
+     * @return string The formatted string output
      */
-    public function run(): void;
+    public function render(HealthcheckResult $result): string;
 }

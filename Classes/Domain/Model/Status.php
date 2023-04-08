@@ -1,8 +1,6 @@
 <?php
 
-namespace WorldDirect\Healthcheck\Probe;
-
-use WorldDirect\Healthcheck\Domain\Model\ProbeResult;
+namespace WorldDirect\Healthcheck\Domain\Model;
 
 /*
  * This file is part of the TYPO3 extension "worlddirect/healthcheck".
@@ -18,18 +16,10 @@ use WorldDirect\Healthcheck\Domain\Model\ProbeResult;
  */
 
 /**
- * This is the interface for probes to implement. You can build your own probes.
- * They only must implement the "run" function and return an array.
- *
- * @author Klaus Hörmann-Engl
- * @package WorldDirect\Healthcheck\Check
+ * The possible status values for the ProbeResult and the ProbeResultMessage.
  */
-interface ProbeInterface
+enum Status
 {
-    /**
-     * Execute the probe and return the probeResult.
-     *
-     * @return void
-     */
-    public function run(): void;
+    case ERROR;
+    case SUCCESS;
 }
