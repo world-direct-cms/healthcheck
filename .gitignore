@@ -1,2 +1,3 @@
 .phpstan.neon
 .Build
+.php-cs-fixer.cache
