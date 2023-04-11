@@ -13,6 +13,21 @@
         // PHP STAN
         "phpstan.configFile": ".phpstan.neon",
         "phpstan.binPath": ".Build/bin/phpstan",
+    
+        // INTELEPHENSE
+        "intelephense.files.exclude": [
+            "**/.git/**",
+            "**/.svn/**",
+            "**/.hg/**",
+            "**/CVS/**",
+            "**/.DS_Store/**",
+            "**/node_modules/**",
+            "**/bower_components/**",
+            "**/vendor/**/{Tests,tests}/**",
+            "**/.history/**",
+            "**/vendor/**/vendor/**",
+            ".Build/**"
+        ],
 
          // RUN ON SAVE
         "emeraldwalk.runonsave": {
