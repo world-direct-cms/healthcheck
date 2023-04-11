@@ -32,7 +32,6 @@
         }
     },
     "replace": {
-        "worlddirect/healthcheck": "self.version",
         "typo3-ter/healthcheck": "self.version"
     },
     "config": {
