@@ -177,7 +177,7 @@ class HealthcheckUtility
 
         foreach ($this->config->getProbes() as $probeClass) {
             /** @var ProbeInterface $probe */
-            $probe = GeneralUtility::makeInstance($probeClass);
+            $probe = GeneralUtility::makeInstance($probeClass); /** @phpstan-ignore-line */
             $probe->run();
 
             // Add probe with results to Healthcheck result
@@ -228,10 +228,10 @@ class HealthcheckUtility
      * @param ServerRequestInterface $request The Request holding the requestTarget.
      * @return string
      */
-    private function getOutputFromRequest(ServerRequestInterface $request): string
-    {
-        return $this->getPartOfRequestTarget($request, 3);
-    }
+    // private function getOutputFromRequest(ServerRequestInterface $request): string
+    // {
+    //     return $this->getPartOfRequestTarget($request, 3);
+    // }
 
     /**
      * Function returns the desired number part from the given requestTarget.

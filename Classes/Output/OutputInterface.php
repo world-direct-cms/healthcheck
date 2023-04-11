@@ -22,7 +22,7 @@ interface OutputInterface
     /**
      * Function renders the given results in the appropriate format.
      *
-     * @param HealthcheckResult The healthcheck result to output.
+     * @param HealthcheckResult $result The healthcheck result to output.
      *
      * @return string The formatted string output
      */

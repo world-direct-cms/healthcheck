@@ -2,7 +2,6 @@
 
 namespace WorldDirect\Healthcheck\Probe;
 
-use WorldDirect\Healthcheck\Domain\Model\ProbeResult;
 use WorldDirect\Healthcheck\Probe\ProbeBase;
 use WorldDirect\Healthcheck\Probe\ProbeInterface;
 
@@ -34,6 +33,12 @@ class DummyProbe extends ProbeBase implements ProbeInterface
      */
     public function run(): void
     {
+        // Start probe
+        parent::start();
+
         // TODO: Implement dummy probe
+
+        // End probe
+        parent::stop();
     }
 }

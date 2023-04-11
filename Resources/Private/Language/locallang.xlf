@@ -3,7 +3,9 @@
     <file source-language="en" datatype="plaintext" original="messages" date="2023-04-06T08:27:11Z" product-name="healthcheck">
         <header/>
         <body>
-            <!-- Debugging error messages -->
+            <!-- ############################################################### -->
+            <!-- DEBUGGING  -->
+
             <!-- secret -->
             <trans-unit id="error.secret.isEmpty">
                 <source>You need to set a secret with minimum 10 characters in the extension configuration in order for this to work. This setting is mandatory.</source>
@@ -26,31 +28,37 @@
                 <source>There is at least one configured Probe, which does not implement the ProbeInterface.</source>
             </trans-unit>
 
+            <!-- ############################################################### -->
+            <!-- PROBES -->
+
             <!-- Database probe -->
             <trans-unit id="probe.database.success">
-                <source>The database operates as expected.</source>
+                <source>The database connection named "%s" operates as expected.</source>
             </trans-unit>
             <trans-unit id="probe.database.error.notConnected">
-                <source>Cannot connect to the database. Check the credentials.</source>
+                <source>Cannot connect to the database. Maybe check the database credentials?</source>
             </trans-unit>
 
             <!-- Scheduler probe -->
             <trans-unit id="probe.scheduler.success">
-                <source>All scheduled tasks have completed succesfully!</source>
+                <source>The task with the uid "%s" last run sucessfully.</source>
             </trans-unit>
             <trans-unit id="probe.scheduler.error.noDatabase">
-                <source>The database is not accessible. Not possible to fetch Scheduled Tasks.</source>
+                <source>The database is not accessible. Not possible to fetch Scheduled Tasks. Maybe check the database credentials?</source>
             </trans-unit>
             <trans-unit id="probe.scheduler.error.executionFailure">
-                <source>There is at least one task which excecuted with failures.</source>
+                <source>The task with the uid "%s" has failures.</source>
             </trans-unit>
 
             <!-- Cache probe -->
             <trans-unit id="probe.cache.success">
-                <source>All cache configurations were tested and could be written.</source>
+                <source>Writing the cache configuration named "%s" was successful.</source>
+            </trans-unit>
+            <trans-unit id="probe.cache.error">
+                <source>There was an error trying to test the cache configurations.</source>
             </trans-unit>
             <trans-unit id="probe.cache.error.notWriteable">
-                <source>At least one cache configuration (%s) is not writeable.</source>
+                <source>The cache configuration named "%s" is NOT writeable.</source>
             </trans-unit>
         </body>
     </file>

@@ -58,14 +58,22 @@ class CacheProbe extends ProbeBase implements ProbeInterface
                 // Check if the cache contains the cacheKey
                 if ($cache->has($cacheKey)) {
                     $cache->remove($cacheKey);
-                // TODO: Add success message
+                    // Success message
+                    $this->result->addSuccessMessage(
+                        sprintf($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.cache.success'), $id)
+                    );
                 } else {
-                    // TODO: Add cache configurtion which could not be written
-                    $this->result->addErrorMessage(sprintf($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.cache.error.notWriteable'), $id));
+                    // Error message
+                    $this->result->addErrorMessage(
+                        sprintf($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.cache.error.notWriteable'), $id)
+                    );
                 }
             }
         } catch(\Throwable $throwable) {
-            // TODO: Write overall error result while trying to test the cache configurations
+            // Error message
+            $this->result->addErrorMessage(
+                $this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.cache.error')
+            );
         }
 
         // Stop the probe

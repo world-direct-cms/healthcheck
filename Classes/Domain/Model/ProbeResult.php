@@ -99,6 +99,7 @@ class ProbeResult
     public function setEndtime(float $endtime): void
     {
         $this->endtime = $endtime;
+        $this->duration = $this->endtime - $this->starttime;
     }
 
     /**
@@ -110,7 +111,7 @@ class ProbeResult
     {
         // TODO: Format the probe result duration, according to TypoScript settings
         // TODO: Check if the endtime and the starttime are set, only return valid duration when this is given
-        return $this->endtime - $this->starttime;
+        return $this->duration;
     }
 
     /**

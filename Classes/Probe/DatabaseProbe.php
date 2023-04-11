@@ -59,18 +59,12 @@ class DatabaseProbe extends ProbeBase implements ProbeInterface
                 // Try to execute a query on the database, if this does not work an exception is thrown
                 $statement = $connection->executeQuery(self::PROBE_QUERY);
 
-                // TODO: Add success message
+                // Add success message
+                $this->result->addSuccessMessage(sprintf($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.database.success'), $name));
             } catch(\Throwable $throwable) {
                 // Handle error
                 $this->result->addErrorMessage($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.database.error.notConnected'));
             }
-            // TODO: Write success message with the connection name, which was sucessfull
-        }
-
-        // Write ok message if the probe result is still SUCCESS.
-        // TODO: Remove this and rebuild the language file
-        if ($this->result->getStatus() == Status::SUCCESS) {
-            $this->result->addSuccessMessage($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.database.success'));
         }
 
         // Stop the probe

@@ -6,10 +6,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use WorldDirect\Healthcheck\Probe\ProbeBase;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
-use WorldDirect\Healthcheck\Utility\BasicUtility;
-use WorldDirect\Healthcheck\Domain\Model\ProbeResult;
 use WorldDirect\Healthcheck\Utility\HealthcheckUtility;
-use WorldDirect\Healthcheck\Domain\Model\Status;
 
 /*
  * This file is part of the TYPO3 extension "worlddirect/healthcheck".
@@ -63,11 +60,17 @@ class SchedulerProbe extends ProbeBase implements ProbeInterface
 
             // Step through all tasks and check if they have "lastexecution_failure" set
             foreach ($tasks as $task) {
-                if (isset($task['lastexecution_failure'])) {
-                    // TODO: Add id of scheduled task which failed
-                    $this->result->addErrorMessage($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.scheduler.error.executionFailure'));
+                if (isset($task['lastexecution_failure']) && $task['lastexecution_failure'] != '') {
+                    // Error message
+                    $this->result->addErrorMessage(
+                        sprintf($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.scheduler.error.executionFailure'), strval($task['uid']))
+                    );
                 } else {
-                    // TODO: Add success message
+                    // Success message
+                    $this->result->addSuccessMessage(
+                        sprintf($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.scheduler.success'), strval($task['uid']))
+                    );
+                    //$this->result->addSuccessMessage(sprintf($this->langService->sL(HealthCheckUtility::LANG_PREFIX . 'probe.scheduler.error.executionSuccess'), $task['uid']);
                 }
             }
         } catch(\Throwable $throwable) {
