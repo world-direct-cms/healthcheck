@@ -6,6 +6,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use WorldDirect\Healthcheck\Probe\ProbeBase;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use WorldDirect\Healthcheck\Utility\HealthcheckUtility;
 
 /*
@@ -46,31 +47,37 @@ class SchedulerProbe extends ProbeBase implements ProbeInterface
         parent::start();
 
         try {
-            /** @var ConnectionPool $connectionPool */
-            $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
-            /** @var QueryBuilder $queryBuilder */
-            $queryBuilder = $connectionPool->getQueryBuilderForTable(self::SCHEDULER_TABLE);
+            // Try only if the "scheduler" extension is installed
+            if (ExtensionManagementUtility::isLoaded('scheduler')) {
+                /** @var ConnectionPool $connectionPool */
+                $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+                /** @var QueryBuilder $queryBuilder */
+                $queryBuilder = $connectionPool->getQueryBuilderForTable(self::SCHEDULER_TABLE);
 
-            // Get all tasks
-            $tasks = $queryBuilder
-                ->select('*')
-                ->from(self::SCHEDULER_TABLE)
-                ->executeQuery()
-                ->fetchAllAssociative();
+                // Get all tasks
+                $tasks = $queryBuilder
+                    ->select('*')
+                    ->from(self::SCHEDULER_TABLE)
+                    ->where(
+                        $queryBuilder->expr()->eq('disable', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT))
+                    )
+                    ->executeQuery()
+                    ->fetchAllAssociative();
 
-            // Step through all tasks and check if they have "lastexecution_failure" set
-            foreach ($tasks as $task) {
-                if (isset($task['lastexecution_failure']) && $task['lastexecution_failure'] != '') {
-                    // Error message
-                    $this->result->addErrorMessage(
-                        sprintf($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.scheduler.error.executionFailure'), strval($task['uid']))
-                    );
-                } else {
-                    // Success message
-                    $this->result->addSuccessMessage(
-                        sprintf($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.scheduler.success'), strval($task['uid']))
-                    );
-                    //$this->result->addSuccessMessage(sprintf($this->langService->sL(HealthCheckUtility::LANG_PREFIX . 'probe.scheduler.error.executionSuccess'), $task['uid']);
+                // Step through all tasks and check if they have "lastexecution_failure" set
+                foreach ($tasks as $task) {
+                    if (isset($task['lastexecution_failure']) && $task['lastexecution_failure'] != '') {
+                        // Error message
+                        $this->result->addErrorMessage(
+                            sprintf($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.scheduler.error.executionFailure'), strval($task['uid']))
+                        );
+                    } else {
+                        // Success message
+                        $this->result->addSuccessMessage(
+                            sprintf($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.scheduler.success'), strval($task['uid']))
+                        );
+                        //$this->result->addSuccessMessage(sprintf($this->langService->sL(HealthCheckUtility::LANG_PREFIX . 'probe.scheduler.error.executionSuccess'), $task['uid']);
+                    }
                 }
             }
         } catch(\Throwable $throwable) {
