@@ -98,19 +98,21 @@ class HealthcheckMiddleware implements MiddlewareInterface
                 return $response;
             }
 
-            // TODO: Check if the 3rd part of the url contains a valid string which can be then put into a
-            // Output class "HtmlOutput" or "PrtgOutput". Then the rendering can do its job.
-            // If not throw an error.
+            // Check if there are output formats configured in the url
+            $requestedOutput = $this->utility->getOutputFromRequest($request);
+            if ($response = $this->utility->checkOutputs($request, $requestedOutput)) {
+                return $response;
+            }
 
             // Run the healthcheck probes
             /** @var HealthcheckResult $result */
             $result = $this->utility->runProbes();
 
-            // TODO: Add configuration and interface for output --> Multiple outputs possible
-            // TODO: Use fluid view to output HTML or JSON
-
-            \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($result, 'The HealthcheckResult');
-            exit;
+            // Return the desired output
+            return $this->utility->getHealthcheckResponse(
+                $result,
+                $this->utility->config->getOutputs()[$requestedOutput]
+            );
         }
 
         // If the request target does not start with the configured pathSegment let another middleware

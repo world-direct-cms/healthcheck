@@ -41,4 +41,10 @@ class BasicUtility
         $langService = GeneralUtility::makeInstance(LanguageService::class);
         return $langService;
     }
+
+    // TODO: Comment and fix php code
+    public static function getShortClassName(string $fqdnClass): string
+    {
+        return end(explode('\\', $fqdnClass));
+    }
 }

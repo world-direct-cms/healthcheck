@@ -2,15 +2,20 @@
 
 namespace WorldDirect\Healthcheck\Utility;
 
+use Throwable;
+use ReflectionException;
 use TYPO3\CMS\Core\Http\Response;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Http\ResponseFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Localization\LanguageService;
-use WorldDirect\Healthcheck\Utility\BasicUtility;
-use WorldDirect\Healthcheck\Domain\Model\HealthcheckConfiguration;
-use WorldDirect\Healthcheck\Domain\Model\HealthcheckResult;
 use WorldDirect\Healthcheck\Probe\ProbeInterface;
+use WorldDirect\Healthcheck\Utility\BasicUtility;
+use WorldDirect\Healthcheck\Output\OutputInterface;
+use WorldDirect\Healthcheck\Domain\Model\HealthcheckResult;
+use WorldDirect\Healthcheck\Domain\Model\HealthcheckConfiguration;
+use TYPO3\CMS\Extbase\Persistence\Generic\Exception\TooDirtyException;
 
 /*
  * This file is part of the TYPO3 extension "worlddirect/healthcheck".
@@ -45,6 +50,11 @@ class HealthcheckUtility
     const ERROR_RESPONSE_HTTP_STATUS = 403;
 
     /**
+     * The success response http status code
+     */
+    const SUCCESS_RESPONSE_HTTP_STATUS = 200;
+
+    /**
      * The healthcheck configuration
      *
      * @var HealthcheckConfiguration
@@ -59,13 +69,24 @@ class HealthcheckUtility
     public $langService;
 
     /**
+     * Response factory
+     *
+     * @var ResponseFactory
+     */
+    public $responseFactory;
+
+    /**
      * Constructor for new HealthcheckUility objects
+     *
+     * @param HealthcheckConfiguration $healthcheckConfiguration The healthcheck extension configuration
+     * @param ResponseFactory $responseFactory The factory object to create new response
      *
      * @return void
      */
-    public function __construct(HealthcheckConfiguration $healthcheckConfiguration)
+    public function __construct(HealthcheckConfiguration $healthcheckConfiguration, ResponseFactory $responseFactory)
     {
         $this->config = $healthcheckConfiguration;
+        $this->responseFactory = $responseFactory;
         $this->langService = BasicUtility::getLanguageService();
     }
 
@@ -151,7 +172,7 @@ class HealthcheckUtility
             foreach ($this->config->getProbes() as $probeClass) {
                 $interfaces = class_implements($probeClass);
                 if (!isset($interfaces['WorldDirect\Healthcheck\Probe\ProbeInterface'])) {
-                    $errorMessage = $this->langService->sL(self::LANG_PREFIX . 'error.probes.wrongType');
+                    $errorMessage = $this->langService->sL(self::LANG_PREFIX . 'error.probes.wrongInterface');
                     break;
                 }
             }
@@ -162,6 +183,53 @@ class HealthcheckUtility
         }
 
         // Everything is OK
+        return null;
+    }
+
+    /**
+     * Function cehcks for the possible output
+     *
+     * @param ServerRequestInterface $request The original request
+     * @param string $requestedOutput The name of the requested output format (e.g. "html")
+     *
+     * @return null|ResponseInterface
+     */
+    public function checkOutputs(ServerRequestInterface $request, string $requestedOutput): ?ResponseInterface
+    {
+        $errorMessage = '';
+
+        // Check if there are any outputs configured
+        if (empty($this->config->getOutputs())) {
+            $errorMessage = $this->langService->sL(self::LANG_PREFIX . 'error.outputs.isEmpty');
+        }
+
+        // When no error has occured...
+        if (empty($errorMessage)) {
+            $possibleOutputs = [];
+
+            // Check all output classes if they implement the OutputInterface
+            foreach ($this->config->getOutputs() as $outputClass) {
+                $interfaces = class_implements($outputClass);
+                if (!isset($interfaces['WorldDirect\Healthcheck\Output\OutputInterface'])) {
+                    $errorMessage = $this->langService->sL(self::LANG_PREFIX . 'error.outputs.wrongInterface');
+                    break;
+                }
+                $possibleOutputs[] = strtolower(str_replace('Output', '', BasicUtility::getShortClassName($outputClass)));
+            }
+
+            // If still no error has occured...
+            if (empty($errorMessage)) {
+                // Check if the requestOutput is present in the possibleOutputs
+                if (!in_array($requestedOutput, array_keys($this->config->getOutputs()))) {
+                    $errorMessage = $this->langService->sL(self::LANG_PREFIX . 'error.outputs.notPresent');
+                }
+            }
+        }
+
+        if (!empty($errorMessage)) {
+            return $this->returnErrorResponse($errorMessage);
+        }
+
         return null;
     }
 
@@ -190,6 +258,18 @@ class HealthcheckUtility
         return $result;
     }
 
+    // TODO: Comment function
+    public function getHealthcheckResponse(HealthcheckResult $result, string $outputClass): ResponseInterface
+    {
+        /** @var OutputInterface $output */
+        $output = GeneralUtility::makeInstance($outputClass); /** @phpstan-ignore-line */
+
+        return $this->returnSuccessReponse(
+            $output->getContentType(),
+            $output->getContent($result)
+        );
+    }
+
     /**
      * Build a reponse with a optional error message to return
      *
@@ -205,6 +285,16 @@ class HealthcheckUtility
         if ($this->config->isDebugEnabled()) {
             $response->getBody()->write($errorMessage);
         }
+        return $response;
+    }
+
+    // TODO: Comment function
+    // TODO: Set http status code to 200
+    private function returnSuccessReponse(string $contentType, string $content): ResponseInterface
+    {
+        $response = $this->responseFactory->createResponse()->withHeader('Content-Type', $contentType);
+        $response->getBody()->write($content);
+
         return $response;
     }
 
@@ -228,10 +318,16 @@ class HealthcheckUtility
      * @param ServerRequestInterface $request The Request holding the requestTarget.
      * @return string
      */
-    // private function getOutputFromRequest(ServerRequestInterface $request): string
-    // {
-    //     return $this->getPartOfRequestTarget($request, 3);
-    // }
+    public function getOutputFromRequest(ServerRequestInterface $request): string
+    {
+        try {
+            // Try to get the third part of the url
+            return $this->getPartOfRequestTarget($request, 3);
+        } catch(\Throwable $throwable) {
+            // If there is no third part of the url return a "default" value: html
+            return 'html';
+        }
+    }
 
     /**
      * Function returns the desired number part from the given requestTarget.

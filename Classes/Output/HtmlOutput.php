@@ -1,6 +1,12 @@
-<?php 
+<?php
 
 namespace WorldDirect\Healthcheck\Output;
+
+use TYPO3\CMS\Fluid\View\StandaloneView;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use WorldDirect\Healthcheck\Output\OutputInterface;
+use WorldDirect\Healthcheck\Domain\Model\HealthcheckResult;
+use TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException;
 
 /*
  * This file is part of the TYPO3 extension "worlddirect/healthcheck".
@@ -15,5 +21,53 @@ namespace WorldDirect\Healthcheck\Output;
  * LICENSE file that was distributed with this source code.
  */
 
-class HtmlOutput
-{}
+class HtmlOutput implements OutputInterface
+{
+    /**
+     * The content type of the rendered content.
+     *
+     * @return string The content type for this output type.
+     */
+    public function getContentType(): string
+    {
+        return 'text/html';
+    }
+
+    /**
+     * Function renders the HTML output and returns the HTML content.
+     *
+     * @param HealthcheckResult $result The healthcheck result to be rendered
+     *
+     * @return string The html content of the renderd healthcheck result
+     */
+    public function getContent(HealthcheckResult $result): string
+    {
+        //TODO: Why is this red underlined here?
+
+        /** @var StandaloneView $view */
+        $view = GeneralUtility::makeInstance(StandaloneView::class);
+
+        try {
+            $view->setLayoutRootPaths([
+                GeneralUtility::getFileAbsFileName('EXT:healthcheck/Resources/Private/Layouts/')
+            ]);
+            $view->setTemplateRootPaths([
+                GeneralUtility::getFileAbsFileName('EXT:healthcheck/Resources/Private/Templates/')
+            ]);
+            $view->setPartialRootPaths([
+                GeneralUtility::getFileAbsFileName('EXT:healthcheck/Resources/Private/Partials/')
+            ]);
+            $view->setFormat('html');
+            $view->setTemplate('HtmlOutput');
+            $view->assignMultiple(
+                [
+                    'result' => $result
+                ]
+            );
+            return $view->render();
+        } catch (InvalidTemplateResourceException $e) {
+            // TODO: Show error message or something similar
+            return '';
+        }
+    }
+}

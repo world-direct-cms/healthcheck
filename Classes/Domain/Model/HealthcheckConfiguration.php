@@ -5,6 +5,7 @@ namespace WorldDirect\Healthcheck\Domain\Model;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use WorldDirect\Healthcheck\Probe\ProbeInterface;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use WorldDirect\Healthcheck\Utility\BasicUtility;
 
 /*
  * This file is part of the TYPO3 extension "worlddirect/healthcheck".
@@ -69,6 +70,13 @@ class HealthcheckConfiguration
     protected $probes = [];
 
     /**
+     * The possible output formats.
+     *
+     * @var array<string, string>
+     */
+    protected $outputs = [];
+
+    /**
      * Construct a new HealthcheckConfiguration using the extension configuration.
      *
      * @return void
@@ -96,6 +104,13 @@ class HealthcheckConfiguration
 
             // Get all configured probes
             $this->probes = (array)$GLOBALS['TYPO3_CONF_VARS']['EXT']['healthcheck']['probe'];
+
+            // Get all configured output formats
+            $outputs = (array)$GLOBALS['TYPO3_CONF_VARS']['EXT']['healthcheck']['output'];
+            foreach ($outputs as $output) {
+                $key = strtolower(str_replace('Output', '', BasicUtility::getShortClassName($output)));
+                $this->outputs[$key] = $output;
+            }
         } catch (\Exception $exception) {
             // Do nothing, use the default set property values
         }
@@ -149,5 +164,15 @@ class HealthcheckConfiguration
     public function getProbes(): array
     {
         return $this->probes;
+    }
+
+    /**
+     * Returns the configured output formats.
+     *
+     * @return array<string, string> Array with output formats classes
+     */
+    public function getOutputs(): array
+    {
+        return $this->outputs;
     }
 }

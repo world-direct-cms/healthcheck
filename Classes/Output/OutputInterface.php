@@ -20,11 +20,18 @@ use WorldDirect\Healthcheck\Domain\Model\HealthcheckResult;
 interface OutputInterface
 {
     /**
-     * Function renders the given results in the appropriate format.
+     * Function returns the content for the given result.
      *
-     * @param HealthcheckResult $result The healthcheck result to output.
+     * @param HealthcheckResult $result The healthcheck result to build the output from.
      *
-     * @return string The formatted string output
+     * @return string The string output
      */
-    public function render(HealthcheckResult $result): string;
+    public function getContent(HealthcheckResult $result): string;
+
+    /**
+     * Return the contentType to use for a response
+     *
+     * @return string The content type to use. E.g. "application/json".
+     */
+    public function getContentType(): string;
 }

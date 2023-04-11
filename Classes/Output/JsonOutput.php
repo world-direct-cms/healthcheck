@@ -2,6 +2,7 @@
 
 namespace WorldDirect\Healthcheck\Output;
 
+use WorldDirect\Healthcheck\Domain\Model\HealthcheckResult;
 use WorldDirect\Healthcheck\Output\OutputInterface;
 
 /*
@@ -17,6 +18,24 @@ use WorldDirect\Healthcheck\Output\OutputInterface;
  * LICENSE file that was distributed with this source code.
  */
 
-class PrtgOutput
+class JsonOutput implements OutputInterface
 {
+    // TODO: Comment function
+    public function getContent(HealthcheckResult $result): string
+    {
+        // TODO: Build JSON from healthcheck result object
+
+        // Dummy content
+        $array = ['test' => 'Hello World'];
+
+        $json = json_encode($array);
+
+        return strval($json);
+    }
+
+    // TODO: comment function
+    public function getContentType(): string
+    {
+        return 'application/json';
+    }
 }

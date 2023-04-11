@@ -13,6 +13,7 @@
             <trans-unit id="error.secret.isFalse">
                 <source>The given secret does not equal the configured secret.</source>
             </trans-unit>
+            
             <!-- allowedIps -->
             <trans-unit id="error.allowedIps.isEmpty">
                 <source>You need to set allowedIps in the extension configuration in order for this to work. This setting is mandatory.</source>
@@ -20,13 +21,26 @@
             <trans-unit id="error.allowedIps.dontMatch">
                 <source>The allowed IPs entered in the extension configuration do not match with the current IP.</source>
             </trans-unit>
+            
             <!-- probes -->
             <trans-unit id="error.probes.isEmpty">
                 <source>There are no probes configured. You need to set probes for this to work.</source>
             </trans-unit>
-            <trans-unit id="error.probes.wrongType">
+            <trans-unit id="error.probes.wrongInterface">
                 <source>There is at least one configured Probe, which does not implement the ProbeInterface.</source>
             </trans-unit>
+            
+            <!-- outputs -->
+            <trans-unit id="error.outputs.isEmpty">
+                <source>There are no outputs configured. You need to set at least the "html" output, as this is the default output.</source>
+            </trans-unit>
+            <trans-unit id="error.outputs.wrongInterface">
+                <source>There is at leas one configured Output, which does not implement the OutputInterface.</source>
+            </trans-unit>
+            <trans-unit id="error.outputs.notPresent">
+                <source>There is no output format given like requested. Sorry.</source>
+            </trans-unit>
+
 
             <!-- ############################################################### -->
             <!-- PROBES -->
@@ -60,6 +74,11 @@
             <trans-unit id="probe.cache.error.notWriteable">
                 <source>The cache configuration named "%s" is NOT writeable.</source>
             </trans-unit>
+
+            <!-- ############################################################### -->
+            <!-- OUTPUTS -->
+
+            <!-- -->
         </body>
     </file>
 </xliff>
