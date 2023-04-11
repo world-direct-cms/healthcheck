@@ -54,5 +54,8 @@
         "friendsofphp/php-cs-fixer": "*",
         "phpstan/phpstan": "^1.10",
         "saschaegerer/phpstan-typo3": "^1.8"
+    },
+    "scripts": {
+        "php:stan": "./.Build/bin/phpstan analyze -c .phpstan.neon Classes"
     }
 }
