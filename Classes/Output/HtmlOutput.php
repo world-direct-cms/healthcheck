@@ -57,9 +57,11 @@ class HtmlOutput implements OutputInterface
             ]);
             $view->setFormat('html');
             $view->setTemplate('HtmlOutput');
+
             $view->assignMultiple(
                 [
-                    'result' => $result
+                    'result' => $result,
+                    'sitename' => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename']
                 ]
             );
             return $view->render();
