@@ -5,10 +5,36 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>EXT:healthcheck</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+        <style>
+            /* Cairo Font */
+            @font-face {
+                font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+                font-family: 'Cairo';
+                font-style: normal;
+                font-weight: 400;
+                src: url('/typo3conf/ext/healthcheck/Resources/Public/Assets/Fonts/cairo-v26-latin-regular.eot'); /* IE9 Compat Modes */
+                src: url('/typo3conf/ext/healthcheck/Resources/Public/Assets/Fonts/cairo-v26-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+                    url('/typo3conf/ext/healthcheck/Resources/Public/Assets/Fonts/cairo-v26-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+                    url('/typo3conf/ext/healthcheck/Resources/Public/Assets/Fonts/cairo-v26-latin-regular.woff') format('woff'), /* Modern Browsers */
+                    url('/typo3conf/ext/healthcheck/Resources/Public/Assets/Fonts/cairo-v26-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+                    url('/typo3conf/ext/healthcheck/Resources/Public/Assets/Fonts/cairo-v26-latin-regular.svg#Cairo') format('svg'); /* Legacy iOS */
+            }
+            body {
+                /* Background image */
+                background: url("/typo3conf/ext/healthcheck/Resources/Public/Assets/background.png") center center / cover no-repeat fixed rgb(36, 36, 36);
+                min-height: 100vh;
+                font-family: Cairo;
+            }
+            .container {
+                /* Subtle box shadow to container */
+                box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+            }
+        </style>
     </head>
     <body>
-        <div class="container">
+        <div class="container mt-5 p-3 pb-0 bg-white">
             <f:render section="main" />
         </div>
     </body>

@@ -1,0 +1,13 @@
+<f:variable name="imageName"><f:spaceless>
+    <f:if condition="{status.name} == 'SUCCESS'">
+        <f:then>success</f:then>
+        <f:else>danger</f:else>
+    </f:if>
+</f:spaceless></f:variable>
+<f:variable name="imageSize"><f:spaceless>
+    <f:if condition="{size} == ''">
+        <f:then>36</f:then>
+        <f:else>{size}</f:else>
+    </f:if>
+</f:spaceless></f:variable>
+<f:image class="m{margin}-2" src="EXT:healthcheck/Resources/Public/Icons/{imageName}.png" absolute="1" width="{imageSize}"/>

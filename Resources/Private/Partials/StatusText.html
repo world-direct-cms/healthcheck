@@ -1,0 +1,7 @@
+<f:variable name="statusClass"><f:spaceless>
+    <f:if condition="{status.name} == 'SUCCESS'">
+        <f:then>success</f:then>
+        <f:else>danger</f:else>
+    </f:if>
+</f:spaceless></f:variable>
+<span class="fs-5 text-{statusClass}"><strong>{status.name}</strong></span>

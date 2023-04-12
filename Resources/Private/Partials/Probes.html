@@ -1,0 +1,26 @@
+<div class="row pt-3">
+    <div class="col">
+        <div class="accordion" id="probes-accordion">
+            <f:for each="{result.probes}" as="probe" iteration="i">
+                <!-- Single probe -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{i.index}" aria-expanded="true" aria-controls="collapse-{i.index}">
+                            <f:render partial="StatusIcon" arguments="{status: probe.result.status, margin: 'e', size: '24'}" /> {probe.title} 
+                        </button>
+                    </h2>
+                    <div id="collapse-{i.index}" class="accordion-collapse collapse" data-bs-parent="#probes-accordion">
+                        <div class="accordion-body">
+                            <f:for each="{probe.result.messages}" as="message" iteration="i">
+                                <p>
+                                    <f:render partial="StatusIcon" arguments="{status: message.status, margin: 'e', size: '12'}" />
+                                    {message.message}
+                                </p>
+                            </f:for>
+                        </div>
+                    </div>
+                </div>
+            </f:for>
+        </div>
+    </div>
+</div>

@@ -1,9 +1,15 @@
-
 <f:layout name="HtmlOutput" />
-
 <f:section name="main">
-    This is the main section in the Fluid template
+    <!-- Header -->
+    <f:render partial="Header" />
 
-    <f:debug>{result}</f:debug>
+    <!-- Overall Status -->
+    <f:render partial="OverallStatus" arguments="{result: result}" />
 
+    <!-- Probes -->
+    <f:render partial="Probes" arguments="{result: result}" />
+
+    <!-- Footer -->
+    <f:render partial="Footer" />
+    
 </f:section>
