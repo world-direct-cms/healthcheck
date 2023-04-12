@@ -47,7 +47,7 @@
 
             <!-- Database probe -->
             <trans-unit id="probe.database.success">
-                <source>The database connection named "%s" operates as expected.</source>
+                <source><![CDATA[The database connection named <span class="badge bg-primary">%s</span> operates as expected.]]></source>
             </trans-unit>
             <trans-unit id="probe.database.error.notConnected">
                 <source>Cannot connect to the database. Maybe check the database credentials?</source>
@@ -55,24 +55,24 @@
 
             <!-- Scheduler probe -->
             <trans-unit id="probe.scheduler.success">
-                <source><![CDATA[The task with the uid "%s" last run sucessfully. <span class="badge bg-secondary">Description:</span> "%s"]]></source>
+                <source><![CDATA[The task with the uid <span class="badge bg-primary">%s</span> last run sucessfully. <span class="badge bg-secondary">Description:</span> "%s"]]></source>
             </trans-unit>
             <trans-unit id="probe.scheduler.error.noDatabase">
                 <source>The database is not accessible. Not possible to fetch Scheduled Tasks. Maybe check the database credentials?</source>
             </trans-unit>
             <trans-unit id="probe.scheduler.error.executionFailure">
-                <source><![CDATA[The task with the uid "%s" has failures. <strong>Description:</strong> "%s"]]></source>
+                <source><![CDATA[The task with the uid <span class="badge bg-primary">%s</span> has failures. <span class="badge bg-secondary">Description:</span> "%s"]]></source>
             </trans-unit>
 
             <!-- Cache probe -->
             <trans-unit id="probe.cache.success">
-                <source>Writing the cache configuration named "%s" was successful.</source>
+                <source><![CDATA[Writing the cache configuration named <span class="badge bg-primary">%s</span> was successful.]]></source>
             </trans-unit>
             <trans-unit id="probe.cache.error">
                 <source>There was an error trying to test the cache configurations.</source>
             </trans-unit>
             <trans-unit id="probe.cache.error.notWriteable">
-                <source>The cache configuration named "%s" is NOT writeable.</source>
+                <source><![CDATA[The cache configuration named <span class="badge bg-primary">%s</span> is NOT writeable.]]></source>
             </trans-unit>
 
             <!-- ############################################################### -->
