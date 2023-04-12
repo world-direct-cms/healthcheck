@@ -40,7 +40,7 @@ class CacheProbe extends ProbeBase implements ProbeInterface
     {
         return true;
     }
-    
+
     /**
      * Run the cache probe. Check if caches can be written.
      *
