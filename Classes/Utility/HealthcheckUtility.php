@@ -261,13 +261,18 @@ class HealthcheckUtility
     // TODO: Comment function
     public function getHealthcheckResponse(HealthcheckResult $result, string $outputClass): ResponseInterface
     {
-        /** @var OutputInterface $output */
-        $output = GeneralUtility::makeInstance($outputClass); /** @phpstan-ignore-line */
+        try {
+            /** @var OutputInterface $output */
+            $output = GeneralUtility::makeInstance($outputClass); /** @phpstan-ignore-line */
 
-        return $this->returnSuccessReponse(
-            $output->getContentType(),
-            $output->getContent($result)
-        );
+            return $this->returnSuccessReponse(
+                $output->getContentType(),
+                $output->getContent($result)
+            );
+        } catch(\Throwable $throwable) {
+            // TODO: This happens when the database is gone --> Write a better error response
+            return $this->returnErrorResponse($throwable->getMessage());
+        }
     }
 
     /**
@@ -289,10 +294,10 @@ class HealthcheckUtility
     }
 
     // TODO: Comment function
-    // TODO: Set http status code to 200
     private function returnSuccessReponse(string $contentType, string $content): ResponseInterface
     {
         $response = $this->responseFactory->createResponse()->withHeader('Content-Type', $contentType);
+        $response->withStatus(self::SUCCESS_RESPONSE_HTTP_STATUS);
         $response->getBody()->write($content);
 
         return $response;
