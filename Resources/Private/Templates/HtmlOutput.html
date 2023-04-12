@@ -1,10 +1,8 @@
 <f:layout name="HtmlOutput" />
 <f:section name="main">
-    <!-- Header -->
-    <f:render partial="Header" />
 
-    <!-- Overall Status -->
-    <f:render partial="OverallStatus" arguments="{result: result}" />
+    <!-- Header -->
+    <f:render partial="Header" arguments="{result: result, sitename: sitename}" />
 
     <!-- Probes -->
     <f:render partial="Probes" arguments="{result: result}" />

@@ -1,10 +1,14 @@
-<div class="row">
-    <!-- LOGO -->
+<div class="row my-2">
     <div class="col-6">
-        <f:image src="EXT:healthcheck/Resources/Public/Assets/logo.svg" absolute="1" width="170" />
+        <!-- LOGO -->
+        <f:image src="EXT:healthcheck/Resources/Public/Icons/health-report.png" absolute="1" width="100" />
+        <!-- OVERALL STATUS-->
+        <span class="ms-5 fs-3">Healthcheck Status:</span>
+        <f:render partial="StatusIcon" arguments="{status: result.status, margin: 's', size: '24'}" />
+        <f:render partial="StatusText" arguments="{status: result.status, class: 'fs-2'}" />
     </div>
     <!-- TEXT -->
     <div class="col-6 d-flex align-items-center flex-row-reverse">
-        <h1>Healthcheck</h1>
+        <span class="fs-3"><strong>{sitename}</strong></span>
     </div>
 </div>
