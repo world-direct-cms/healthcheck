@@ -42,7 +42,7 @@
 
         // TODO TREE
         "todo-tree.highlights.customHighlight": {
-            "TODO:": {
+            "TODO": {
                 "foreground": "#333333",
                 "background": "#a02eaf",
                 "type": "whole-line",
