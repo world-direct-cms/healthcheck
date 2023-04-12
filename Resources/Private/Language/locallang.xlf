@@ -55,13 +55,13 @@
 
             <!-- Scheduler probe -->
             <trans-unit id="probe.scheduler.success">
-                <source>The task with the uid "%s" last run sucessfully.</source>
+                <source><![CDATA[The task with the uid "%s" last run sucessfully. <span class="badge bg-secondary">Description:</span> "%s"]]></source>
             </trans-unit>
             <trans-unit id="probe.scheduler.error.noDatabase">
                 <source>The database is not accessible. Not possible to fetch Scheduled Tasks. Maybe check the database credentials?</source>
             </trans-unit>
             <trans-unit id="probe.scheduler.error.executionFailure">
-                <source>The task with the uid "%s" has failures.</source>
+                <source><![CDATA[The task with the uid "%s" has failures. <strong>Description:</strong> "%s"]]></source>
             </trans-unit>
 
             <!-- Cache probe -->

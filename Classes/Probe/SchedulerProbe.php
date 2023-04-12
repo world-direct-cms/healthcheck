@@ -77,12 +77,20 @@ class SchedulerProbe extends ProbeBase implements ProbeInterface
                 if (isset($task['lastexecution_failure']) && $task['lastexecution_failure'] != '') {
                     // Error message
                     $this->result->addErrorMessage(
-                        sprintf($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.scheduler.error.executionFailure'), strval($task['uid']))
+                        sprintf(
+                            $this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.scheduler.error.executionFailure'),
+                            strval($task['uid']),
+                            strval($task['description'])
+                        )
                     );
                 } else {
                     // Success message
                     $this->result->addSuccessMessage(
-                        sprintf($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.scheduler.success'), strval($task['uid']))
+                        sprintf(
+                            $this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.scheduler.success'),
+                            strval($task['uid']),
+                            strval($task['description'])
+                        )
                     );
                     //$this->result->addSuccessMessage(sprintf($this->langService->sL(HealthCheckUtility::LANG_PREFIX . 'probe.scheduler.error.executionSuccess'), $task['uid']);
                 }

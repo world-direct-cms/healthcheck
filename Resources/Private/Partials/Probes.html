@@ -14,7 +14,7 @@
                             <f:for each="{probe.result.messages}" as="message" iteration="i">
                                 <p>
                                     <f:render partial="StatusIcon" arguments="{status: message.status, margin: 'e', size: '12'}" />
-                                    {message.message}
+                                    <f:format.raw>{message.message}</f:format.raw>
                                 </p>
                             </f:for>
                         </div>
