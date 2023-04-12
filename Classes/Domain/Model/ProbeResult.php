@@ -109,9 +109,7 @@ class ProbeResult
      */
     public function getDuration(): float
     {
-        // TODO: Format the probe result duration, according to TypoScript settings
-        // TODO: Check if the endtime and the starttime are set, only return valid duration when this is given
-        return $this->duration;
+        return round($this->duration, 4);
     }
 
     /**
