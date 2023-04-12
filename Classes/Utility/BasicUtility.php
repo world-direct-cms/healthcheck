@@ -42,9 +42,21 @@ class BasicUtility
         return $langService;
     }
 
-    // TODO: Comment and fix php code
+    /**
+     * This function receives a fully qualified domain name class, and returns the
+     * last part of it.
+     *
+     * @param string $fqdnClass The fully qualified domain name class
+     *
+     * @return string The last part of the fqdnClass
+     */
     public static function getShortClassName(string $fqdnClass): string
     {
-        return end(explode('\\', $fqdnClass));
+        $parts = explode('\\', $fqdnClass);
+
+        if (is_array($parts)) {
+            $lastPart = end($parts);
+            return $lastPart;
+        }
     }
 }

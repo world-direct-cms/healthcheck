@@ -42,8 +42,6 @@ class HtmlOutput implements OutputInterface
      */
     public function getContent(HealthcheckResult $result): string
     {
-        //TODO: Why is this red underlined here?
-
         /** @var StandaloneView $view */
         $view = GeneralUtility::makeInstance(StandaloneView::class);
 

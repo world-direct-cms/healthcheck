@@ -20,10 +20,16 @@ use WorldDirect\Healthcheck\Output\OutputInterface;
 
 class JsonOutput implements OutputInterface
 {
-    // TODO: Comment function
+    /**
+     * Returns JSON for the given Healthcheckresult.
+     *
+     * @param HealthcheckResult $result The overall HealthcheckResult
+     *
+     * @return string JSON output of the result
+     */
     public function getContent(HealthcheckResult $result): string
     {
-        // TODO: Build JSON from healthcheck result object
+        // TODO: JsonOutput: Build JSON from healthcheck result object
 
         // Dummy content
         $array = ['test' => 'Hello World'];
@@ -33,7 +39,11 @@ class JsonOutput implements OutputInterface
         return strval($json);
     }
 
-    // TODO: comment function
+    /**
+     * Return json content type.
+     *
+     * @return string The application/json content type for JSON output
+     */
     public function getContentType(): string
     {
         return 'application/json';

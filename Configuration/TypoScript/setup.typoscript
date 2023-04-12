@@ -1,3 +1,3 @@
 tx_healthcheck {
-    // TODO: How to configure the paths here instead of in code of the HtmlOutput?
+    // TODO: TypoScript Configuration: Add configurations for varios settings
 }
