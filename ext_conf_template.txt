@@ -1,6 +1,6 @@
 
 # cat=features/enable/1; type=string; label=LLL:EXT:healthcheck/Resources/Private/Language/locallang_db.xlf:extConf.secret.description
-secret = this-is-a-secret
+secret = 
 
 # cat=features/enable/2; type=string; label=LLL:EXT:healthcheck/Resources/Private/Language/locallang_db.xlf:extConf.pathSegment.description
 pathSegment = healthcheck
@@ -9,4 +9,4 @@ pathSegment = healthcheck
 allowedIps = *
 
 # cat=features/enable/4; type=boolean; label=LLL:EXT:healthcheck/Resources/Private/Language/locallang_db.xlf:extConf.enableDebug.description
-enableDebug = 1
+enableDebug = 0
