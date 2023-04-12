@@ -39,6 +39,16 @@ class DatabaseProbe extends ProbeBase implements ProbeInterface
     const PROBE_QUERY = 'SHOW TABLES';
 
     /**
+     * This probe can always run.
+     *
+     * @return bool True
+     */
+    public function useProbe(): bool
+    {
+        return true;
+    }
+
+    /**
      * Run the database probe. Check if all connection can make queries to the
      * database. If not an error is returned.
      *

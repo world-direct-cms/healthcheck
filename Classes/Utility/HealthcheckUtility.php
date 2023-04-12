@@ -2,8 +2,6 @@
 
 namespace WorldDirect\Healthcheck\Utility;
 
-use Throwable;
-use ReflectionException;
 use TYPO3\CMS\Core\Http\Response;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\ResponseFactory;
@@ -15,7 +13,6 @@ use WorldDirect\Healthcheck\Utility\BasicUtility;
 use WorldDirect\Healthcheck\Output\OutputInterface;
 use WorldDirect\Healthcheck\Domain\Model\HealthcheckResult;
 use WorldDirect\Healthcheck\Domain\Model\HealthcheckConfiguration;
-use TYPO3\CMS\Extbase\Persistence\Generic\Exception\TooDirtyException;
 
 /*
  * This file is part of the TYPO3 extension "worlddirect/healthcheck".
@@ -246,19 +243,23 @@ class HealthcheckUtility
         foreach ($this->config->getProbes() as $probeClass) {
             /** @var ProbeInterface $probe */
             $probe = GeneralUtility::makeInstance($probeClass); /** @phpstan-ignore-line */
-            $probe->run();
 
-            // Add probe with results to Healthcheck result
-            $result->addProbe($probe);
+            if ($probe->useProbe()) {
+                // Run the probe
+                $probe->run();
 
-            // Update the overall status of the HealthcheckResult.
-            $result->updateStatus();
+                // Add probe with results to Healthcheck result
+                $result->addProbe($probe);
+
+                // Update the overall status of the HealthcheckResult.
+                $result->updateStatus();
+            }
         }
 
         return $result;
     }
 
-    // TODO: Comment function
+    // TODO: Utility: Comment function
     public function getHealthcheckResponse(HealthcheckResult $result, string $outputClass): ResponseInterface
     {
         try {
@@ -270,7 +271,7 @@ class HealthcheckUtility
                 $output->getContent($result)
             );
         } catch(\Throwable $throwable) {
-            // TODO: This happens when the database is gone --> Write a better error response
+            // TODO: Utility: This happens when the database is gone --> Write a better error response
             return $this->returnErrorResponse($throwable->getMessage());
         }
     }
@@ -293,7 +294,14 @@ class HealthcheckUtility
         return $response;
     }
 
-    // TODO: Comment function
+    /**
+     * This function returns a success response.
+     *
+     * @param string $contentType The content type to return
+     * @param string $content The content to return
+     *
+     * @return ResponseInterface The response with the content
+     */
     private function returnSuccessReponse(string $contentType, string $content): ResponseInterface
     {
         $response = $this->responseFactory->createResponse()->withHeader('Content-Type', $contentType);

@@ -32,6 +32,16 @@ use WorldDirect\Healthcheck\Utility\HealthcheckUtility;
 class CacheProbe extends ProbeBase implements ProbeInterface
 {
     /**
+     * This probe can always be run.
+     *
+     * @return bool True
+     */
+    public function useProbe(): bool
+    {
+        return true;
+    }
+    
+    /**
      * Run the cache probe. Check if caches can be written.
      *
      * @return void The probes result

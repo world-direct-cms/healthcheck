@@ -27,9 +27,17 @@ use WorldDirect\Healthcheck\Domain\Model\ProbeResult;
 interface ProbeInterface
 {
     /**
+     * Whether to use the probe or not. E.g. depending on if an extension is installed or not.
+     *
+     * @return bool If the probe should be used or not.
+     */
+    public function useProbe(): bool;
+
+    /**
      * Execute the probe and return the probeResult.
      *
      * @return void
      */
     public function run(): void;
+
 }
