@@ -115,6 +115,16 @@ class ProbeResult
     }
 
     /**
+     * Returns the messages
+     *
+     * @return array<ProbeResultMessage> The messages for this probe
+     */
+    public function getMessages(): array
+    {
+        return $this->messages;
+    }
+
+    /**
      * Add a success probe result message.
      *
      * @param string $message The message text

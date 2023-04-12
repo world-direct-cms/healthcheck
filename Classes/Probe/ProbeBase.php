@@ -45,6 +45,13 @@ class ProbeBase
     protected $result;
 
     /**
+     * The title of the probes. This is handy in the output of the probe result.
+     *
+     * @var string
+     */
+    protected $title;
+
+    /**
      * Construct new ProbeResults.
      *
      * @return void
@@ -53,6 +60,7 @@ class ProbeBase
     {
         $this->langService = BasicUtility::getLanguageService();
         $this->result = GeneralUtility::makeInstance(ProbeResult::class);
+        $this->title = (new ReflectionClass($this))->getShortName();
     }
 
     /**
@@ -95,5 +103,15 @@ class ProbeBase
     public function getProbeId(ProbeInterface $object): string
     {
         return str_replace('probe', '', strtolower((new ReflectionClass($object))->getShortName()));
+    }
+
+    /**
+     * Return the title of the Probe.
+     *
+     * @return string The probe title
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
     }
 }

@@ -66,6 +66,16 @@ class HealthcheckResult
     }
 
     /**
+     * Returns the probes array
+     *
+     * @return array<ProbeInterface>
+     */
+    public function getProbes(): array
+    {
+        return $this->probes;
+    }
+
+    /**
      * Update the overall status of the Healthcheck.
      * Depending on the Status of each probe. If there
      *
