@@ -38,6 +38,17 @@
                     "cmd": ".Build/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php ${file}"
                 }
             ]
+        },
+
+        // TODO TREE
+        "todo-tree.highlights.customHighlight": {
+            "TODO:": {
+                "foreground": "#333333",
+                "background": "#a02eaf",
+                "type": "whole-line",
+                "icon": "beaker",
+                "iconColor": "orange"
+            }
         }
 	}
 }
