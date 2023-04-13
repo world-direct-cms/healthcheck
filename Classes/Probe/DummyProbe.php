@@ -33,7 +33,7 @@ class DummyProbe extends ProbeBase implements ProbeInterface
      */
     public function useProbe(): bool
     {
-        // TODO: Probe: Check if this probe is to be run
+        // The probe must know when it should run (e.g. if an extension is installed, or a certain context is set, ...)
         return true;
     }
 
@@ -47,7 +47,14 @@ class DummyProbe extends ProbeBase implements ProbeInterface
         // Start probe
         parent::start();
 
-        // TODO: Probe: Implement dummy probe
+        // Implement the probe. Check whatever you want to check, and
+        // depending on the result add "success" or "error" messages
+        // to the probe result.
+
+        // Success message
+        // $this->result->addSuccessMessage('this is working');
+        // Error message
+        // $this->result->addErrorMessage('this did not work properly');
 
         // End probe
         parent::stop();
