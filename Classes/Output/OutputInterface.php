@@ -17,6 +17,14 @@ use WorldDirect\Healthcheck\Domain\Model\HealthcheckResult;
  * LICENSE file that was distributed with this source code.
  */
 
+/**
+ * The OutputInterface must be implemented by all Output classes, in
+ * order to get the returned content as well as the returned content
+ * type.
+ *
+ * @author Klaus Hörmann-Engl
+ * @package WorldDirect\Healthcheck\Output
+ */
 interface OutputInterface
 {
     /**
