@@ -2,12 +2,13 @@
 
 namespace WorldDirect\Healthcheck\Probe;
 
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use WorldDirect\Healthcheck\Probe\ProbeBase;
+use WorldDirect\Healthcheck\Domain\Model\Status;
 use WorldDirect\Healthcheck\Probe\ProbeInterface;
 use WorldDirect\Healthcheck\Domain\Model\ProbeResult;
-use WorldDirect\Healthcheck\Domain\Model\Status;
 use WorldDirect\Healthcheck\Utility\HealthcheckUtility;
 
 /*
@@ -32,12 +33,18 @@ use WorldDirect\Healthcheck\Utility\HealthcheckUtility;
 class CacheProbe extends ProbeBase implements ProbeInterface
 {
     /**
-     * This probe can always be run.
+     * This probe should be disabled on systems running the
+     * TYPO3_CONTEXT "Development". This because, the development
+     * systems often have disabled caching configurations. Therefore
+     * nothing can be written, and the probe would fail on these systems.
      *
-     * @return bool True
+     * @return bool True or false, depending on the current context
      */
     public function useProbe(): bool
     {
+        if (Environment::getContext() == 'Development') {
+            return false;
+        }
         return true;
     }
 
