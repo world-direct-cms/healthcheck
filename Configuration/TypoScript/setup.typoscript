@@ -1,3 +1,14 @@
-tx_healthcheck {
-    // TODO: TypoScript Configuration: Add configurations for varios settings
+plugin {
+    tx_healthcheck {
+        settings {
+            # Output settings
+            output {
+                # Html output
+                html {
+                    # Change the background image of the html output
+                    backgroundimage = EXT:healthcheck/Resources/Public/Images/background.png
+                }
+            }
+        }
+    }
 }

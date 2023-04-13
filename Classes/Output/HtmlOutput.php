@@ -7,6 +7,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use WorldDirect\Healthcheck\Output\OutputInterface;
 use WorldDirect\Healthcheck\Domain\Model\HealthcheckResult;
 use TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException;
+use WorldDirect\Healthcheck\Domain\Model\Settings;
 
 /*
  * This file is part of the TYPO3 extension "worlddirect/healthcheck".
@@ -21,7 +22,7 @@ use TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException;
  * LICENSE file that was distributed with this source code.
  */
 
-class HtmlOutput implements OutputInterface
+class HtmlOutput extends OutputBase implements OutputInterface
 {
     /**
      * The content type of the rendered content.
@@ -61,6 +62,7 @@ class HtmlOutput implements OutputInterface
             $view->assignMultiple(
                 [
                     'result' => $result,
+                    'settings' => $this->getTypoScriptConfiguration(),
                     'sitename' => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename']
                 ]
             );

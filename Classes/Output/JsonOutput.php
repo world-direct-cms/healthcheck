@@ -18,7 +18,13 @@ use WorldDirect\Healthcheck\Output\OutputInterface;
  * LICENSE file that was distributed with this source code.
  */
 
-class JsonOutput implements OutputInterface
+/**
+ * The JsonOupt returns a simple JSON response of the HealthcheckResult.
+ *
+ * @author Klaus Hörmann-Engl
+ * @package WorldDirect\Healthcheck\Output
+ */
+class JsonOutput extends OutputBase implements OutputInterface
 {
     /**
      * Returns JSON for the given Healthcheckresult.

@@ -10,3 +10,6 @@ services:
   # In order for dependecy injection to work
   WorldDirect\Healthcheck\Middleware\HealthcheckMiddleware:
     public: true
+  # Don't know why, but this is needed in order to instance the Settings object
+  WorldDirect\Healthcheck\Domain\Model\TypoScriptConfiguration:
+    public: true
