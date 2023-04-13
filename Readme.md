@@ -2,7 +2,10 @@
 # TYPO3 extension: "healthcheck"
 
 - [What does it do?](#what-does-it-do)
+- [Accessing the healthcheck](#accessing-the-healthcheck)
 - [Configuration](#configuration)
+  - [Extension configuration](#extension-configuration)
+  - [TypoScript configuration](#typoscript-configuration)
 - [Probes](#probes)
   - [CacheProbe](#cacheprobe)
   - [DatabaseProbe](#databaseprobe)
@@ -16,47 +19,78 @@
 - [Used resources](#used-resources)
 
 ## What does it do?
-The TYPO3 extension **"healthcheck"** provides various output possibilities to schow a healthcheck for the TYPO3 project. It checks various extensible probes for their health and summarizes these into a overall health status. These informations can be used by a monitoring software tool like **"PRTG"** to monitor the TYPO3 project.
+The TYPO3 extension **"healthcheck"** provides various outputs, each showing healthcheck informations for the current TYPO3 installation. To do so, the extension runs various probes. According to each single probe result (Success or Error) an overall Healthcheck result is generated. The healthcheck output may be used by a variety of monitoring software like **PRTG**. 
+
+<img src="Resources/Public/Images/documentation/healthcheck-screenshot.png" width="600" />
+
+## Accessing the healthcheck
+The **Healthcheck** uses a Middleware to render the output. In order for the Middleware to know that a possible healthcheck needs to be rendered, we use the extension configuration settings **pathSegment** and **secret**. As well as the output type.
+
+The healthcheck can be accessed by a "path" using 3 parts. Here is an example URL:
+https://www.mustermann.de/healthcheck/lkjl23wsdkjjlskdj/html/.
+- **1. part:** The first of the "path" is the *"pathSegment"*. In the example this is **"healthcheck"**.
+- **2. part:** The second part of the "path" is the "*secret*". The example contains the secret **"lkjl23wsdkjjlskdj"**. 
+- **3. part:** The third and final part of the "path" contains the name of the desired Output. In this case it uses "html" which represents the **"HtmlOutput"**.
 ## Configuration
-TODO
+There is an extension configuration as well as a TypoScript settings configuration.
+
+### Extension configuration
+The extension configuration holds various settings, which need to be set in order for the healthcheck to work. Also showing debugging informations can be enabled.
+
+**pathSegment:** This setting sets the 1. part of the "path" used to access the healthcheck. It's default setting is **"healthcheck"** and may be adapted by the user.
+
+**secret:** As the output of the healthcheck is considered an information worthy to protect, setting a secret value is mandatory. Without it will not work and will not show an output. In the default settings there is no secret, which forces the administrator of the site to create one.
+
+**allowedIps:** It is possible to limit the allowedIps which may view the healthcheck. Default value is "*" (everybody).
+
+**enableDebug:** This setting allows to output some more debugging information. E.g.: If you do not set a *secret*, the healthcheck will not show anything in the frontend. If you enable the **"enableDebug"** setting you will at least see a short message about the current error.
+
+### TypoScript configuration
+The TypoScript configuration is used for any other settings. Currently there is only one setting for the HTML output.
+
+**backgroundImage:** This setting is relevant for the HTML output and contains the background image to use for the HtmlOutput class instance.
 
 ## Probes
 
-The extension provides these probes out of the box:
+In order to check for certain functionality, data or states we use **Probes** to do so. These probes have a **"run"** method which checks certain stuff, and fills the probe's result with *success* or *error* messages. If there is at least 1 *error* message the overall status of the *HealthcheckResult* is *ERROR*. 
+
+> All probes need to have the status "SUCCESS" for the overall HealthcheckResult Status to be "SUCCESS"!
+
+The extension already provides three probes out of the box:
 - **CacheProbe:** Checks if all cache configurations are writeable
 - **DatabaseProbe:** Checks if the access to the database works
 - **SchedulerProbe:** Check if there are any scheduled tasks, which have a failure
 
 ### CacheProbe
-TODO
+TODO: What is the CacheProbe?
+
 ### DatabaseProbe
-TODO
+TODO: What is the DatabaseProbe?
 
 ### SchedulerProbe
-TODO
+TODO: What does the SchedulerProbe do?
 
 ## Outputs
+TODO: What is a output?
 
 The extension provides these output formats out of the box:
 - **HtmlOutput:** Renders a HTML page using Bootstrap 5 to display the HealthcheckResult. Showing a overall Success or Error.
 - **JsonOutput:** Simple JSON output which displays the HealthcheckResult as JSON.
 
 ### HtmlOutput
-
-The **HtmlOutput**
-
-- Uses a configured **"backendLogo"** in the HTML output of the Healthcheck. It this is not set, the extension uses the TYPO3 backend logo.
+TODO: How does the HtmlOutput work?
 
 ## Customization
 
-This extension is customizable in a way, that allows the developer to add custom **probes** and **outputs**.
+This extension is customizable in a way, that allows the developer to add new **probes** as well as **outputs**.
 
 ### Add custom probes
-TODO
+TODO: Explain Interface
+TODO: Explain BaseClass
 
 ### Add custom outputs
-TODO
-
+TODO: Explain Interface
+TODO: Explain BaseClass
 
 ## Inspiration
 
