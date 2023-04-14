@@ -2,7 +2,9 @@
 # TYPO3 extension: "healthcheck"
 
 - [What does it do?](#what-does-it-do)
+- [Installation](#installation)
 - [Accessing the healthcheck](#accessing-the-healthcheck)
+- [Returned HTTP status code](#returned-http-status-code)
 - [Configuration](#configuration)
   - [Extension configuration](#extension-configuration)
   - [TypoScript configuration](#typoscript-configuration)
@@ -23,6 +25,13 @@ The TYPO3 extension **"healthcheck"** provides various outputs, each showing hea
 
 <img src="Resources/Public/Images/documentation/healthcheck-screenshot.png" width="600" />
 
+## Installation
+The extension is installable using Composer:
+```bash
+composer req worlddirect/healthcheck
+```
+> **ATTENTION:** You need to configure the **"secret"** in order for the healthcheck to work. See [Extension configuration](#extension-configuration) for details.
+
 ## Accessing the healthcheck
 The **Healthcheck** uses a Middleware to render the output. In order for the Middleware to know that a possible healthcheck needs to be rendered, we use the extension configuration settings **pathSegment** and **secret**. As well as the output type.
 
@@ -30,7 +39,11 @@ The healthcheck can be accessed by a "path" using 3 parts. Here is an example UR
 https://www.mustermann.de/healthcheck/lkjl23wsdkjjlskdj/html/.
 - **1. part:** The first of the "path" is the *"pathSegment"*. In the example this is **"healthcheck"**.
 - **2. part:** The second part of the "path" is the "*secret*". The example contains the secret **"lkjl23wsdkjjlskdj"**. 
-- **3. part:** The third and final part of the "path" contains the name of the desired Output. In this case it uses "html" which represents the **"HtmlOutput"**.
+- **3. part:** The third and final part of the "path" contains the name of the desired Output. In this case it uses "html" which represents the **"HtmlOutput"**. If this part is omitted, the default "html" is used.
+
+## Returned HTTP status code
+The returned response status code depends on the status of the HealthcheckResult object. If the status equals an **"ERROR"** a http status code `503` is returned. If the status is a **"SUCCESS"** a code of `200` is returned. This makes it possible to check for the http status code in order to determine if there is a problem with the healthcheck. No need to interpret the output. There are tools, as mentioned before which can perform checks for a specific HTTP status code. Or you build your own litte script to do so. :smiley:
+
 ## Configuration
 There is an extension configuration as well as a TypoScript settings configuration.
 
@@ -41,9 +54,9 @@ The extension configuration holds various settings, which need to be set in orde
 
 **secret:** As the output of the healthcheck is considered an information worthy to protect, setting a secret value is mandatory. Without it will not work and will not show an output. In the default settings there is no secret, which forces the administrator of the site to create one.
 
-**allowedIps:** It is possible to limit the allowedIps which may view the healthcheck. Default value is "*" (everybody).
+**allowedIps:** It is possible to limit the allowedIps which may view the healthcheck. Default value is **"*"** (every IP address).
 
-**enableDebug:** This setting allows to output some more debugging information. E.g.: If you do not set a *secret*, the healthcheck will not show anything in the frontend. If you enable the **"enableDebug"** setting you will at least see a short message about the current error.
+**enableDebug:** This setting allows to output some more debugging information. E.g.: If you do not set a *secret*, the healthcheck will not show anything in the frontend. If you enable the **"enableDebug"** setting you will at least see a short message about the current error. Default value is **"off"** (0).
 
 ### TypoScript configuration
 The TypoScript configuration is used for any other settings. Currently there is only one setting for the HTML output.

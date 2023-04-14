@@ -2,12 +2,14 @@
 
 namespace WorldDirect\Healthcheck\Utility;
 
-use TYPO3\CMS\Core\Http\Response;
+use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\ResponseFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Psr\Http\Message\ServerRequestInterface;
+use RuntimeException;
 use TYPO3\CMS\Core\Localization\LanguageService;
+use WorldDirect\Healthcheck\Domain\Model\Status;
 use WorldDirect\Healthcheck\Probe\ProbeInterface;
 use WorldDirect\Healthcheck\Utility\BasicUtility;
 use WorldDirect\Healthcheck\Output\OutputInterface;
@@ -44,7 +46,7 @@ class HealthcheckUtility
     /**
      * The error response http status code
      */
-    const ERROR_RESPONSE_HTTP_STATUS = 403;
+    const ERROR_RESPONSE_HTTP_STATUS = 503;
 
     /**
      * The success response http status code
@@ -113,7 +115,7 @@ class HealthcheckUtility
 
         // If there is an error message set, build a response and return it
         if (!empty($errorMessage)) {
-            return $this->returnErrorResponse($errorMessage);
+            return $this->getResponse($errorMessage, self::ERROR_RESPONSE_HTTP_STATUS);
         }
 
         // Everything is OK
@@ -143,7 +145,7 @@ class HealthcheckUtility
         }
 
         if (!empty($errorMessage)) {
-            return $this->returnErrorResponse($errorMessage);
+            return $this->getResponse($errorMessage, self::ERROR_RESPONSE_HTTP_STATUS);
         }
 
         // Everything is OK
@@ -176,7 +178,7 @@ class HealthcheckUtility
         }
 
         if (!empty($errorMessage)) {
-            return $this->returnErrorResponse($errorMessage);
+            return $this->getResponse($errorMessage, self::ERROR_RESPONSE_HTTP_STATUS);
         }
 
         // Everything is OK
@@ -224,7 +226,7 @@ class HealthcheckUtility
         }
 
         if (!empty($errorMessage)) {
-            return $this->returnErrorResponse($errorMessage);
+            return $this->getResponse($errorMessage, self::ERROR_RESPONSE_HTTP_STATUS);
         }
 
         return null;
@@ -259,55 +261,48 @@ class HealthcheckUtility
         return $result;
     }
 
-    // TODO: Utility: Comment function
+    /**
+     *
+     *
+     * @param HealthcheckResult $result The current status of the Healthcheck result
+     * @param string $outputClass Which output to render
+     *
+     * @return ResponseInterface Return a response for the middleware to process
+     */
     public function getHealthcheckResponse(HealthcheckResult $result, string $outputClass): ResponseInterface
     {
-        try {
-            /** @var OutputInterface $output */
-            $output = GeneralUtility::makeInstance($outputClass); /** @phpstan-ignore-line */
+        /** @var OutputInterface $output */
+        $output = GeneralUtility::makeInstance($outputClass); /** @phpstan-ignore-line */
 
-            return $this->returnSuccessReponse(
-                $output->getContentType(),
-                $output->getContent($result)
-            );
-        } catch(\Throwable $throwable) {
-            // TODO: Utility: This happens when the database is gone --> Write a better error response
-            return $this->returnErrorResponse($throwable->getMessage());
+        // Set the http status return code
+        $httpStatus = self::SUCCESS_RESPONSE_HTTP_STATUS;
+        if ($result->getStatus() == Status::ERROR) {
+            $httpStatus = self::ERROR_RESPONSE_HTTP_STATUS;
         }
+
+        // Return the created response
+        return $this->getResponse(
+            $output->getContent($result),
+            $httpStatus,
+            $output->getContentType()
+        );
     }
 
     /**
-     * Build a reponse with a optional error message to return
+     * Returns a Response with the given content, httpsStatus and contentType.
      *
-     * @param string $errorMessage The error message to be contained in the response (when debug is enabled)
+     * @param string $content The content for the response
+     * @param int $httpStatus The used http status code
+     * @param string $contentType The contentType for the response header
      *
-     * @return ResponseInterface The response
+     * @return ResponseInterface The response object
      */
-    private function returnErrorResponse(string $errorMessage): ResponseInterface
+    private function getResponse(string $content, int $httpStatus, string $contentType = 'text/html')
     {
-        /** @var Response $response */
-        $response = GeneralUtility::makeInstance(Response::class);
-        $response->withStatus(self::ERROR_RESPONSE_HTTP_STATUS);
-        if ($this->config->isDebugEnabled()) {
-            $response->getBody()->write($errorMessage);
-        }
-        return $response;
-    }
-
-    /**
-     * This function returns a success response.
-     *
-     * @param string $contentType The content type to return
-     * @param string $content The content to return
-     *
-     * @return ResponseInterface The response with the content
-     */
-    private function returnSuccessReponse(string $contentType, string $content): ResponseInterface
-    {
-        $response = $this->responseFactory->createResponse()->withHeader('Content-Type', $contentType);
-        $response->withStatus(self::SUCCESS_RESPONSE_HTTP_STATUS);
+        $response = $this->responseFactory->createResponse()
+            ->withHeader('Content-Type', $contentType)
+            ->withStatus($httpStatus);
         $response->getBody()->write($content);
-
         return $response;
     }
 
