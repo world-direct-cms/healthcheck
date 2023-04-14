@@ -5,6 +5,10 @@ plugin {
             output {
                 # Html output
                 html {
+                    # Change the logo image, if you want to "remove" it overall, use 
+                    # TypoScript in your site extension and set it to '' (empty) or to 
+                    # another image (project logo image maybe?)
+                    logoimage = EXT:healthcheck/Resources/Public/Icons/healthreport.png
                     # Change the background image of the html output
                     backgroundimage = EXT:healthcheck/Resources/Public/Images/background.png
                 }

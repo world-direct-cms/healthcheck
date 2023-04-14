@@ -1,9 +1,14 @@
+<f:debug>{settings}</f:debug>
 <div class="row my-2">
     <div class="col-6">
         <!-- LOGO -->
-        <f:image src="EXT:healthcheck/Resources/Public/Icons/health-report.png" absolute="1" width="100" />
+        <f:if condition="{settings.outputHtmlLogoimage} != ''">
+            <span class="me-2">
+                <f:image src="{settings.outputHtmlLogoimage}" absolute="1" width="100" />
+            </span>
+        </f:if>
         <!-- OVERALL STATUS-->
-        <span class="ms-5 fs-3">Healthcheck Status:</span>
+        <span class="fs-3">Healthcheck Status:</span>
         <f:render partial="StatusIcon" arguments="{status: result.status, margin: 's', size: '24'}" />
         <f:render partial="StatusText" arguments="{status: result.status, class: 'fs-2'}" />
     </div>

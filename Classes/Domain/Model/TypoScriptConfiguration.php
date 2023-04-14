@@ -35,6 +35,13 @@ class TypoScriptConfiguration
     protected $outputHtmlBackgroundimage;
 
     /**
+     * The output html logo image
+     *
+     * @var string
+     */
+    protected $outputHtmlLogoimage;
+
+    /**
      * The configuration manager.
      *
      * @var ConfigurationManager
@@ -52,12 +59,13 @@ class TypoScriptConfiguration
     {
         $this->configManager = $configManager;
         $this->outputHtmlBackgroundimage = strval($this->get('plugin.tx_healthcheck.settings.output.html.backgroundimage'));
+        $this->outputHtmlLogoimage = strval($this->get('plugin.tx_healthcheck.settings.output.html.logoimage'));
     }
 
     /**
      * Return the output html backgroundimage
      *
-     * @return string
+     * @return string The background image path
      */
     public function getOutputHtmlBackgroundimage(): string
     {
@@ -65,14 +73,24 @@ class TypoScriptConfiguration
     }
 
     /**
-     * Function returns the value of the requests typoscript settings path.
-     * You can traverse into the TypoScript full settings by giving a settingsPath.
-     * E.g.: plugin.tx_healthcheck.settings.output.html.backgroundImage
+     * Return the output html logoimage
      *
-     * @param string $settingsPath The path to the desired TypoScript setting
-     *
-     * @return string|array<mixed> The setting value or settings array
+     * @return string The logo image path
      */
+    public function getOutputHtmlLogoimage(): string
+    {
+        return $this->outputHtmlLogoimage;
+    }
+
+    /**
+    * Function returns the value of the requests typoscript settings path.
+    * You can traverse into the TypoScript full settings by giving a settingsPath.
+    * E.g.: plugin.tx_healthcheck.settings.output.html.backgroundImage
+    *
+    * @param string $settingsPath The path to the desired TypoScript setting
+    *
+    * @return string|array<mixed> The setting value or settings array
+    */
     public function get(string $settingsPath): string|array
     {
         // Get the full TypoScript configuration
