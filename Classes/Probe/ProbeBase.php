@@ -55,6 +55,7 @@ class ProbeBase
      * Construct new ProbeResults.
      *
      * @return void
+     * @SuppressWarnings(PHPMD.StaticAccess)
      */
     public function __construct()
     {

@@ -94,6 +94,7 @@ class HealthcheckConfiguration
      * Construct a new HealthcheckConfiguration using the extension configuration.
      *
      * @return void
+     * @SuppressWarnings(PHPMD.StaticAccess)
      */
     public function __construct()
     {

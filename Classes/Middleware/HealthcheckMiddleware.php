@@ -78,6 +78,7 @@ class HealthcheckMiddleware implements MiddlewareInterface
      * @param RequestHandlerInterface $handler The request handler
      *
      * @return ResponseInterface Returns a response
+     * @SuppressWarnings(PHPMD.IfStatementAssignment)
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -100,7 +101,7 @@ class HealthcheckMiddleware implements MiddlewareInterface
 
             // Check if there are output formats configured in the url
             $requestedOutput = $this->utility->getOutputFromRequest($request);
-            if ($response = $this->utility->checkOutputs($request, $requestedOutput)) {
+            if ($response = $this->utility->checkOutputs($requestedOutput)) {
                 return $response;
             }
 

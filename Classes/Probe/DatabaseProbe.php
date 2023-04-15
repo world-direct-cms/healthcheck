@@ -53,6 +53,7 @@ class DatabaseProbe extends ProbeBase implements ProbeInterface
      * database. If not an error is returned.
      *
      * @return void
+     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
     public function run(): void
     {

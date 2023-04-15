@@ -81,6 +81,7 @@ class HealthcheckUtility
      * @param ResponseFactory $responseFactory The factory object to create new response
      *
      * @return void
+     * @SuppressWarnings(PHPMD.StaticAccess)
      */
     public function __construct(HealthcheckConfiguration $healthcheckConfiguration, ResponseFactory $responseFactory)
     {
@@ -188,12 +189,12 @@ class HealthcheckUtility
     /**
      * Function cehcks for the possible output
      *
-     * @param ServerRequestInterface $request The original request
      * @param string $requestedOutput The name of the requested output format (e.g. "html")
      *
      * @return null|ResponseInterface
+     * @SuppressWarnings(PHPMD.StaticAccess)
      */
-    public function checkOutputs(ServerRequestInterface $request, string $requestedOutput): ?ResponseInterface
+    public function checkOutputs(string $requestedOutput): ?ResponseInterface
     {
         $errorMessage = '';
 

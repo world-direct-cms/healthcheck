@@ -52,6 +52,7 @@ class CacheProbe extends ProbeBase implements ProbeInterface
      * Run the cache probe. Check if caches can be written.
      *
      * @return void The probes result
+     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
     public function run(): void
     {
