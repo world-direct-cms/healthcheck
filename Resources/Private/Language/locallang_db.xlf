@@ -16,6 +16,12 @@
             <trans-unit id="extConf.enableDebug.description">
                 <source>Enable debugging messages:Show debugging messages in the frontend or not.</source>
             </trans-unit>
+            <trans-unit id="extConf.enableBuildinfo.description">
+                <source>Enable "buildinfo" extension information:Show the configured timestamp, buildnumber and Git version from the extension "buildinfo" (if installed)</source>
+            </trans-unit>
+            <trans-unit id="extConf.enableAdditionalInfo.description">
+                <source>Enable additional informations:Like the current IP address, current date, ...</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

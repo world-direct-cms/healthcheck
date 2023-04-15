@@ -5,9 +5,10 @@ namespace WorldDirect\Healthcheck\Output;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use WorldDirect\Healthcheck\Output\OutputInterface;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use WorldDirect\Healthcheck\Domain\Model\HealthcheckResult;
 use TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException;
-use WorldDirect\Healthcheck\Domain\Model\Settings;
+use WorldDirect\Buildinfo\Utility\BuildinfoUtility;
 
 /*
  * This file is part of the TYPO3 extension "worlddirect/healthcheck".
@@ -62,10 +63,41 @@ class HtmlOutput extends OutputBase implements OutputInterface
             $view->assignMultiple(
                 [
                     'result' => $result,
-                    'settings' => $this->getTypoScriptConfiguration(),
+                    'tsConfig' => $this->getTypoScriptConfiguration(),
+                    'extConfig' => $this->getExtensionConfiguration(),
                     'sitename' => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename']
                 ]
             );
+
+            // Check if buildinfo is enabled, then add these informations too
+            // But only if the extension buildinfo is installed
+            if ($this->getExtensionConfiguration()->getEnableBuildinfo()) {
+                if (ExtensionManagementUtility::isLoaded('buildinfo')) {
+                    $buildinfoUtil = GeneralUtility::makeInstance(BuildinfoUtility::class);
+
+                    $view->assignMultiple(
+                        [
+                            // Buildinfo
+                            'buildNumber' => $buildinfoUtil->getFileContent('buildNumber'),
+                            'buildTimestamp' => $buildinfoUtil->getFileContent('buildTimestamp'),
+                            'gitVersion' => $buildinfoUtil->getFileContent('gitVersion')
+                        ]
+                    );
+                }
+            }
+
+            // Check if additionaInfo is enabled, then add these informations also
+            if ($this->getExtensionConfiguration()->getEnableAdditionalInfo()) {
+                $view->assignMultiple(
+                    [
+                        // Additional info
+                        'datetime' => date('d.m.Y H:i:s'),
+                        'ip' => GeneralUtility::getIndpEnv('REMOTE_ADDR')
+                    ]
+                );
+            }
+
+            // Return the rendered view
             return $view->render();
         } catch (InvalidTemplateResourceException $e) {
             // TODO: Show error message or something similar

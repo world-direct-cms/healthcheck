@@ -4,6 +4,7 @@ namespace WorldDirect\Healthcheck\Domain\Model;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use WorldDirect\Healthcheck\Domain\Model\TypoScriptConfiguration;
+use WorldDirect\Healthcheck\Domain\Model\HealthcheckConfiguration;
 
 /*
  * This file is part of the TYPO3 extension "worlddirect/healthcheck".
@@ -35,6 +36,13 @@ class HealthcheckBase
     protected $tsConfig;
 
     /**
+     * The extension configuration
+     *
+     * @var HealthcheckConfiguration
+     */
+    protected $extConf;
+
+    /**
      * Get the Settings object.
      *
      * @return TypoScriptConfiguration The TypoScript configuration object
@@ -45,6 +53,16 @@ class HealthcheckBase
     }
 
     /**
+     * Return the healthcheck extension configuration.
+     *
+     * @return HealthcheckConfiguration The extension config
+     */
+    public function getExtensionConfiguration(): HealthcheckConfiguration
+    {
+        return $this->extConf;
+    }
+
+    /**
      * Constructor for new HealthcheckBase objects
      *
      * @return void
@@ -52,5 +70,6 @@ class HealthcheckBase
     public function __construct()
     {
         $this->tsConfig = GeneralUtility::makeInstance(TypoScriptConfiguration::class);
+        $this->extConf = GeneralUtility::makeInstance(HealthcheckConfiguration::class);
     }
 }

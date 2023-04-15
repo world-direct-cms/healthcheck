@@ -58,9 +58,23 @@ class HealthcheckConfiguration
     /**
      * Whether to enable debug output or not. Default not.
      *
-     * @var bool
+     * @var int
      */
-    protected $enableDebug = false;
+    protected $enableDebug = 0;
+
+    /**
+     * Whether to show the EXT:buildinfo informations in the healthcheck.
+     *
+     * @var int
+     */
+    protected $enableBuildinfo = 0;
+
+    /**
+     * Wheter to enable additional information like current IP address, current datetime, ...
+     *
+     * @var int
+     */
+    protected $enableAdditionalInfo = 0;
 
     /**
      * The probes to check.
@@ -98,7 +112,13 @@ class HealthcheckConfiguration
                     $this->allowedIps = $extConf['allowedIps'];
                 }
                 if (isset($extConf['enableDebug'])) {
-                    $this->enableDebug = $extConf['enableDebug'];
+                    $this->enableDebug = intval($extConf['enableDebug']);
+                }
+                if (isset($extConf['enableBuildinfo'])) {
+                    $this->enableBuildinfo = intval($extConf['enableBuildinfo']);
+                }
+                if (isset($extConf['enableAdditionalInfo'])) {
+                    $this->enableAdditionalInfo = intval($extConf['enableAdditionalInfo']);
                 }
             }
 
@@ -149,11 +169,31 @@ class HealthcheckConfiguration
     /**
      * Returns whether debugging is enabled or not.
      *
-     * @return bool Enabled debug?
+     * @return int Enabled debug?
      */
-    public function isDebugEnabled(): bool
+    public function getEnableDebug(): int
     {
         return $this->enableDebug;
+    }
+
+    /**
+     * Return whether the buildinfo extension information is enabled or not.
+     *
+     * @return int Buildinfo extension info enabled?
+     */
+    public function getEnableBuildinfo(): int
+    {
+        return $this->enableBuildinfo;
+    }
+
+    /**
+     * Use the additional information?
+     *
+     * @return int Show additional info?
+     */
+    public function getEnableAdditionalInfo(): int
+    {
+        return $this->enableAdditionalInfo;
     }
 
     /**
