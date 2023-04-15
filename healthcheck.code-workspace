@@ -3,18 +3,18 @@
         {
             "name": "EXT:healthcheck",
             "path": "."
-        },
-        {
-            "name": "TYPO3 for testing",
-            "path": "../../../.."
-        }        
+        }
     ],
     "settings": {
-        // PHP STAN
+        
+        // PHPstan
         "phpstan.configFile": ".phpstan.neon",
         "phpstan.binPath": ".Build/bin/phpstan",
+
+        // PHPmd
+        "phpmd.rules": ".phpmd.xml",
     
-        // INTELEPHENSE
+        // Intelephense
         "intelephense.files.exclude": [
             "**/.git/**",
             "**/.svn/**",
@@ -25,14 +25,13 @@
             "**/bower_components/**",
             "**/vendor/**/{Tests,tests}/**",
             "**/.history/**",
-            "**/vendor/**/vendor/**",
-            ".Build/**"
+            "**/vendor/**/vendor/**"
         ],
 
-         // RUN ON SAVE
+         // Run on save
         "emeraldwalk.runonsave": {
             "commands": [
-                // PHP-CS-FIXER
+                // Run "php-cs-fixer" when php is saved
                 {
                     "match": "\\.php$",
                     "cmd": ".Build/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php ${file}"
@@ -40,7 +39,7 @@
             ]
         },
 
-        // TODO TREE
+        // Todo tree
         "todo-tree.highlights.customHighlight": {
             "TODO": {
                 "foreground": "#333333",

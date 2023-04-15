@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<ruleset name="fh"
+    xmlns="http://pmd.sf.net/ruleset/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
+    xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+
+    <description>Ruleset for TYPO3 extensions</description>
+
+    <!-- ########################## CLEAN CODE ########################## -->
+    <rule ref="rulesets/cleancode.xml">
+        <exclude name="ElseExpression" />
+        <exclude name="MissingImport" />
+        <exclude name="StaticAccess" />
+    </rule>
+    <rule ref="rulesets/cleancode.xml/StaticAccess">
+        <properties>
+            <property name="exceptions">
+                <value>
+                    \League\Csv\Reader,
+                    \Swift_Attachment,
+                    \TCPDF_FONTS,
+                    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility,
+                    \TYPO3\CMS\Core\Utility\GeneralUtility,
+                    \TYPO3\CMS\Core\Utility\HttpUtility,
+                    \TYPO3\CMS\Core\Utility\MailUtility,
+                    \TYPO3\CMS\Core\Resource\ResourceFactory,
+                    \TYPO3\CMS\Extbase\Utility\DebuggerUtility,
+                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility,
+                    \TYPO3\CMS\Saltedpasswords\Salt\SaltFactory,
+                    \TYPO3\CMS\Core\Core\Environment,
+                    Environment,
+                    \WorldDirect\Buildinfo\Utility\BasicUtility
+                </value>
+            </property>
+        </properties>
+    </rule>
+
+    <!-- ########################## CODE SIZE ########################## -->
+    <rule ref="rulesets/codesize.xml">
+        <exclude name="CyclomaticComplexity" />
+        <exclude name="TooManyPublicMethods" />
+    </rule>
+    <rule ref="rulesets/codesize.xml/CyclomaticComplexity">
+        <properties>
+            <property name="reportLevel" value="15" />
+        </properties>
+    </rule>
+    <rule ref="rulesets/codesize.xml/TooManyPublicMethods">
+        <properties>
+            <property name="ignorepattern" value="(^(set|get|is))i" />
+        </properties>
+    </rule>
+
+    <!-- ########################## CONTROVERSIAL ########################## -->
+    <rule ref="rulesets/controversial.xml">
+        <exclude name="Superglobals" />
+    </rule>
+
+    <!-- ########################## DESIGN ########################## -->
+    <rule ref="rulesets/design.xml" />
+
+    <!-- ########################## NAMING ########################## -->
+    <rule ref="rulesets/naming.xml">
+        <exclude name="LongVariable" />
+        <exclude name="ShortVariable" />
+    </rule>
+    <rule ref="rulesets/naming.xml/LongVariable">
+        <properties>
+            <property name="maximum" value="30" />
+        </properties>
+    </rule>
+    <rule ref="rulesets/naming.xml/ShortVariable">
+        <properties>
+            <property name="exceptions" value="to,id" />
+        </properties>
+    </rule>
+
+    <!-- ########################## UNUSED CODE ########################## -->
+    <rule ref="rulesets/unusedcode.xml" />
+</ruleset>
