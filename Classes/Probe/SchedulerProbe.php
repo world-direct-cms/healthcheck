@@ -67,7 +67,8 @@ class SchedulerProbe extends ProbeBase implements ProbeInterface
                 ->select('*')
                 ->from(self::SCHEDULER_TABLE)
                 ->where(
-                    $queryBuilder->expr()->eq('disable', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT))
+                    $queryBuilder->expr()->eq('disable', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)),
+                    $queryBuilder->expr()->eq('deleted', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT))
                 )
                 ->executeQuery()
                 ->fetchAllAssociative();
