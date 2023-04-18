@@ -13,3 +13,13 @@ services:
   # Don't know why, but this is needed in order to instance the Settings object
   WorldDirect\Healthcheck\Domain\Model\TypoScriptConfiguration:
     public: true
+  # In order to make DI work
+  WorldDirect\Healthcheck\Utility\HealthcheckUtility:
+    public: true
+  # System information provider for adding the Healthcheck link
+  WorldDirect\Healthcheck\SystemInformation\ToolbarItemProvider:
+    tags:
+      - name: event.listener
+        identifier: 'healthcheck/show-healthcheck-link'
+        method: 'getHealthcheckLink'
+        event: TYPO3\CMS\Backend\Backend\Event\SystemInformationToolbarCollectorEvent
