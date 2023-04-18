@@ -60,4 +60,20 @@ class BasicUtility
             return $lastPart;
         }
     }
+
+    /**
+     * Function returns the current domain and protocol as contained
+     * in the $_SERVER variable.
+     * 
+     * @return string The current domain (e.g. "https://www.google.com/")
+     */
+    public static function getCurrentDomain(): string
+    {
+        $domain = 'http://';
+        if ($_SERVER['HTTPS'] == 'on') {
+            $domain = 'https://';
+        }
+
+        return $domain . $_SERVER['HTTP_HOST'] . '/';
+    }
 }

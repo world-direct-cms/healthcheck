@@ -2,12 +2,10 @@
 
 namespace WorldDirect\Healthcheck\Utility;
 
-use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\ResponseFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Psr\Http\Message\ServerRequestInterface;
-use RuntimeException;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use WorldDirect\Healthcheck\Domain\Model\Status;
 use WorldDirect\Healthcheck\Probe\ProbeInterface;
@@ -77,15 +75,15 @@ class HealthcheckUtility
     /**
      * Constructor for new HealthcheckUility objects
      *
-     * @param HealthcheckConfiguration $healthcheckConfiguration The healthcheck extension configuration
+     * @param HealthcheckConfiguration $healthcheckConfig The healthcheck extension configuration
      * @param ResponseFactory $responseFactory The factory object to create new response
      *
      * @return void
      * @SuppressWarnings(PHPMD.StaticAccess)
      */
-    public function __construct(HealthcheckConfiguration $healthcheckConfiguration, ResponseFactory $responseFactory)
+    public function __construct(HealthcheckConfiguration $healthcheckConfig, ResponseFactory $responseFactory)
     {
-        $this->config = $healthcheckConfiguration;
+        $this->config = $healthcheckConfig;
         $this->responseFactory = $responseFactory;
         $this->langService = BasicUtility::getLanguageService();
     }
@@ -351,5 +349,16 @@ class HealthcheckUtility
         $target = $request->getRequestTarget();
         $parts = explode('/', $target);
         return $parts[$number];
+    }
+
+    /**
+     * Return a full url to the healthcheck of the current TYPO3 installation.
+     * 
+     * @return string The healthcheck url
+     */
+    public function getHealthcheckLink(): string
+    {
+        // Return the url of the healthcheck with the current domain
+        return BasicUtility::getCurrentDomain() . $this->config->getPathSegment() . '/' . $this->config->getSecret();
     }
 }
