@@ -6,6 +6,7 @@ return [
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
+        'rootLevel' => '-1', // Allow to create entries on the pid "0"
         'searchFields' => 'class_name',
         'iconfile' => 'EXT:healthcheck/Resources/Public/Icons/tx_healthcheck_domain_model_probe_pause.png',
     ],

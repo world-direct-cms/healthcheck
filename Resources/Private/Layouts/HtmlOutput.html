@@ -40,68 +40,55 @@
                 box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
             }
         </style>
+
         <script>
+            // Variables
+            var pathSegment = "<f:format.raw>{extConfig.pathSegment}</f:format.raw>";
+            var secret = "<f:format.raw>{extConfig.secret}</f:format.raw>";
+
             // Wait for the document to load
             document.addEventListener('DOMContentLoaded', function() {
                 
                 // Add event listener to play buttons
                 document.querySelectorAll('.play').forEach(item => {
                     item.addEventListener('click', event => {
-                        // PLAY ACTION
-                        // Ajax call to pause middleware using "pathSegment-play"
-                        playProbe(item, item.dataset.class);
-
-                        // Reload window
+                        makeAjaxCall(pathSegment + "-play/" + secret + "/", item.dataset.class);
                     });
                 });
 
                 // Add event listener to pause buttons
                 document.querySelectorAll('.pause').forEach(item => {
                     item.addEventListener('click', event => {
-                        // PAUSE ACTION
-                        // Ajax call to pause middleware using "pathSegment-pause"
-                        pauseProbe(item, item.dataset.class);
-
-                        // Reload window
+                        makeAjaxCall(pathSegment + "-pause/" + secret + "/", item.dataset.class);
                     });
                 });
             });
 
             /**
-             * Pause the probe for the given className
+             * Function makes an ajax call to a given url and adds the
+             * probe className as argument.
              * 
-             * @param clickElement The pause element clicked on
-             * @param className The FQCN to pause
+             * @param url - is the url to make the ajax call to
+             * @param className - is the className of the probe to play or pause
              * 
-             * @return void
+             * @returns void
              */
-            function pauseProbe(clickElement, className) {
-
-                // Make ajax call
-                var data = {
-                    className: className
-                };
+            function makeAjaxCall(url, className)
+            {
                 $.ajax({
                     method: "GET",
-                    url: "/healthcheck-pause/this-is-a-secret/",
-                    data: data
+                    url: url,
+                    data: { className: className}
                 })
                     .done(function(response) {
-                        console.log("done");
+                        // Reload window
+                        window.location.reload();
                     })
                     .fail(function(jqXhr, textStatus) {
+                        // Output error
                         console.log(textStatus);
                     });
-
-                // In success return of ajax call, hide pause and show play
-                console.log(clickElement);
-                console.log(className);
             }
-
-            function playProbe(clickElement, className) {
-
-            }
-
         </script>
     </head>
     <body>

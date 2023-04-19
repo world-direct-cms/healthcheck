@@ -39,6 +39,13 @@ class ProbeBase
     public $langService;
 
     /**
+     * The ProbeBase Repository.
+     *
+     * @var ProbePauseRepository
+     */
+    protected $probePauseRepo;
+
+    /**
      * The probe result.
      *
      * @var ProbeResult
@@ -54,12 +61,10 @@ class ProbeBase
 
     /**
      * The fully qualified class name. Used for the ProbePause entries.
-     * 
+     *
      * @var string
      */
     protected $fqcn;
-
-
 
     /**
      * Construct new ProbeResults.
@@ -71,6 +76,7 @@ class ProbeBase
     {
         $this->langService = BasicUtility::getLanguageService();
         $this->result = GeneralUtility::makeInstance(ProbeResult::class);
+        $this->probePauseRepo = GeneralUtility::makeInstance(ProbePauseRepository::class);
         $this->title = (new ReflectionClass($this))->getShortName();
         $this->fqcn = (new ReflectionClass($this))->getName();
     }
@@ -110,12 +116,12 @@ class ProbeBase
      * Therefore it uses the ProbePauseRepository function "isPaused".
      * This function gets the class name of the current object
      * to determine if there is a database entry.
-     * 
+     *
      * @return bool Paused or not
      */
     public function isPaused(): bool
     {
-        return ProbePauseRepository::isPaused(get_class($this));
+        return $this->probePauseRepo->isPaused(get_class($this));
     }
 
     /**
@@ -142,7 +148,7 @@ class ProbeBase
 
     /**
      * Returns the fully qualified class name.
-     * 
+     *
      * @return string Fully qualified class name of this probe
      */
     public function getFqcn(): string
