@@ -2,18 +2,13 @@
 
 namespace WorldDirect\Healthcheck\Middleware;
 
-use RuntimeException;
-use InvalidArgumentException;
 use TYPO3\CMS\Core\Http\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use WorldDirect\Healthcheck\Utility\HealthcheckUtility;
 use WorldDirect\Healthcheck\Domain\Model\HealthcheckResult;
-use TYPO3\CMS\Core\Localization\Exception\InvalidParserException;
 
 /*
  * This file is part of the TYPO3 extension "worlddirect/healthcheck".

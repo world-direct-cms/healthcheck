@@ -7,6 +7,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use WorldDirect\Healthcheck\Utility\BasicUtility;
 use WorldDirect\Healthcheck\Domain\Model\ProbeResult;
+use WorldDirect\Healthcheck\Domain\Repository\ProbePauseRepository;
 
 /*
  * This file is part of the TYPO3 extension "worlddirect/healthcheck".
@@ -52,6 +53,15 @@ class ProbeBase
     protected $title;
 
     /**
+     * The fully qualified class name. Used for the ProbePause entries.
+     * 
+     * @var string
+     */
+    protected $fqcn;
+
+
+
+    /**
      * Construct new ProbeResults.
      *
      * @return void
@@ -62,6 +72,7 @@ class ProbeBase
         $this->langService = BasicUtility::getLanguageService();
         $this->result = GeneralUtility::makeInstance(ProbeResult::class);
         $this->title = (new ReflectionClass($this))->getShortName();
+        $this->fqcn = (new ReflectionClass($this))->getName();
     }
 
     /**
@@ -95,6 +106,19 @@ class ProbeBase
     }
 
     /**
+     * Method returns whether the probe is paused or not.
+     * Therefore it uses the ProbePauseRepository function "isPaused".
+     * This function gets the class name of the current object
+     * to determine if there is a database entry.
+     * 
+     * @return bool Paused or not
+     */
+    public function isPaused(): bool
+    {
+        return ProbePauseRepository::isPaused(get_class($this));
+    }
+
+    /**
      * Return the probe id.
      *
      * @param ProbeInterface $object The actual object extending this class.
@@ -114,5 +138,15 @@ class ProbeBase
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    /**
+     * Returns the fully qualified class name.
+     * 
+     * @return string Fully qualified class name of this probe
+     */
+    public function getFqcn(): string
+    {
+        return $this->fqcn;
     }
 }

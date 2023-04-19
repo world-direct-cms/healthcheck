@@ -25,7 +25,8 @@
             "**/bower_components/**",
             "**/vendor/**/{Tests,tests}/**",
             "**/.history/**",
-            "**/vendor/**/vendor/**"
+            "**/vendor/**/vendor/**",
+            "**/.Build/public/**"
         ],
 
          // Run on save
