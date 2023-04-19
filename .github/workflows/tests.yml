@@ -28,4 +28,4 @@ jobs:
 
       - name: "🏃🏼 Run test"
         run: |
-          composer git:pre-commit
+          composer ci:tests
