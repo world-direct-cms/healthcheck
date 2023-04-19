@@ -5,7 +5,9 @@ namespace WorldDirect\Healthcheck\Utility;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\ResponseFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use WorldDirect\Healthcheck\Domain\Model\Status;
 use WorldDirect\Healthcheck\Probe\ProbeInterface;
@@ -344,7 +346,7 @@ class HealthcheckUtility
      *
      * @return string The desired string part of the request target.
      */
-    private function getPartOfRequestTarget(ServerRequestInterface $request, int $number): string
+    public function getPartOfRequestTarget(ServerRequestInterface $request, int $number): string
     {
         $target = $request->getRequestTarget();
         $parts = explode('/', $target);

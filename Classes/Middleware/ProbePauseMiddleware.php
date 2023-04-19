@@ -6,6 +6,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use WorldDirect\Healthcheck\Domain\Repository\ProbePauseRepository;
 use WorldDirect\Healthcheck\Utility\HealthcheckUtility;
 
 /*
@@ -31,15 +32,24 @@ class ProbePauseMiddleware implements MiddlewareInterface
     protected $utility;
 
     /**
+     * ProbePause repository to deal with probePause elements.
+     *
+     * @var ProbePauseRepository
+     */
+    protected $probePauseRepo;
+
+    /**
      * Constructor for new HealthcheckUtility instances
      *
      * @param HealthcheckUtility $healthcheckUtility Utility for healthchecks object
+     * @param ProbePauseRepository $probePauseRepo The repository to deal with probePause entries
      *
      * @return void
      */
-    public function __construct(HealthcheckUtility $healthcheckUtility)
+    public function __construct(HealthcheckUtility $healthcheckUtility, ProbePauseRepository $probePauseRepo)
     {
         $this->utility = $healthcheckUtility;
+        $this->probePauseRepo = $probePauseRepo;
     }
 
     /**
@@ -68,12 +78,14 @@ class ProbePauseMiddleware implements MiddlewareInterface
             }
 
             // Get parameters
+            $queryParams = $request->getQueryParams();
 
             // Use urls to pause or play
-            // Pause: Create entry for probePause
-            // Play:  Delete entry for probePause
-
-            \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($request);
+            if (str_contains($this->utility->getPartOfRequestTarget($request, 1), 'pause')) {
+                return $this->probePauseRepo->pauseProbe($queryParams['className']);
+            } elseif (str_contains($this->utility->getPartOfRequestTarget($request, 1), 'play')) {
+                return $this->probePauseRepo->playProbe($queryParams['className']);
+            }
         }
 
         return $handler->handle($request);
