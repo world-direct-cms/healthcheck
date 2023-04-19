@@ -51,8 +51,12 @@ class DummyProbe extends ProbeBase implements ProbeInterface
         // depending on the result add "success" or "error" messages
         // to the probe result.
 
+        // You must add a single or multiple "SUCCESS" or "ERROR" message, otherwise
+        // the probeResult status is not set properly!!!!
+
         // Success message
         // $this->result->addSuccessMessage('this is working');
+
         // Error message
         // $this->result->addErrorMessage('this did not work properly');
 
