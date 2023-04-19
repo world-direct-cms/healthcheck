@@ -4,10 +4,9 @@ on:
   push:
     branches:
       - "**"
-  workflow_dispatch:
 
 jobs:
-  test:
+  tests:
     runs-on: ubuntu-latest
     container:
       image: typo3/core-testing-php81:latest
@@ -26,6 +25,6 @@ jobs:
         run: |
           composer install
 
-      - name: "🏃🏼 Run test"
+      - name: "🏃🏼 Run tests"
         run: |
           composer ci:tests
