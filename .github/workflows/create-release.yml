@@ -4,18 +4,17 @@ on:
   push:
     tags:
       - v[0-9]+.[0-9]+.[0-9]+
-  workflow_dispatch:
 
 jobs:
   create-release:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
+      - name: "Checkout Code"
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
       
-      - name: Get previous tag
+      - name: "🏷 Get previous tag"
         id: previousTag
         run: |
           name=$(git --no-pager tag --sort=creatordate --merged ${{ github.ref_name }} | tail -2 | head -1)
@@ -27,8 +26,8 @@ jobs:
         id: changelog
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          fromTag: ${{ github.ref_name }}
-          toTag: ${{ env.previousTag }}
+          fromTag: ${{ env.previousTag }}
+          toTag: ${{ github.ref_name }}
           includeInvalidCommits: true
           writeToFile: false
           excludeTypes: ""
