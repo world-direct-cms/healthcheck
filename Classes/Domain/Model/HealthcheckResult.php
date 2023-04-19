@@ -77,7 +77,10 @@ class HealthcheckResult
 
     /**
      * Update the overall status of the Healthcheck.
-     * Depending on the Status of each probe. If there
+     * Depending on the Status of each probe and if the
+     * probe is paused or not.
+     * If the probe is paused, the status of it does not 
+     * affect the overall HealthcheckResult status.
      *
      * @return void
      */
@@ -86,9 +89,13 @@ class HealthcheckResult
         foreach ($this->probes as $probeItem) {
             /** @var ProbeBase $probe */
             $probe = $probeItem;
-            if ($probe->getResult()->getStatus() == Status::ERROR) {
-                $this->status = Status::ERROR;
-                break;
+
+            // Check if the probe is not paused.
+            if (!$probe->isPaused()) {
+                if ($probe->getResult()->getStatus() == Status::ERROR) {
+                    $this->status = Status::ERROR;
+                    break;
+                }
             }
         }
     }

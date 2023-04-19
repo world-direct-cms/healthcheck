@@ -30,7 +30,8 @@
                     \TYPO3\CMS\Saltedpasswords\Salt\SaltFactory,
                     \TYPO3\CMS\Core\Core\Environment,
                     Environment,
-                    \WorldDirect\Buildinfo\Utility\BasicUtility
+                    \WorldDirect\Healthcheck\Utility\BasicUtility,
+                    \WorldDirect\Healthcheck\Domain\Repository\ProbePauseRepository
                 </value>
             </property>
         </properties>

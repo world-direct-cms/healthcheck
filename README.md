@@ -21,8 +21,9 @@ Version: 0.7.3
 - [Customization](#customization)
   - [Add custom probes](#add-custom-probes)
   - [Add custom outputs](#add-custom-outputs)
+- [Pausing a probe](#pausing-a-probe)
 - [Inspiration](#inspiration)
-- [Used resources](#used-resources)
+- [Credits](#credits)
 
 ## What does it do?
 The TYPO3 extension **"healthcheck"** provides various outputs, each showing healthcheck informations for the current TYPO3 installation. To do so, the extension runs various probes. According to each single probe result (Success or Error) an overall Healthcheck result is generated. The healthcheck output may be used by a variety of monitoring software like **PRTG**. 
@@ -109,12 +110,17 @@ TODO: Explain BaseClass
 TODO: Explain Interface
 TODO: Explain BaseClass
 
+## Pausing a probe
+A failing probe results in the Healthcheck returning a non 200 http status code, in order to represent a error. In order to buy some time to fix the issue regarding the failed probe, you can pause a Probe. 
+TODO: Explain concept of pausing probes.
+
 ## Inspiration
 
 This extension was inspired by the GitHub Gist of **Axel Seemann** (aseemann). For details on the Gist see here: [healthcheck.php](https://gist.github.com/aseemann/42041fccb784cf472349a7af9748fe9b). Also did I take some ideas from the extension **t3monitoring_client** from **Ringer Georg**. For details on this extension see here: [t3monitoring_client](https://github.com/georgringer/t3monitoring_client).
-## Used resources
-
+## Credits
 The credit for the images goes to:
 - success.png: <a href="https://www.flaticon.com/free-icons/tick" title="tick icons">Tick icons created by kliwir art - Flaticon</a>
 - danger.png: <a href="https://www.flaticon.com/free-icons/error" title="error icons">Error icons created by Ilham Fitrotul Hayat - Flaticon</a>
 - health-report.png: <a href="https://www.flaticon.com/free-icons/medical-record" title="medical record icons">Medical record icons created by Freepik - Flaticon</a>
+- tx_healthcheck_domain_model_probe_pause.png and pause.png: <a href="https://www.flaticon.com/free-icons/pause" title="pause icons">Pause icons created by Kiranshastry - Flaticon</a>
+- play.png: <a href="https://www.flaticon.com/free-icons/play" title="play icons">Play icons created by Freepik - Flaticon</a>

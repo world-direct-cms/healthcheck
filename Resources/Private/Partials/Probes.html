@@ -2,12 +2,15 @@
     <div class="col">
         <div class="accordion" id="probes-accordion">
             <f:for each="{result.probes}" as="probe" iteration="i">
+
+                <f:comment><!-- Get background class variable --></f:comment>
                 <f:variable name="bgClass"><f:spaceless>
                     <f:if condition="{probe.result.status.name} == 'SUCCESS'">
                         <f:then>success</f:then>
                         <f:else>danger</f:else>
                     </f:if>
                 </f:spaceless></f:variable>
+
                 <!-- Single probe -->
                 <div class="accordion-item">
                     <!-- Item header -->
@@ -18,6 +21,16 @@
                                     <f:render partial="StatusIcon" arguments="{status: probe.result.status, margin: 'e', size: '24'}" />
                                     {probe.title}
                                 </span>
+                                <f:if condition="{probe.paused}">
+                                    <f:then>
+                                        <f:render partial="Paused" arguments="{probeClass: probe.fqcn}" />
+                                        <f:render partial="Playing" arguments="{probeClass: probe.fqcn, displayClass: 'd-none'}" />
+                                    </f:then>
+                                    <f:else>
+                                        <f:render partial="Paused" arguments="{probeClass: probe.fqcn, displayClass: 'd-none'}" />
+                                        <f:render partial="Playing" arguments="{probeClass: probe.fqcn}" />
+                                    </f:else>
+                                </f:if>
                                 <span>
                                     <f:render partial="Duration" arguments="{duration: probe.result.duration}" />
                                 </span>

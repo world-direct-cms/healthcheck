@@ -11,8 +11,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>EXT:healthcheck</title>
+        <base href="/" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
         <style>
             /* Cairo Font */
             @font-face {
@@ -38,6 +40,69 @@
                 box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
             }
         </style>
+        <script>
+            // Wait for the document to load
+            document.addEventListener('DOMContentLoaded', function() {
+                
+                // Add event listener to play buttons
+                document.querySelectorAll('.play').forEach(item => {
+                    item.addEventListener('click', event => {
+                        // PLAY ACTION
+                        // Ajax call to pause middleware using "pathSegment-play"
+                        playProbe(item, item.dataset.class);
+
+                        // Reload window
+                    });
+                });
+
+                // Add event listener to pause buttons
+                document.querySelectorAll('.pause').forEach(item => {
+                    item.addEventListener('click', event => {
+                        // PAUSE ACTION
+                        // Ajax call to pause middleware using "pathSegment-pause"
+                        pauseProbe(item, item.dataset.class);
+
+                        // Reload window
+                    });
+                });
+            });
+
+            /**
+             * Pause the probe for the given className
+             * 
+             * @param clickElement The pause element clicked on
+             * @param className The FQCN to pause
+             * 
+             * @return void
+             */
+            function pauseProbe(clickElement, className) {
+
+                // Make ajax call
+                var data = {
+                    className: className
+                };
+                $.ajax({
+                    method: "GET",
+                    url: "/healthcheck-pause/this-is-a-secret/",
+                    data: data
+                })
+                    .done(function(response) {
+                        console.log("done");
+                    })
+                    .fail(function(jqXhr, textStatus) {
+                        console.log(textStatus);
+                    });
+
+                // In success return of ajax call, hide pause and show play
+                console.log(clickElement);
+                console.log(className);
+            }
+
+            function playProbe(clickElement, className) {
+
+            }
+
+        </script>
     </head>
     <body>
         <div class="container mt-5 p-3 pb-0 bg-white">
