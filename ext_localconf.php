@@ -6,6 +6,7 @@ defined('TYPO3') || die('Access denied.');
 $GLOBALS['TYPO3_CONF_VARS']['EXT']['healthcheck']['probe'][] = \WorldDirect\Healthcheck\Probe\DatabaseProbe::class;
 $GLOBALS['TYPO3_CONF_VARS']['EXT']['healthcheck']['probe'][] = \WorldDirect\Healthcheck\Probe\SchedulerProbe::class;
 $GLOBALS['TYPO3_CONF_VARS']['EXT']['healthcheck']['probe'][] = \WorldDirect\Healthcheck\Probe\CacheProbe::class;
+$GLOBALS['TYPO3_CONF_VARS']['EXT']['healthcheck']['probe'][] = \WorldDirect\Healthcheck\Probe\ExternalImportProbe::class;
 
 // Set outputs
 $GLOBALS['TYPO3_CONF_VARS']['EXT']['healthcheck']['output'][] = \WorldDirect\Healthcheck\Output\HtmlOutput::class;

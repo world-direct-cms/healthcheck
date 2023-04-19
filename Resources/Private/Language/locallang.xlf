@@ -75,6 +75,18 @@
                 <source><![CDATA[The cache configuration named <span class="badge bg-primary">%s</span> is NOT writeable.]]></source>
             </trans-unit>
 
+            <!-- External Import -->
+            <trans-unit id="probe.externalimport.success">
+                <source><![CDATA[The latest ExternalImport log entry with the configuration <span class="badge bg-primary">%s</span> and the message "%s" was a success.]]></source>
+            </trans-unit>
+            <trans-unit id="probe.externalimport.error">
+                <source><![CDATA[The latest ExternalImport log entry with the configuration <span class="badge bg-primary">%s</span> and the message "%s" was a warning/error.]]></source>
+            </trans-unit>
+            <trans-unit id="probe.externalimport.error.database">
+                <source>There was an error while trying to fetch the ExternalImport log entries from the database.</source>
+            </trans-unit>
+
+
             <!-- ############################################################### -->
             <!-- OUTPUTS -->
 
