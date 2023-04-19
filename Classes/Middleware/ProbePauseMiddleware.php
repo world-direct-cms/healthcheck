@@ -50,6 +50,7 @@ class ProbePauseMiddleware implements MiddlewareInterface
      * @param RequestHandlerInterface $handler The request handler
      *
      * @return ResponseInterface The response
+     * @SuppressWarnings(PHPMD.IfStatementAssignment)
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -73,7 +74,6 @@ class ProbePauseMiddleware implements MiddlewareInterface
             // Play:  Delete entry for probePause
 
             \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($request);
-            exit;
         }
 
         return $handler->handle($request);
