@@ -1,8 +1,6 @@
 <!-- omit in toc -->
 # TYPO3 extension: "healthcheck"
 
-Version: 0.7.3
-
 <!-- omit in toc -->
 ## Content
 - [What does it do?](#what-does-it-do)
