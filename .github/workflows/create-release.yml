@@ -26,8 +26,10 @@ jobs:
         id: changelog
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          fromTag: ${{ env.previousTag }}
-          toTag: ${{ github.ref_name }}
+          # This is the latest (newer) tag
+          fromTag: ${{ github.ref_name }}
+          # This is the older tag
+          toTag: ${{ env.previousTag }}
           includeInvalidCommits: true
           writeToFile: false
           excludeTypes: ""
