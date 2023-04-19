@@ -76,7 +76,7 @@
         "ci:php:stan": [
             ".Build/bin/phpstan analyze -c .phpstan.neon.dist Classes"
         ],
-        "ci:test": [
+        "ci:tests": [
             "@lint",
             "@ci:php:stan",
             "@php:md",
