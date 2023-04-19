@@ -353,8 +353,9 @@ class HealthcheckUtility
 
     /**
      * Return a full url to the healthcheck of the current TYPO3 installation.
-     * 
+     *
      * @return string The healthcheck url
+     * @SuppressWarnings(PHPMD.StaticAccess)
      */
     public function getHealthcheckLink(): string
     {
