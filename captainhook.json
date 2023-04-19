@@ -16,6 +16,9 @@
                     "regex": "/f\\:debug/im",
                     "fileExtensions": ["html"]
                 }
+            },
+            {
+                "action": "composer git:pre-commit"
             }
         ]
     },
