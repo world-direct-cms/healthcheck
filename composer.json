@@ -97,6 +97,9 @@
             "@ts:lint",
             "@yaml:lint"
         ],
+        "loc": [
+            "find Classes -name '*.php' | xargs wc -l"
+        ],
         "php:lint": [
             "find *.php Classes -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l"
         ],
