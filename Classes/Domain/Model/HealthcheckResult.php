@@ -60,7 +60,7 @@ class HealthcheckResult
      *
      * @return void
      */
-    public function addProbe(ProbeInterface $probe)
+    public function addProbe(ProbeInterface $probe): void
     {
         $this->probes[] = $probe;
     }
@@ -79,7 +79,7 @@ class HealthcheckResult
      * Update the overall status of the Healthcheck.
      * Depending on the Status of each probe and if the
      * probe is paused or not.
-     * If the probe is paused, the status of it does not 
+     * If the probe is paused, the status of it does not
      * affect the overall HealthcheckResult status.
      *
      * @return void
