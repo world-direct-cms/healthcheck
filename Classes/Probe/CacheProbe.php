@@ -33,6 +33,11 @@ use WorldDirect\Healthcheck\Utility\HealthcheckUtility;
 class CacheProbe extends ProbeBase implements ProbeInterface
 {
     /**
+     * Constant holding the null backend class name to compare.
+     */
+    const NULL_BACKEND = 'TYPO3\CMS\Core\Cache\Backend\NullBackend';
+
+    /**
      * This probe should be disabled on systems running the
      * TYPO3_CONTEXT "Development". This because, the development
      * systems often have disabled caching configurations. Therefore
@@ -42,9 +47,9 @@ class CacheProbe extends ProbeBase implements ProbeInterface
      */
     public function useProbe(): bool
     {
-        if (Environment::getContext() == 'Development') {
-            return false;
-        }
+        // if (Environment::getContext() == 'Development') {
+        //     return false;
+        // }
         return true;
     }
 
@@ -69,22 +74,27 @@ class CacheProbe extends ProbeBase implements ProbeInterface
             $cacheManager->setCacheConfigurations($cacheConfigs);
             $cacheKey = md5(microtime() . '.healthcheck');
 
-            foreach ($cacheConfigs as $id => $cacheConfig) {
-                $cache = $cacheManager->getCache($id);
-                $cache->set($cacheKey, 'healthcheck');
+            // TODO: Check for backend of frontend cache, NullBackend
 
-                // Check if the cache contains the cacheKey
-                if ($cache->has($cacheKey)) {
-                    $cache->remove($cacheKey);
-                    // Success message
-                    $this->result->addSuccessMessage(
-                        sprintf($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.cache.success'), $id)
-                    );
-                } else {
-                    // Error message
-                    $this->result->addErrorMessage(
-                        sprintf($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.cache.error.notWriteable'), $id)
-                    );
+            foreach ($cacheConfigs as $id => $cacheConfig) {
+                if ($this->checkForNullBackend($cacheConfig)) {
+                    $cache = $cacheManager->getCache($id);
+
+                    $cache->set($cacheKey, 'healthcheck');
+
+                    // Check if the cache contains the cacheKey
+                    if ($cache->has($cacheKey)) {
+                        $cache->remove($cacheKey);
+                        // Success message
+                        $this->result->addSuccessMessage(
+                            sprintf($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.cache.success'), $id)
+                        );
+                    } else {
+                        // Error message
+                        $this->result->addErrorMessage(
+                            sprintf($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.cache.error.notWriteable'), $id)
+                        );
+                    }
                 }
             }
         } catch(\Throwable $throwable) {
@@ -96,5 +106,26 @@ class CacheProbe extends ProbeBase implements ProbeInterface
 
         // Stop the probe
         parent::stop();
+    }
+
+    /**
+     * Function checks if the cache configuration of 'frontend' or 'backend'
+     * contains the NULL BACKEND class name. If it does, the cache configuration
+     * cannet be tested for writing, as this would not work. Therefore "false"
+     * is returned.
+     *
+     * @param array $cacheConfig The cache Configuration array
+     *
+     * @return bool Wheter the cacheConfig array contains a NULL BACKEND in frontend or backend configuration.
+     */
+    private function checkForNullBackend(array $cacheConfig): bool
+    {
+        $parts = ['frontend', 'backend'];
+        foreach ($parts as $part) {
+            if ($cacheConfig[$part] == self::NULL_BACKEND) {
+                return false;
+            }
+        }
+        return true;
     }
 }
