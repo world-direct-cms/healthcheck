@@ -114,7 +114,7 @@ class CacheProbe extends ProbeBase implements ProbeInterface
      * cannet be tested for writing, as this would not work. Therefore "false"
      * is returned.
      *
-     * @param array $cacheConfig The cache Configuration array
+     * @param array<mixed> $cacheConfig The cache Configuration array
      *
      * @return bool Wheter the cacheConfig array contains a NULL BACKEND in frontend or backend configuration.
      */
