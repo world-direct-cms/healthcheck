@@ -93,8 +93,14 @@ class SchedulerProbe extends ProbeBase implements ProbeInterface
                             strval($task['description'])
                         )
                     );
-                    //$this->result->addSuccessMessage(sprintf($this->langService->sL(HealthCheckUtility::LANG_PREFIX . 'probe.scheduler.error.executionSuccess'), $task['uid']);
                 }
+            }
+
+            // Add success message if there are no tasks configured at all
+            if (sizeof($tasks) == 0) {
+                $this->result->addSuccessMessage(
+                    $this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.scheduler.notasks')
+                );
             }
         } catch(\Throwable $throwable) {
             // Handle no connection error
