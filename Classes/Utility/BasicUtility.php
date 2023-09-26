@@ -2,7 +2,6 @@
 
 namespace WorldDirect\Healthcheck\Utility;
 
-use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
@@ -35,12 +34,9 @@ class BasicUtility
         // There is a backend user context, then return his language
         if (isset($GLOBALS['BE_USER'])) {
             return $langFactory->createFromUserPreferences($GLOBALS['BE_USER']);
+        } else {
+            return $langFactory->create('de-DE');
         }
-
-        // Otherwise return a new LanguageService
-        /** @var LanguageService */
-        $langService = GeneralUtility::makeInstance(LanguageService::class);
-        return $langService;
     }
 
     /**
