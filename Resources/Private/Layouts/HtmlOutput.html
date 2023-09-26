@@ -1,5 +1,5 @@
 <f:variable name="outputHtmlBackgroundimage"><f:spaceless>
-    <f:uri.image src="{tsConfig.outputHtmlBackgroundimage}" />
+    <f:uri.resource  path="{tsConfig.outputHtmlBackgroundimage}" />
 </f:spaceless></f:variable>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +31,7 @@
             }
             body {
                 /* Background image */
-                background: url("/typo3conf/ext/healthcheck/Resources/Public/Images/background.png") center center / cover no-repeat fixed rgb(36, 36, 36);
+                background: url("<f:format.raw>{outputHtmlBackgroundimage}</f:format.raw>") center center / cover no-repeat fixed rgb(36, 36, 36);
                 min-height: 100vh;
                 font-family: Cairo;
             }
@@ -93,6 +93,7 @@
     </head>
     <body>
         <div class="container mt-5 p-3 pb-0 bg-white">
+            
             <f:render section="main" />
         </div>
     </body>
