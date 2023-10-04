@@ -2,6 +2,11 @@
 <f:variable name="bootstrap-css"><f:uri.resource path="EXT:healthcheck/Resources/Public/Contrib/bootstrap5/bootstrap-5.3.0.min.css" /></f:variable>
 <f:variable name="bootstrap-js"><f:uri.resource path="EXT:healthcheck/Resources/Public/Contrib/bootstrap5/bootstrap-5.3.0.bundle.min.js" /></f:variable>
 <f:variable name="jquery-js"><f:uri.resource path="EXT:healthcheck/Resources/Public/Contrib/jquery3/jquery-3.6.4.min.js" /></f:variable>
+<f:variable name="cairo-eot"><f:uri.resource path="EXT:healthcheck/Resources/Public/Fonts/cairo-v26-latin-regular.eot" /></f:variable>
+<f:variable name="cairo-woff2"><f:uri.resource path="EXT:healthcheck/Resources/Public/Fonts/cairo-v26-latin-regular.woff2" /></f:variable>
+<f:variable name="cairo-woff"><f:uri.resource path="EXT:healthcheck/Resources/Public/Fonts/cairo-v26-latin-regular.woff" /></f:variable>
+<f:variable name="cairo-ttf"><f:uri.resource path="EXT:healthcheck/Resources/Public/Fonts/cairo-v26-latin-regular.ttf" /></f:variable>
+<f:variable name="cairo-svg"><f:uri.resource path="EXT:healthcheck/Resources/Public/Fonts/cairo-v26-latin-regular.svg" /></f:variable>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -25,12 +30,12 @@
                 font-family: 'Cairo';
                 font-style: normal;
                 font-weight: 400;
-                src: url('/typo3conf/ext/healthcheck/Resources/Public/Fonts/cairo-v26-latin-regular.eot'); /* IE9 Compat Modes */
-                src: url('/typo3conf/ext/healthcheck/Resources/Public/Fonts/cairo-v26-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-                    url('/typo3conf/ext/healthcheck/Resources/Public/Fonts/cairo-v26-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
-                    url('/typo3conf/ext/healthcheck/Resources/Public/Fonts/cairo-v26-latin-regular.woff') format('woff'), /* Modern Browsers */
-                    url('/typo3conf/ext/healthcheck/Resources/Public/Fonts/cairo-v26-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
-                    url('/typo3conf/ext/healthcheck/Resources/Public/Fonts/cairo-v26-latin-regular.svg#Cairo') format('svg'); /* Legacy iOS */
+                src: url('<f:format.raw>{cairo-eot}</f:format.raw>'); /* IE9 Compat Modes */
+                src: url('<f:format.raw>{cairo-eot}</f:format.raw>?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+                    url('<f:format.raw>{cairo-woff2}</f:format.raw>') format('woff2'), /* Super Modern Browsers */
+                    url('<f:format.raw>{cairo-woff}</f:format.raw>') format('woff'), /* Modern Browsers */
+                    url('<f:format.raw>{cairo-ttf}</f:format.raw>') format('truetype'), /* Safari, Android, iOS */
+                    url('<f:format.raw>{cairo-svg}</f:format.raw>#Cairo') format('svg'); /* Legacy iOS */
             }
             body {
                 /* Background image */
