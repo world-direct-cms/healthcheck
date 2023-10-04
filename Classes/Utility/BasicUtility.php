@@ -37,6 +37,11 @@ class BasicUtility
         } else {
             return $langFactory->create('de-DE');
         }
+
+        // Otherwise return a new LanguageService
+        /** @var LanguageService */
+        $langService = $langFactory->create('de-DE');
+        return $langService;
     }
 
     /**
@@ -60,7 +65,7 @@ class BasicUtility
     /**
      * Function returns the current domain and protocol as contained
      * in the $_SERVER variable.
-     * 
+     *
      * @return string The current domain (e.g. "https://www.google.com/")
      */
     public static function getCurrentDomain(): string
