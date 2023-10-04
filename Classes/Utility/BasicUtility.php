@@ -39,7 +39,7 @@ class BasicUtility
 
         // Otherwise return a new LanguageService
         /** @var LanguageService */
-        $langService = GeneralUtility::makeInstance(LanguageService::class);
+        $langService = $langFactory->create('de-DE');
         return $langService;
     }
 
