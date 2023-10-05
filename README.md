@@ -5,6 +5,7 @@
 ## Content
 - [What does it do?](#what-does-it-do)
 - [Installation](#installation)
+- [Versions and branches](#versions-and-branches)
 - [Accessing the healthcheck](#accessing-the-healthcheck)
 - [Returned HTTP status code](#returned-http-status-code)
 - [Configuration](#configuration)
@@ -35,6 +36,11 @@ The extension is installable using Composer:
 composer req worlddirect/healthcheck
 ```
 > **ATTENTION:** You need to configure the **"secret"** in order for the healthcheck to work. See [Extension configuration](#extension-configuration) for details.
+
+## Versions and branches
+The `master` branch contains the latest version comnpatible with TYPO3 V11 and TYPO3 V12. There is a `feature-v10` branch, which contains a backport of the extension to be comnpatible with TYPO3 V10. It misses some configuration options and new features of PHP (like Enums). It was made quick and dirty, just to have a healthcheck for older TYPO3 V10 installations as well. There will not be any updates to this branch, after upgrading all projects to v11 or v12 or ...
+
+The TYPO3 V10 version will be a "0.xx.xx". The current versions for TYPO3 V11 and V12 have the version numbering "1.xx.xx".
 
 ## Accessing the healthcheck
 The **Healthcheck** uses a Middleware to render the output. In order for the Middleware to know that a possible healthcheck needs to be rendered, we use the extension configuration settings **pathSegment** and **secret** (as well as the output type).
