@@ -63,13 +63,6 @@ class HealthcheckConfiguration
     protected $enableDebug = 0;
 
     /**
-     * Whether to show the EXT:buildinfo informations in the healthcheck.
-     *
-     * @var int
-     */
-    protected $enableBuildinfo = 0;
-
-    /**
      * Wheter to enable additional information like current IP address, current datetime, ...
      *
      * @var int
@@ -114,9 +107,6 @@ class HealthcheckConfiguration
                 }
                 if (isset($extConf['enableDebug'])) {
                     $this->enableDebug = intval($extConf['enableDebug']);
-                }
-                if (isset($extConf['enableBuildinfo'])) {
-                    $this->enableBuildinfo = intval($extConf['enableBuildinfo']);
                 }
                 if (isset($extConf['enableAdditionalInfo'])) {
                     $this->enableAdditionalInfo = intval($extConf['enableAdditionalInfo']);
@@ -175,16 +165,6 @@ class HealthcheckConfiguration
     public function getEnableDebug(): int
     {
         return $this->enableDebug;
-    }
-
-    /**
-     * Return whether the buildinfo extension information is enabled or not.
-     *
-     * @return int Buildinfo extension info enabled?
-     */
-    public function getEnableBuildinfo(): int
-    {
-        return $this->enableBuildinfo;
     }
 
     /**

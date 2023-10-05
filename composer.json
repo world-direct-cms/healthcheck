@@ -6,7 +6,6 @@
     "keywords": [
         "healthcheck",
         "probes",
-        "buildinfo",
         "monitoring",
         "outputs"
     ],
@@ -36,8 +35,7 @@
         "phpmd/phpmd": "^2.13",
         "phpstan/phpstan": "^1.10",
         "saschaegerer/phpstan-typo3": "^1.8",
-        "seld/jsonlint": "^1.9",
-        "worlddirect/buildinfo": "^1.1"
+        "seld/jsonlint": "^1.9"
     },
     "replace": {
         "typo3-ter/healthcheck": "self.version"

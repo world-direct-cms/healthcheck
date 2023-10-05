@@ -1,19 +1,6 @@
 <div class="row mt-3 py-2">
     <div class="col">
         <p class="text-end">
-            <f:if condition="{extConfig.enableBuildinfo}">
-                <f:spaceless>
-                <f:if condition="{buildNumber}">
-                    <span class="badge bg-secondary me-3">Build Nr. {buildNumber}</span>
-                </f:if>
-                <f:if condition="{buildTimestamp}">
-                    <span class="badge bg-secondary me-3">Build timestamp: {buildTimestamp}</span>
-                </f:if>
-                <f:if condition="{gitVersion}">
-                    <span class="badge bg-secondary me-3">Git version: {gitVersion}</span>
-                </f:if>
-                </f:spaceless>
-            </f:if>
             <f:if condition="{extConfig.enableAdditionalInfo}">
                 <span class="badge bg-info text-dark me-3">Current date: {datetime}</span>
                 <span class="badge bg-info text-dark me-3">IP: {ip}</span>
