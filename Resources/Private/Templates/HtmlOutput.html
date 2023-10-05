@@ -1,6 +1,6 @@
 <f:layout name="HtmlOutput" />
 <f:section name="main">
-    <f:render partial="Header" arguments="{result: result, sitename: sitename}" />
+    <f:render partial="Header" arguments="{result: result, sitename: sitename, tsConfig: tsConfig}" />
     <f:render partial="Probes" arguments="{result: result}" />
     <f:render partial="Footer" arguments="{_all}" />
 </f:section>
