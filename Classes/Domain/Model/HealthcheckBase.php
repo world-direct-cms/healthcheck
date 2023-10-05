@@ -3,7 +3,6 @@
 namespace WorldDirect\Healthcheck\Domain\Model;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use WorldDirect\Healthcheck\Domain\Model\TypoScriptConfiguration;
 use WorldDirect\Healthcheck\Domain\Model\HealthcheckConfiguration;
 
 /*
@@ -29,28 +28,11 @@ use WorldDirect\Healthcheck\Domain\Model\HealthcheckConfiguration;
 class HealthcheckBase
 {
     /**
-     * The typoscript configuration
-     *
-     * @var TypoScriptConfiguration
-     */
-    protected $tsConfig;
-
-    /**
      * The extension configuration
      *
      * @var HealthcheckConfiguration
      */
     protected $extConf;
-
-    /**
-     * Get the Settings object.
-     *
-     * @return TypoScriptConfiguration The TypoScript configuration object
-     */
-    public function getTypoScriptConfiguration(): TypoScriptConfiguration
-    {
-        return $this->tsConfig;
-    }
 
     /**
      * Return the healthcheck extension configuration.
@@ -69,7 +51,6 @@ class HealthcheckBase
      */
     public function __construct()
     {
-        $this->tsConfig = GeneralUtility::makeInstance(TypoScriptConfiguration::class);
         $this->extConf = GeneralUtility::makeInstance(HealthcheckConfiguration::class);
     }
 }
