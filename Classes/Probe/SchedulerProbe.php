@@ -78,30 +78,30 @@ class SchedulerProbe extends ProbeBase implements ProbeInterface
             }
 
             // Step through all tasks and check if they have "lastexecution_failure" set
-            foreach ($tasks as $task) {
-                if (isset($task['lastexecution_failure']) && $task['lastexecution_failure'] != '') {
-                    // Error message
-                    $this->result->addErrorMessage(
-                        sprintf(
-                            $this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.scheduler.error.executionFailure'),
-                            strval($task['uid']),
-                            strval($task['description'])
-                        )
-                    );
-                } else {
-                    // Success message
-                    $this->result->addSuccessMessage(
-                        sprintf(
-                            $this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.scheduler.success'),
-                            strval($task['uid']),
-                            strval($task['description'])
-                        )
-                    );
+            if (is_array($tasks)) {
+                foreach ($tasks as $task) {
+                    if (isset($task['lastexecution_failure']) && $task['lastexecution_failure'] != '') {
+                        // Error message
+                        $this->result->addErrorMessage(
+                            sprintf(
+                                $this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.scheduler.error.executionFailure'),
+                                strval($task['uid']),
+                                strval($task['description'])
+                            )
+                        );
+                    } else {
+                        // Success message
+                        $this->result->addSuccessMessage(
+                            sprintf(
+                                $this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.scheduler.success'),
+                                strval($task['uid']),
+                                strval($task['description'])
+                            )
+                        );
+                    }
                 }
-            }
-
-            // Add success message if there are no tasks configured at all
-            if (sizeof($tasks) == 0) {
+            } else {
+                // Add success message if there are no tasks configured at all
                 $this->result->addSuccessMessage(
                     $this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.scheduler.notasks')
                 );
