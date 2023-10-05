@@ -2,6 +2,7 @@
 
 namespace WorldDirect\Healthcheck\Probe;
 
+use Doctrine\DBAL\ForwardCompatibility\Result;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use WorldDirect\Healthcheck\Probe\ProbeBase;
@@ -70,8 +71,11 @@ class SchedulerProbe extends ProbeBase implements ProbeInterface
                     $queryBuilder->expr()->eq('disable', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)),
                     $queryBuilder->expr()->eq('deleted', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT))
                 )
-                ->executeQuery()
-                ->fetchAllAssociative();
+                ->execute();
+
+            if ($tasks instanceof Result) {
+                $tasks = $tasks->fetchAllAssociative();
+            }
 
             // Step through all tasks and check if they have "lastexecution_failure" set
             foreach ($tasks as $task) {
