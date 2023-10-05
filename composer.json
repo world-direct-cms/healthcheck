@@ -23,7 +23,7 @@
         "source": "https://github.com/world-direct/healthcheck/"
     },
     "require": {
-        "php": "^8.1",
+        "php": "^7.4",
         "typo3/cms-core": "^10.4",
         "typo3/cms-fluid": "^10.4"
     },
