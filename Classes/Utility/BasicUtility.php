@@ -37,11 +37,6 @@ class BasicUtility
         } else {
             return $langFactory->create('de-DE');
         }
-
-        // Otherwise return a new LanguageService
-        /** @var LanguageService */
-        $langService = $langFactory->create('de-DE');
-        return $langService;
     }
 
     /**
