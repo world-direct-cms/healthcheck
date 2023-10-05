@@ -4,7 +4,6 @@ namespace WorldDirect\Healthcheck\Domain\Model;
 
 use TYPO3\CMS\T3editor\T3editor;
 use WorldDirect\Healthcheck\Probe\ProbeBase;
-use WorldDirect\Healthcheck\Domain\Model\Status;
 use WorldDirect\Healthcheck\Probe\ProbeInterface;
 
 /*
@@ -33,9 +32,9 @@ class HealthcheckResult
     /**
      * The overall status of the HealthcheckResult.
      *
-     * @var Status
+     * @var string
      */
-    protected $status = Status::SUCCESS;
+    protected $status = "SUCCESS";
     /**
      * Array holding all Probes.
      *
@@ -46,9 +45,9 @@ class HealthcheckResult
     /**
      * Returns the current status.
      *
-     * @return Status
+     * @return string
      */
-    public function getStatus(): Status
+    public function getStatus(): string
     {
         return $this->status;
     }
@@ -92,8 +91,8 @@ class HealthcheckResult
 
             // Check if the probe is not paused.
             if (!$probe->isPaused()) {
-                if ($probe->getResult()->getStatus() == Status::ERROR) {
-                    $this->status = Status::ERROR;
+                if ($probe->getResult()->getStatus() == "ERROR") {
+                    $this->status = "ERROR";
                     break;
                 }
             }

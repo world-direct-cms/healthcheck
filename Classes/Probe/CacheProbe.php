@@ -6,7 +6,6 @@ use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use WorldDirect\Healthcheck\Probe\ProbeBase;
-use WorldDirect\Healthcheck\Domain\Model\Status;
 use WorldDirect\Healthcheck\Probe\ProbeInterface;
 use WorldDirect\Healthcheck\Domain\Model\ProbeResult;
 use WorldDirect\Healthcheck\Utility\HealthcheckUtility;

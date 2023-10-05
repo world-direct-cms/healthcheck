@@ -5,7 +5,7 @@
 
                 <f:comment><!-- Get background class variable --></f:comment>
                 <f:variable name="bgClass"><f:spaceless>
-                    <f:if condition="{probe.result.status.name} == 'SUCCESS'">
+                    <f:if condition="{probe.result.status} == 'SUCCESS'">
                         <f:then>success</f:then>
                         <f:else>danger</f:else>
                     </f:if>

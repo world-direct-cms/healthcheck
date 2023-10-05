@@ -9,7 +9,6 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Localization\LanguageService;
-use WorldDirect\Healthcheck\Domain\Model\Status;
 use WorldDirect\Healthcheck\Probe\ProbeInterface;
 use WorldDirect\Healthcheck\Utility\BasicUtility;
 use WorldDirect\Healthcheck\Output\OutputInterface;
@@ -277,7 +276,7 @@ class HealthcheckUtility
 
         // Set the http status return code
         $httpStatus = self::SUCCESS_RESPONSE_HTTP_STATUS;
-        if ($result->getStatus() == Status::ERROR) {
+        if ($result->getStatus() == 'ERROR') {
             $httpStatus = self::ERROR_RESPONSE_HTTP_STATUS;
         }
 

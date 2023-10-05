@@ -4,7 +4,6 @@ namespace WorldDirect\Healthcheck\Domain\Model;
 
 use InvalidArgumentException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use WorldDirect\Healthcheck\Domain\Model\Status;
 use WorldDirect\Healthcheck\Domain\Model\ProbeResultMessage;
 
 /*
@@ -35,9 +34,9 @@ class ProbeResult
      * The overall status of the probe.
      * Default set to success, as long as an error occurs.
      *
-     * @var Status
+     * @var string
      */
-    protected $status = Status::SUCCESS;
+    protected $status = "SUCCESS";
 
     /**
      * The probe starttime.
@@ -70,9 +69,9 @@ class ProbeResult
     /**
      * Get the ProbeResult status.
      *
-     * @return Status
+     * @return string
      */
-    public function getStatus(): Status
+    public function getStatus(): string
     {
         return $this->status;
     }
@@ -133,7 +132,7 @@ class ProbeResult
     {
         /** @var ProbeResultMessage $probeResultMessage */
         $probeResultMessage = GeneralUtility::makeInstance(ProbeResultMessage::class);
-        $probeResultMessage->setStatus(Status::SUCCESS);
+        $probeResultMessage->setStatus("SUCCESS");
         $probeResultMessage->setMessage($message);
 
         $this->messages[] = $probeResultMessage;
@@ -151,7 +150,7 @@ class ProbeResult
         // Create a new ProbeResultMessage to set the error and message to
         /** @var ProbeResultMessage $probeResultMessage */
         $probeResultMessage = GeneralUtility::makeInstance(ProbeResultMessage::class);
-        $probeResultMessage->setStatus(Status::ERROR);
+        $probeResultMessage->setStatus("ERROR");
         $probeResultMessage->setMessage($message);
 
         // Add error message to messages
@@ -159,6 +158,6 @@ class ProbeResult
 
         // Set the ProbeResult status
         // As soon as a single error message gets set, the overall probe status is set to error.
-        $this->status = Status::ERROR;
+        $this->status = "ERROR";
     }
 }

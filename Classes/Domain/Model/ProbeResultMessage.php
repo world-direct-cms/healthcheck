@@ -2,8 +2,6 @@
 
 namespace WorldDirect\Healthcheck\Domain\Model;
 
-use WorldDirect\Healthcheck\Domain\Model\Status;
-
 /*
  * This file is part of the TYPO3 extension "worlddirect/healthcheck".
  *
@@ -28,7 +26,7 @@ class ProbeResultMessage
     /**
      * The status of the error message.
      *
-     * @var Status
+     * @var string
      */
     protected $status;
 
@@ -42,9 +40,9 @@ class ProbeResultMessage
     /**
      * Get the status of the error message.
      *
-     * @return Status
+     * @return string
      */
-    public function getStatus(): Status
+    public function getStatus(): string
     {
         return $this->status;
     }
@@ -52,11 +50,11 @@ class ProbeResultMessage
     /**
      * Set the status of the error message.
      *
-     * @param Status $status The status of the error message.
+     * @param string $status The status of the error message.
      *
      * @return void
      */
-    public function setStatus(Status $status): void
+    public function setStatus(string $status): void
     {
         $this->status = $status;
     }

@@ -10,7 +10,6 @@ use WorldDirect\Healthcheck\Probe\ProbeInterface;
 use WorldDirect\Healthcheck\Utility\BasicUtility;
 use WorldDirect\Healthcheck\Domain\Model\ProbeResult;
 use WorldDirect\Healthcheck\Utility\HealthcheckUtility;
-use WorldDirect\Healthcheck\Domain\Model\Status;
 
 /*
  * This file is part of the TYPO3 extension "worlddirect/healthcheck".
