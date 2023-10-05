@@ -5,6 +5,7 @@ namespace WorldDirect\Healthcheck\Domain\Repository;
 use Doctrine\DBAL\Exception;
 use InvalidArgumentException;
 use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Driver\Result;
 use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
 use TYPO3\CMS\Core\Http\ResponseFactory;
@@ -89,8 +90,13 @@ class ProbePauseRepository
             ->where(
                 $queryBuilder->expr()->eq('class_name', $queryBuilder->createNamedParameter($className, \PDO::PARAM_STR))
             )
-            ->executeQuery()
-            ->fetchAssociative();
+            ->execute();
+
+        if ($result  instanceof Result) {
+            $result = $result->fetchAssociative();
+        } else {
+            return false;
+        }
 
         // Check if result is an array. If so there is a entry in the database.
         // Return "true" for paused.
