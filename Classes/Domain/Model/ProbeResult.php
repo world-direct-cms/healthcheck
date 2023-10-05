@@ -36,7 +36,7 @@ class ProbeResult
      *
      * @var string
      */
-    protected $status = "SUCCESS";
+    protected $status = 'SUCCESS';
 
     /**
      * The probe starttime.
@@ -64,7 +64,7 @@ class ProbeResult
      *
      * @var array<ProbeResultMessage>
      */
-    protected $messages;
+    protected $messages = [];
 
     /**
      * Get the ProbeResult status.
@@ -132,7 +132,7 @@ class ProbeResult
     {
         /** @var ProbeResultMessage $probeResultMessage */
         $probeResultMessage = GeneralUtility::makeInstance(ProbeResultMessage::class);
-        $probeResultMessage->setStatus("SUCCESS");
+        $probeResultMessage->setStatus('SUCCESS');
         $probeResultMessage->setMessage($message);
 
         $this->messages[] = $probeResultMessage;
@@ -150,7 +150,7 @@ class ProbeResult
         // Create a new ProbeResultMessage to set the error and message to
         /** @var ProbeResultMessage $probeResultMessage */
         $probeResultMessage = GeneralUtility::makeInstance(ProbeResultMessage::class);
-        $probeResultMessage->setStatus("ERROR");
+        $probeResultMessage->setStatus('ERROR');
         $probeResultMessage->setMessage($message);
 
         // Add error message to messages
@@ -158,6 +158,6 @@ class ProbeResult
 
         // Set the ProbeResult status
         // As soon as a single error message gets set, the overall probe status is set to error.
-        $this->status = "ERROR";
+        $this->status = 'ERROR';
     }
 }
