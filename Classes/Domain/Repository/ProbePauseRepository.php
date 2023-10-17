@@ -128,7 +128,7 @@ class ProbePauseRepository
                 'pid' => '0',
                 'class_name' => $className
             ])
-            ->executeStatement();
+            ->execute();
 
         // If there was 1 inserted element, return "success", if not return "error".
         if ($insertedRows == 1) {
@@ -156,7 +156,7 @@ class ProbePauseRepository
             ->where(
                 $queryBuilder->expr()->eq('class_name', $queryBuilder->createNamedParameter($className, \PDO::PARAM_STR))
             )
-            ->executeStatement();
+            ->execute();
 
         // If there was at least 1 deleted element, return "success", if not return "error".
         if ($deletedElements > 0) {
