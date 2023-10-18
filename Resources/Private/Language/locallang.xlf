@@ -89,6 +89,14 @@
                 <source>There was an error while trying to fetch the ExternalImport log entries from the database.</source>
             </trans-unit>
 
+            <!-- Samlmetadata -->
+            <trans-unit id="probe.samlmetadata.error">
+                <source><![CDATA[The metadata expiration date is <span class="badge text-bg-danger">%s</span>. This was <span class="badge bg-secondary">%s minutes</span> ago. Tolerance is set to <span class="badge bg-secondary">%s minutes</span>.]]></source>
+            </trans-unit>
+            <trans-unit id="probe.samlmetadata.success">
+                <source><![CDATA[The metadata is still fresh! Expires at <span class="badge bg-primary">%s</span> (this is in in <span class="badge bg-primary">%s minutes</span>). Tolerance is set to <span class="badge bg-secondary">%s minutes</span>.]]></source>
+            </trans-unit>
+
 
             <!-- ############################################################### -->
             <!-- OUTPUTS -->
