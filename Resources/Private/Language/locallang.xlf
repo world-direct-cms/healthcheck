@@ -89,6 +89,17 @@
                 <source>There was an error while trying to fetch the ExternalImport log entries from the database.</source>
             </trans-unit>
 
+            <!-- Solr -->
+            <trans-unit id="probe.solr.error.noDatabase">
+                <source>The database is not accessible. Not possible to fetch Solr index queue items. Maybe check the database credentials?</source>
+            </trans-unit>
+            <trans-unit id="probe.solr.error.maxErrors">
+                <source><![CDATA[There are currently <span class="badge text-bg-danger">%s</span> Solr indexing errors, but only <span class="badge text-bg-warning">%s</span> are allowed!]]></source>
+            </trans-unit>
+            <trans-unit id="probe.solr.success">
+                <source><![CDATA[There are currently <span class="badge text-bg-primary">%s</span> Solr indexing errors, which is less than the allowed <span class="badge text-bg-warning">%s</span>!]]></source>
+            </trans-unit>
+
 
             <!-- ############################################################### -->
             <!-- OUTPUTS -->

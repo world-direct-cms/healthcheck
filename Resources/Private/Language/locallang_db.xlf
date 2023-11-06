@@ -22,6 +22,9 @@
             <trans-unit id="extConf.enableAdditionalInfo.description">
                 <source>Enable additional informations:Like the current IP address, current date, ...</source>
             </trans-unit>
+            <trans-unit id="extConf.probes.solr.maxErrorCount">
+                <source>Maximum allowed solr index queue item error count (if more errors than this, Healthcheck fails)</source
+            ></trans-unit>
 
             <!-- TCA: tx_healthcheck_domain_model_probe_pause -->
             <trans-unit id="tx_healthcheck_domain_model_probe_pause">

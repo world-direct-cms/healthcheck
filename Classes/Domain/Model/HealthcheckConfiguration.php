@@ -77,6 +77,13 @@ class HealthcheckConfiguration
     protected $enableAdditionalInfo = 0;
 
     /**
+     * The configuration for the solr probe. How many index queue errors are tolerated.
+     *
+     * @var int
+     */
+    protected $solrMaxErrorCount = 0;
+
+    /**
      * The probes to check.
      *
      * @var array<string>
@@ -120,6 +127,9 @@ class HealthcheckConfiguration
                 }
                 if (isset($extConf['enableAdditionalInfo'])) {
                     $this->enableAdditionalInfo = intval($extConf['enableAdditionalInfo']);
+                }
+                if (isset($extConf['solrMaxErrorCount'])) {
+                    $this->solrMaxErrorCount = intval($extConf['solrMaxErrorCount']);
                 }
             }
 
@@ -215,5 +225,15 @@ class HealthcheckConfiguration
     public function getOutputs(): array
     {
         return $this->outputs;
+    }
+
+    /**
+     * Returns the configured solr max index queue item error counter.
+     *
+     * @return int Max allowed solr index queue errors
+     */
+    public function getSolrMaxErrorCount(): int
+    {
+        return $this->solrMaxErrorCount;
     }
 }
