@@ -122,7 +122,7 @@ class CacheProbe extends ProbeBase implements ProbeInterface
     {
         $parts = ['frontend', 'backend'];
         foreach ($parts as $part) {
-            if ($cacheConfig[$part] == self::NULL_BACKEND) {
+            if (isset($cacheConfig[$part]) && $cacheConfig[$part] == self::NULL_BACKEND) {
                 return false;
             }
         }
