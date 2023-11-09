@@ -5,9 +5,7 @@ namespace WorldDirect\Healthcheck\Utility;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\ResponseFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use Psr\Http\Message\ServerRequestInterface;
-use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use WorldDirect\Healthcheck\Domain\Model\Status;
 use WorldDirect\Healthcheck\Probe\ProbeInterface;
@@ -334,6 +332,7 @@ class HealthcheckUtility
             return $this->getPartOfRequestTarget($request, 3);
         } catch(\Throwable $throwable) {
             // If there is no third part of the url return a "default" value: html
+            // Or any other exception
             return 'html';
         }
     }
@@ -350,7 +349,11 @@ class HealthcheckUtility
     {
         $target = $request->getRequestTarget();
         $parts = explode('/', $target);
-        return $parts[$number];
+        if (isset($parts[$number])) {
+            return $parts[$number];
+        } else {
+            throw new \RuntimeException('The part ' . $number . ' of the array $parts is not set.');
+        }
     }
 
     /**
