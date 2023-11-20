@@ -77,6 +77,10 @@ class HealthcheckMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
+        // Put the "request" into GLOBALS
+        // This makes it easy to access the request, especially for a middleware
+        $GLOBALS['healthcheck_request'] = $request;
+
         // Check if the pathSegment (route) is relevant for the Healthcheck
         if (str_starts_with($request->getRequestTarget(), '/' . $this->utility->config->getPathSegment() . '/')) {
             // Check for possible "secret" errors
