@@ -347,7 +347,7 @@ class HealthcheckUtility
         if (isset($parts[$number])) {
             return $parts[$number];
         } else {
-            throw new \RuntimeException('The part ' . $number . ' of the array $parts is not set.');
+            return '';
         }
     }
 
