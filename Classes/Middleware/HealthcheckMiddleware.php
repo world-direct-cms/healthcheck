@@ -82,7 +82,7 @@ class HealthcheckMiddleware implements MiddlewareInterface
         $GLOBALS['healthcheck_request'] = $request;
 
         // Check if the pathSegment (route) is relevant for the Healthcheck
-        if (str_starts_with($request->getRequestTarget(), '/' . $this->utility->config->getPathSegment() . '/')) {
+        if (str_starts_with($request->getRequestTarget(), '/' . $this->utility->config->getPathSegment())) {
             // Check for possible "secret" errors
             if ($response = $this->utility->checkSecret($request)) {
                 return $response;
@@ -100,6 +100,9 @@ class HealthcheckMiddleware implements MiddlewareInterface
 
             // Check if there are output formats configured in the url
             $requestedOutput = $this->utility->getOutputFromRequest($request);
+            if (empty($requestedOutput)) {
+                $requestedOutput = "html";
+            }
             if ($response = $this->utility->checkOutputs($requestedOutput)) {
                 return $response;
             }

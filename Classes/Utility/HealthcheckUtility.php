@@ -103,13 +103,8 @@ class HealthcheckUtility
     {
         $errorMessage = '';
 
-        // Check if the secret in the extension configuration is set
-        if (empty($this->config->getSecret()) || strlen($this->config->getSecret()) < 10) {
-            $errorMessage = $this->langService->sL(self::LANG_PREFIX . 'error.secret.isEmpty');
-        }
-
         // Check if the given secret matches the secret in the extension configuration
-        if (empty($errorMessage) && $this->config->getSecret() !== $this->getSecretFromRequest($request)) {
+        if ($this->config->getSecret() !== $this->getSecretFromRequest($request)) {
             $errorMessage = $this->langService->sL(self::LANG_PREFIX . 'error.secret.isFalse');
         }
 
@@ -349,7 +344,11 @@ class HealthcheckUtility
     {
         $target = $request->getRequestTarget();
         $parts = explode('/', $target);
-        return $parts[$number];
+        if (isset($parts[$number])) {
+            return $parts[$number];
+        }
+        return '';
+
     }
 
     /**
