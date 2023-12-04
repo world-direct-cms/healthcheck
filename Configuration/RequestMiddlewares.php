@@ -2,7 +2,7 @@
 
 return [
     'frontend' => [
-        'healthecheck-pause' => [
+        'healthcheck-pause' => [
             'target' => \WorldDirect\Healthcheck\Middleware\ProbePauseMiddleware::class,
             'before' => [
                 'healthcheck'
