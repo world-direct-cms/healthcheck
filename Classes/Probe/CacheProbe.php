@@ -77,23 +77,30 @@ class CacheProbe extends ProbeBase implements ProbeInterface
             // TODO: Check for backend of frontend cache, NullBackend
 
             foreach ($cacheConfigs as $id => $cacheConfig) {
-                if ($this->checkForNullBackend($cacheConfig)) {
-                    $cache = $cacheManager->getCache($id);
+                // Ignore certain caches, as they are not implemented in a way that works
+                // with the CacheManager.
+                // 
+                // autoloader7...Does not work, therefore ignore it (EXT:autoloader)
+                //
+                if (!in_array($id, ['autoloader7'])) {
+                    if ($this->checkForNullBackend($cacheConfig)) {
+                        $cache = $cacheManager->getCache($id);
 
-                    $cache->set($cacheKey, 'healthcheck');
+                        $cache->set($cacheKey, 'healthcheck');
 
-                    // Check if the cache contains the cacheKey
-                    if ($cache->has($cacheKey)) {
-                        $cache->remove($cacheKey);
-                        // Success message
-                        $this->result->addSuccessMessage(
-                            sprintf($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.cache.success'), $id)
-                        );
-                    } else {
-                        // Error message
-                        $this->result->addErrorMessage(
-                            sprintf($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.cache.error.notWriteable'), $id)
-                        );
+                        // Check if the cache contains the cacheKey
+                        if ($cache->has($cacheKey)) {
+                            $cache->remove($cacheKey);
+                            // Success message
+                            $this->result->addSuccessMessage(
+                                sprintf($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.cache.success'), $id)
+                            );
+                        } else {
+                            // Error message
+                            $this->result->addErrorMessage(
+                                sprintf($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.cache.error.notWriteable'), $id)
+                            );
+                        }
                     }
                 }
             }
