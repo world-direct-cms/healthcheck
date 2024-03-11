@@ -7,6 +7,7 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use WorldDirect\Healthcheck\Probe\ProbeBase;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use WorldDirect\Healthcheck\Domain\Model\HealthcheckConfiguration;
 use WorldDirect\Healthcheck\Utility\HealthcheckUtility;
 
 /*
@@ -73,7 +74,11 @@ class SchedulerProbe extends ProbeBase implements ProbeInterface
                 ->executeQuery()
                 ->fetchAllAssociative();
 
+            /** @var HealthcheckConfiguration */
+            $healthcheckConfiguration = GeneralUtility::makeInstance(HealthcheckConfiguration::class);
+
             // Step through all tasks and check if they have "lastexecution_failure" set
+            // also check if the next execution is 10 minutes late
             foreach ($tasks as $task) {
                 if (isset($task['lastexecution_failure']) && $task['lastexecution_failure'] != '') {
                     // Error message
@@ -81,6 +86,16 @@ class SchedulerProbe extends ProbeBase implements ProbeInterface
                         sprintf(
                             $this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.scheduler.error.executionFailure'),
                             strval($task['uid']),
+                            strval($task['description'])
+                        )
+                    );
+                } else if (isset($task['nextexecution']) && is_int($task['nextexecution']) && (time() - $task['nextexecution']) > $healthcheckConfiguration->getSchedulerMaxMinutesLate() * 60) {
+                    // Error message
+                    $this->result->addErrorMessage(
+                        sprintf(
+                            $this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.scheduler.error.executionLate'),
+                            strval($task['uid']),
+                            strval($healthcheckConfiguration->getSchedulerMaxMinutesLate()),
                             strval($task['description'])
                         )
                     );

@@ -50,7 +50,7 @@
     </rule>
     <rule ref="rulesets/codesize.xml/NPathComplexity">
         <properties>
-            <property name="minimum" value="260" />
+            <property name="minimum" value="516" />
         </properties>
     </rule>
     <rule ref="rulesets/codesize.xml/TooManyPublicMethods">

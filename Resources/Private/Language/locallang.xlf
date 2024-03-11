@@ -63,6 +63,9 @@
             <trans-unit id="probe.scheduler.error.executionFailure">
                 <source><![CDATA[The task with the uid <span class="badge bg-primary">%s</span> has failures. <span class="badge bg-secondary">Description</span> "%s"]]></source>
             </trans-unit>
+            <trans-unit id="probe.scheduler.error.executionLate">
+                <source><![CDATA[The task with the uid <span class="badge bg-primary">%s</span> is <span class="badge bg-secondary">%s</span> or more minutes late. <span class="badge bg-secondary">Description</span> "%s"]]></source>
+            </trans-unit>
             <trans-unit id="probe.scheduler.notasks">
                 <source>There are no scheduled tasks configured.</source>
             </trans-unit>
