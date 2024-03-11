@@ -13,3 +13,6 @@ enableDebug = 0
 
 # cat=features/enable/5; type=boolean; label=LLL:EXT:healthcheck/Resources/Private/Language/locallang_db.xlf:extConf.enableAdditionalInfo.description
 enableAdditionalInfo = 1
+
+# cat=features/enable/7; type=int; label=LLL:EXT:healthcheck/Resources/Private/Language/locallang_db.xlf:extConf.probes.solr.maxMinutesLate
+schedulerMaxMinutesLate = 10

@@ -70,6 +70,13 @@ class HealthcheckConfiguration
     protected $enableAdditionalInfo = 0;
 
     /**
+     * A configuration for the scheduler probe. How many minutes of late execution time are tolerated.
+     *
+     * @var int
+     */
+    protected $schedulerMaxMinutesLate = 0;
+
+    /**
      * The probes to check.
      *
      * @var array<string>
@@ -110,6 +117,9 @@ class HealthcheckConfiguration
                 }
                 if (isset($extConf['enableAdditionalInfo'])) {
                     $this->enableAdditionalInfo = intval($extConf['enableAdditionalInfo']);
+                }
+                if (isset($extConf['schedulerMaxMinutesLate'])) {
+                    $this->schedulerMaxMinutesLate = intval($extConf['schedulerMaxMinutesLate']);
                 }
             }
 
@@ -195,5 +205,15 @@ class HealthcheckConfiguration
     public function getOutputs(): array
     {
         return $this->outputs;
+    }
+
+    /**
+     * Returns the configured solr max index queue item error counter.
+     *
+     * @return int Max allowed solr index queue errors
+     */
+    public function getSchedulerMaxMinutesLate(): int
+    {
+        return $this->schedulerMaxMinutesLate;
     }
 }

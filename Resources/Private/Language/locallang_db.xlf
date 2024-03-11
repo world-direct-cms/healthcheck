@@ -19,6 +19,9 @@
             <trans-unit id="extConf.enableAdditionalInfo.description">
                 <source>Enable additional informations:Like the current IP address, current date, ...</source>
             </trans-unit>
+            <trans-unit id="extConf.probes.scheduler.maxMinutesLate">
+                <source>Maximum allowed late execution in minutes (if late execution time exceeds this, Healthcheck fails)</source>
+            </trans-unit>
 
             <!-- TCA: tx_healthcheck_domain_model_probe_pause -->
             <trans-unit id="tx_healthcheck_domain_model_probe_pause">

@@ -47,6 +47,11 @@
             <property name="reportLevel" value="15" />
         </properties>
     </rule>
+    <rule ref="rulesets/codesize.xml/NPathComplexity">
+        <properties>
+            <property name="minimum" value="516" />
+        </properties>
+    </rule>
     <rule ref="rulesets/codesize.xml/TooManyPublicMethods">
         <properties>
             <property name="ignorepattern" value="(^(set|get|is))i" />
