@@ -58,8 +58,14 @@ class TypoScriptConfiguration
     public function __construct(ConfigurationManager $configManager)
     {
         $this->configManager = $configManager;
-        $this->outputHtmlBackgroundimage = strval($this->get('plugin.tx_healthcheck.settings.output.html.backgroundimage'));
-        $this->outputHtmlLogoimage = strval($this->get('plugin.tx_healthcheck.settings.output.html.logoimage'));
+        $bgImage = $this->get('plugin.tx_healthcheck.settings.output.html.backgroundimage');
+        if (is_string($bgImage)) {
+            $this->outputHtmlBackgroundimage = $bgImage;
+        }
+        $logoImage = $this->get('plugin.tx_healthcheck.settings.output.html.logoimage');
+        if (is_string($logoImage)) {
+            $this->outputHtmlLogoimage = $logoImage;
+        }
     }
 
     /**
