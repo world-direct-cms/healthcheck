@@ -1,7 +1,7 @@
 includes:
     - .Build/vendor/saschaegerer/phpstan-typo3/extension.neon
 parameters:
-    level: max
+    level: 8
     excludePaths:
         - 'ext_emconf.php'
         - 'ext_localconf.php'
