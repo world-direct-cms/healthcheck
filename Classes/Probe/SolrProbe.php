@@ -6,7 +6,7 @@ use PDO;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use WorldDirect\Healthcheck\Probe\ProbeBase;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use WorldDirect\Healthcheck\Utility\HealthcheckUtility;
@@ -63,7 +63,7 @@ class SolrProbe extends ProbeBase implements ProbeInterface
                 ->count('uid')
                 ->from(self::SOLR_INDEX_QUEUE_TABLE)
                 ->where(
-                    $queryBuilder->expr()->neq('errors', $queryBuilder->createNamedParameter('', \PDO::PARAM_STR))
+                    $queryBuilder->expr()->neq('errors', $queryBuilder->createNamedParameter('', Connection::PARAM_STR))
                 )
                 ->executeQuery()
                 ->fetchOne();

@@ -7,6 +7,7 @@ use InvalidArgumentException;
 use Doctrine\DBAL\DBALException;
 use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Http\ResponseFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -87,7 +88,7 @@ class ProbePauseRepository
             ->select('*')
             ->from(self::PROBE_PAUSE_TABLE)
             ->where(
-                $queryBuilder->expr()->eq('class_name', $queryBuilder->createNamedParameter($className, \PDO::PARAM_STR))
+                $queryBuilder->expr()->eq('class_name', $queryBuilder->createNamedParameter($className, Connection::PARAM_STR))
             )
             ->executeQuery()
             ->fetchAssociative();
@@ -148,7 +149,7 @@ class ProbePauseRepository
         $deletedElements = $queryBuilder
             ->delete(self::PROBE_PAUSE_TABLE)
             ->where(
-                $queryBuilder->expr()->eq('class_name', $queryBuilder->createNamedParameter($className, \PDO::PARAM_STR))
+                $queryBuilder->expr()->eq('class_name', $queryBuilder->createNamedParameter($className, Connection::PARAM_STR))
             )
             ->executeStatement();
 

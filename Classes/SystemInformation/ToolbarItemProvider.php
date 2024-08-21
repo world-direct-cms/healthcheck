@@ -3,7 +3,7 @@
 namespace WorldDirect\Healthcheck\SystemInformation;
 
 use TYPO3\CMS\Backend\Backend\Event\SystemInformationToolbarCollectorEvent;
-use TYPO3\CMS\Backend\Toolbar\Enumeration\InformationStatus;
+use TYPO3\CMS\Backend\Toolbar\InformationStatus;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use WorldDirect\Healthcheck\Utility\HealthcheckUtility;
 
@@ -36,7 +36,7 @@ final class ToolbarItemProvider
             'Healthcheck Link', // Titlt of the entry
             $healthcheckUtility->getHealthcheckLink(), // The healthcheck url
             'actions-check-square', // Check icon
-            InformationStatus::STATUS_OK // Information
+            InformationStatus::OK // Information
         );
     }
 }

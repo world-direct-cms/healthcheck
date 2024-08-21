@@ -6,6 +6,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use WorldDirect\Healthcheck\Probe\ProbeBase;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use WorldDirect\Healthcheck\Domain\Model\HealthcheckConfiguration;
 use WorldDirect\Healthcheck\Utility\HealthcheckUtility;
@@ -68,8 +69,8 @@ class SchedulerProbe extends ProbeBase implements ProbeInterface
                 ->select('*')
                 ->from(self::SCHEDULER_TABLE)
                 ->where(
-                    $queryBuilder->expr()->eq('disable', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)),
-                    $queryBuilder->expr()->eq('deleted', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT))
+                    $queryBuilder->expr()->eq('disable', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)),
+                    $queryBuilder->expr()->eq('deleted', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT))
                 )
                 ->executeQuery()
                 ->fetchAllAssociative();
