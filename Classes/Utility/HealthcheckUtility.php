@@ -100,16 +100,18 @@ class HealthcheckUtility
      */
     public function checkSecret(ServerRequestInterface $request): ?ResponseInterface
     {
-        $errorMessage = '';
+        if ($this->config->getSecret() != '') {
+            $errorMessage = '';
 
-        // Check if the given secret matches the secret in the extension configuration
-        if ($this->config->getSecret() !== $this->getSecretFromRequest($request)) {
-            $errorMessage = $this->langService->sL(self::LANG_PREFIX . 'error.secret.isFalse');
-        }
+            // Check if the given secret matches the secret in the extension configuration
+            if ($this->config->getSecret() !== $this->getSecretFromRequest($request)) {
+                $errorMessage = $this->langService->sL(self::LANG_PREFIX . 'error.secret.isFalse');
+            }
 
-        // If there is an error message set, build a response and return it
-        if (!empty($errorMessage)) {
-            return $this->getResponse($errorMessage, self::ERROR_RESPONSE_HTTP_STATUS);
+            // If there is an error message set, build a response and return it
+            if (!empty($errorMessage)) {
+                return $this->getResponse($errorMessage, self::ERROR_RESPONSE_HTTP_STATUS);
+            }
         }
 
         // Everything is OK
