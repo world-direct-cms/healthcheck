@@ -78,13 +78,11 @@
         ],
         "ci:tests": [
             "@lint",
-            "@ci:php:stan",
             "@php:md",
             "@php:scan"
         ],
         "git:pre-commit": [
             "@lint",
-            "@php:stan",
             "@php:md",
             "@php:scan"
         ],
