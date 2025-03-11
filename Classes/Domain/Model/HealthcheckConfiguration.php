@@ -19,6 +19,7 @@ use WorldDirect\Healthcheck\Utility\BasicUtility;
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
+
 /**
  * This class holds the configuration of the healthcheck as configured
  * in the extension configuration. Function uses default values for each
@@ -33,6 +34,20 @@ class HealthcheckConfiguration
      * Constant holding the extension key.
      */
     const EXT_KEY = 'healthcheck';
+
+    /**
+     * The logo image for the healthcheck logo.
+     *
+     * @var string
+     */
+    protected $logoImage = '';
+
+    /**
+     * The background image for the healthcheck logo.
+     *
+     * @var string
+     */
+    protected $backgroundImage = '';
 
     /**
      * The secret is default empty, therefore we enforce the user to set it.
@@ -108,53 +123,97 @@ class HealthcheckConfiguration
      * Construct a new HealthcheckConfiguration using the extension configuration.
      *
      * @return void
-     * @SuppressWarnings(PHPMD.StaticAccess)
      */
     public function __construct()
     {
         try {
-            /** @var ExtensionConfiguration $extensionConfiguration */
-            $extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class);
-            $extConf = $extensionConfiguration->get(self::EXT_KEY);
-            if (is_array($extConf)) {
-                if (isset($extConf['secret'])) {
-                    $this->secret = $extConf['secret'];
-                }
-                if (isset($extConf['pathSegment'])) {
-                    $this->pathSegment = $extConf['pathSegment'];
-                }
-                if (isset($extConf['allowedIps'])) {
-                    $this->allowedIps = $extConf['allowedIps'];
-                }
-                if (isset($extConf['enableDebug'])) {
-                    $this->enableDebug = intval($extConf['enableDebug']);
-                }
-                if (isset($extConf['enableBuildinfo'])) {
-                    $this->enableBuildinfo = intval($extConf['enableBuildinfo']);
-                }
-                if (isset($extConf['enableAdditionalInfo'])) {
-                    $this->enableAdditionalInfo = intval($extConf['enableAdditionalInfo']);
-                }
-                if (isset($extConf['schedulerMaxMinutesLate'])) {
-                    $this->schedulerMaxMinutesLate = intval($extConf['schedulerMaxMinutesLate']);
-                }
-                if (isset($extConf['solrMaxErrorCount'])) {
-                    $this->solrMaxErrorCount = intval($extConf['solrMaxErrorCount']);
-                }
-            }
-
-            // Get all configured probes
-            $this->probes = (array)$GLOBALS['TYPO3_CONF_VARS']['EXT']['healthcheck']['probe'];
-
-            // Get all configured output formats
-            $outputs = (array)$GLOBALS['TYPO3_CONF_VARS']['EXT']['healthcheck']['output'];
-            foreach ($outputs as $output) {
-                $key = strtolower(str_replace('Output', '', BasicUtility::getShortClassName($output)));
-                $this->outputs[$key] = $output;
-            }
+            $this->initializeConfiguration();
+            $this->initializeProbes();
+            $this->initializeOutputs();
         } catch (\Exception $exception) {
             // Do nothing, use the default set property values
         }
+    }
+
+    /**
+     * Initialize the configuration from the extension configuration.
+     *
+     * @return void
+     */
+    private function initializeConfiguration(): void
+    {
+        /** @var ExtensionConfiguration $extensionConfiguration */
+        $extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class);
+        $extConf = $extensionConfiguration->get(self::EXT_KEY);
+
+        if (!is_array($extConf)) {
+            return;
+        }
+
+        $mapping = [
+            'logoImage' => 'logoImage',
+            'backgroundImage' => 'backgroundImage',
+            'secret' => 'secret',
+            'pathSegment' => 'pathSegment',
+            'allowedIps' => 'allowedIps',
+            'enableDebug' => 'enableDebug',
+            'enableBuildinfo' => 'enableBuildinfo',
+            'enableAdditionalInfo' => 'enableAdditionalInfo',
+            'schedulerMaxMinutesLate' => 'schedulerMaxMinutesLate',
+            'solrMaxErrorCount' => 'solrMaxErrorCount',
+        ];
+
+        foreach ($mapping as $configKey => $property) {
+            if (isset($extConf[$configKey])) {
+                $this->$property = in_array($configKey, ['enableDebug', 'enableBuildinfo', 'enableAdditionalInfo', 'schedulerMaxMinutesLate', 'solrMaxErrorCount'])
+                    ? intval($extConf[$configKey])
+                    : $extConf[$configKey];
+            }
+        }
+    }
+
+    /**
+     * Initialize the probes from the extension configuration.
+     *
+     * @return void
+     */
+    private function initializeProbes(): void
+    {
+        $this->probes = (array)($GLOBALS['TYPO3_CONF_VARS']['EXT']['healthcheck']['probe'] ?? []);
+    }
+
+    /**
+     * Initialize the outputs from the extension configuration.
+     *
+     * @return void
+     */
+    private function initializeOutputs(): void
+    {
+        $outputs = (array)($GLOBALS['TYPO3_CONF_VARS']['EXT']['healthcheck']['output'] ?? []);
+        foreach ($outputs as $output) {
+            $key = strtolower(str_replace('Output', '', BasicUtility::getShortClassName($output)));
+            $this->outputs[$key] = $output;
+        }
+    }
+
+    /**
+     * Return the logo image path.
+     *
+     * @return string The logo image path
+     */
+    public function getLogoImage(): string
+    {
+        return $this->logoImage;
+    }
+
+    /**
+     * Return the background image path.
+     *
+     * @return string The background image path
+     */
+    public function getBackgroundImage(): string
+    {
+        return $this->backgroundImage;
     }
 
     /**

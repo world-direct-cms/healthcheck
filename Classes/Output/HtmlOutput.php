@@ -63,7 +63,6 @@ class HtmlOutput extends OutputBase implements OutputInterface
             $view->assignMultiple(
                 [
                     'result' => $result,
-                    'tsConfig' => $this->getTypoScriptConfiguration(),
                     'extConfig' => $this->getExtensionConfiguration(),
                     'sitename' => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename']
                 ]

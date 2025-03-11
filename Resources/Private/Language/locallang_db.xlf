@@ -4,6 +4,12 @@
         <header/>
         <body>
             <!-- Extension configuration -->
+            <trans-unit id="extConf.logoImage.description">
+                <source>Logo image: Displays a logo on the healthcheck frontend</source>
+            </trans-unit>
+            <trans-unit id="extConf.backgroundImage.description">
+                <source>Background image: Used background image for the healthcheck frontend</source>
+            </trans-unit>
             <trans-unit id="extConf.secret.description">
                 <source>Secret:Provide a secret to secure the endpoint. 10 chars minimum!</source>
             </trans-unit>

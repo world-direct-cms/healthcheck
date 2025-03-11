@@ -240,7 +240,7 @@ class HealthcheckUtility
 
         foreach ($this->config->getProbes() as $probeClass) {
             /** @var ProbeInterface $probe */
-            $probe = GeneralUtility::makeInstance($probeClass); /** @phpstan-ignore-line */
+            $probe = GeneralUtility::makeInstance($probeClass);
 
             if ($probe->useProbe()) {
                 // Run the probe
@@ -268,7 +268,7 @@ class HealthcheckUtility
     public function getHealthcheckResponse(HealthcheckResult $result, string $outputClass): ResponseInterface
     {
         /** @var OutputInterface $output */
-        $output = GeneralUtility::makeInstance($outputClass); /** @phpstan-ignore-line */
+        $output = GeneralUtility::makeInstance($outputClass);
 
         // Set the http status return code
         $httpStatus = self::SUCCESS_RESPONSE_HTTP_STATUS;
@@ -327,7 +327,7 @@ class HealthcheckUtility
         try {
             // Try to get the third part of the url
             return $this->getPartOfRequestTarget($request, 3);
-        } catch(\Throwable $throwable) {
+        } catch (\Throwable $throwable) {
             // If there is no third part of the url return a "default" value: html
             // Or any other exception
             return 'html';
