@@ -35,7 +35,6 @@ The extension is installable using Composer:
 ```bash
 composer req worlddirect/healthcheck
 ```
-> **ATTENTION:** You need to configure the **"secret"** in order for the healthcheck to work. See [Extension configuration](#extension-configuration) for details.
 
 ## Versions and branches
 The `master` branch contains the latest version comnpatible with TYPO3 V11 and TYPO3 V12. There is a `feature-v10` branch, which contains a backport of the extension to be comnpatible with TYPO3 V10. It misses some configuration options and new features of PHP (like Enums). It was made quick and dirty, just to have a healthcheck for older TYPO3 V10 installations as well. There will not be any updates to this branch, after upgrading all projects to v11 or v12 or ...
@@ -43,13 +42,12 @@ The `master` branch contains the latest version comnpatible with TYPO3 V11 and T
 The TYPO3 V10 version will be a "0.xx.xx". The current versions for TYPO3 V11 and V12 have the version numbering "1.xx.xx".
 
 ## Accessing the healthcheck
-The **Healthcheck** uses a Middleware to render the output. In order for the Middleware to know that a possible healthcheck needs to be rendered, we use the extension configuration settings **pathSegment** and **secret** (as well as the output type).
+The **Healthcheck** uses a Middleware to render the output. In order for the Middleware to know that a possible healthcheck needs to be rendered, we use the extension configuration settings **pathSegment** (as well as the output type).
 
 The healthcheck can be accessed by a "path" using 3 parts. Here is an example URL:
 https://www.mustermann.de/healthcheck/lkjl23wsdkjjlskdj/html/.
 - **1. part:** The first of the "path" is the *"pathSegment"*. In the example this is **"healthcheck"**.
-- **2. part:** The second part of the "path" is the "*secret*". The example contains the secret **"lkjl23wsdkjjlskdj"**. 
-- **3. part:** The third and final part of the "path" contains the name of the desired Output. In this case it uses "html" which represents the **"HtmlOutput"**. If this part is omitted, the default "html" is used.
+- **2. part:** The third and final part of the "path" contains the name of the desired Output. In this case it uses "html" which represents the **"HtmlOutput"**. If this part is omitted, the default "html" is used.
 
 ## Returned HTTP status code
 The returned response status code depends on the status of the HealthcheckResult object. If the status equals an **"ERROR"** a http status code `503` is returned. If the status is a **"SUCCESS"** a code of `200` is returned. This makes it possible to check for the http status code in order to determine if there is a problem with the healthcheck. No need to interpret the output. There are tools, as mentioned before which can perform checks for a specific HTTP status code. Or you build your own litte script to do so. :smiley:
@@ -62,11 +60,9 @@ The extension configuration holds various settings, which need to be set in orde
 
 **pathSegment:** This setting sets the 1. part of the "path" used to access the healthcheck. It's default setting is **"healthcheck"** and may be adapted by the user.
 
-**secret:** As the output of the healthcheck is considered an information worthy to protect, setting a secret value is mandatory. Without it will not work and will not show an output. In the default settings there is no secret, which forces the administrator of the site to create one.
-
 **allowedIps:** It is possible to limit the allowedIps which may view the healthcheck. Default value is **"*"** (every IP address).
 
-**enableDebug:** This setting allows to output some more debugging information. E.g.: If you do not set a *secret*, the healthcheck will not show anything in the frontend. If you enable the **"enableDebug"** setting you will at least see a short message about the current error. Default value is **"off"** (0).
+**enableDebug:** This setting allows to output some more debugging information. If you enable the **"enableDebug"** setting you will at least see a short message about the current error. Default value is **"off"** (0).
 
 ### TypoScript configuration
 The TypoScript configuration is used for any other settings. Currently there is only one setting for the HTML output.

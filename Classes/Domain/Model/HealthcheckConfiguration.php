@@ -23,7 +23,7 @@ use WorldDirect\Healthcheck\Utility\BasicUtility;
 /**
  * This class holds the configuration of the healthcheck as configured
  * in the extension configuration. Function uses default values for each
- * property. Only the secret is set to empty in order to force using one.
+ * property.
  *
  * @author Klaus Hörmann-Engl
  * @package WorldDirect\Healthcheck\Domain\Model
@@ -48,13 +48,6 @@ class HealthcheckConfiguration
      * @var string
      */
     protected $backgroundImage = '';
-
-    /**
-     * The secret is default empty, therefore we enforce the user to set it.
-     *
-     * @var string
-     */
-    protected $secret = '';
 
     /**
      * The pathSegment to check in the Middleware.
@@ -153,7 +146,6 @@ class HealthcheckConfiguration
         $mapping = [
             'logoImage' => 'logoImage',
             'backgroundImage' => 'backgroundImage',
-            'secret' => 'secret',
             'pathSegment' => 'pathSegment',
             'allowedIps' => 'allowedIps',
             'enableDebug' => 'enableDebug',
@@ -214,16 +206,6 @@ class HealthcheckConfiguration
     public function getBackgroundImage(): string
     {
         return $this->backgroundImage;
-    }
-
-    /**
-     * Return the secret value.
-     *
-     * @return string The secret
-     */
-    public function getSecret(): string
-    {
-        return $this->secret;
     }
 
     /**

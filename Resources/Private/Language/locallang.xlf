@@ -6,14 +6,6 @@
             <!-- ############################################################### -->
             <!-- DEBUGGING  -->
 
-            <!-- secret -->
-            <trans-unit id="error.secret.isEmpty">
-                <source>You need to set a secret with minimum 10 characters in the extension configuration in order for this to work. This setting is mandatory.</source>
-            </trans-unit>
-            <trans-unit id="error.secret.isFalse">
-                <source>The given secret does not equal the configured secret.</source>
-            </trans-unit>
-            
             <!-- allowedIps -->
             <trans-unit id="error.allowedIps.isEmpty">
                 <source>You need to set allowedIps in the extension configuration in order for this to work. This setting is mandatory.</source>
@@ -111,5 +103,3 @@
         </body>
     </file>
 </xliff>
-
-

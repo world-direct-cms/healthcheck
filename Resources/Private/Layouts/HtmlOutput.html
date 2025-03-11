@@ -52,7 +52,6 @@
         <script>
             // Variables
             var pathSegment = "<f:format.raw>{extConfig.pathSegment}</f:format.raw>";
-            var secret = "<f:format.raw>{extConfig.secret}</f:format.raw>";
 
             // Wait for the document to load
             document.addEventListener('DOMContentLoaded', function() {
@@ -60,14 +59,14 @@
                 // Add event listener to play buttons
                 document.querySelectorAll('.play').forEach(item => {
                     item.addEventListener('click', event => {
-                        makeAjaxCall(pathSegment + "-play/" + secret + "/", item.dataset.class);
+                        makeAjaxCall(pathSegment + "-play/" +  "/", item.dataset.class);
                     });
                 });
 
                 // Add event listener to pause buttons
                 document.querySelectorAll('.pause').forEach(item => {
                     item.addEventListener('click', event => {
-                        makeAjaxCall(pathSegment + "-pause/" + secret + "/", item.dataset.class);
+                        makeAjaxCall(pathSegment + "-pause/" +  "/", item.dataset.class);
                     });
                 });
             });

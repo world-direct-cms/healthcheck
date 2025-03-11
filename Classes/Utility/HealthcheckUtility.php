@@ -89,36 +89,6 @@ class HealthcheckUtility
     }
 
     /**
-     * Function checks if the access is authorized, looking at the secret.
-     * If an errors occured a response is build and depending on the extension
-     * configuration settings an error message is attached.
-     * When everything is ok, return "null".
-     *
-     * @param ServerRequestInterface $request The server request
-     *
-     * @return null|ResponseInterface A response when an error has occured, or null when ok.
-     */
-    public function checkSecret(ServerRequestInterface $request): ?ResponseInterface
-    {
-        if ($this->config->getSecret() != '') {
-            $errorMessage = '';
-
-            // Check if the given secret matches the secret in the extension configuration
-            if ($this->config->getSecret() !== $this->getSecretFromRequest($request)) {
-                $errorMessage = $this->langService->sL(self::LANG_PREFIX . 'error.secret.isFalse');
-            }
-
-            // If there is an error message set, build a response and return it
-            if (!empty($errorMessage)) {
-                return $this->getResponse($errorMessage, self::ERROR_RESPONSE_HTTP_STATUS);
-            }
-        }
-
-        // Everything is OK
-        return null;
-    }
-
-    /**
      * Method check if the current requesting IP address is allowed according to the
      * extension configuration.
      *
@@ -303,20 +273,6 @@ class HealthcheckUtility
     }
 
     /**
-     * Function extracts the secret from the given Request.
-     * The secret is the third part of the target. The first entry being empty
-     * and the second being the pathSegment to trigger the Middleware at all.
-     *
-     * @param ServerRequestInterface $request The server request
-     *
-     * @return string The secret from the request
-     */
-    private function getSecretFromRequest(ServerRequestInterface $request): string
-    {
-        return $this->getPartOfRequestTarget($request, 2);
-    }
-
-    /**
      * Return the fourth part of the requestTarget to get the desired output format.
      *
      * @param ServerRequestInterface $request The Request holding the requestTarget.
@@ -362,6 +318,6 @@ class HealthcheckUtility
     public function getHealthcheckLink(): string
     {
         // Return the url of the healthcheck with the current domain
-        return BasicUtility::getCurrentDomain() . $this->config->getPathSegment() . '/' . $this->config->getSecret();
+        return BasicUtility::getCurrentDomain() . $this->config->getPathSegment();
     }
 }
