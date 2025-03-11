@@ -34,10 +34,9 @@
         "helmich/typo3-typoscript-lint": "^3.1",
         "michielroos/typo3scan": "^1.7",
         "phpmd/phpmd": "^2.13",
-        "phpstan/phpstan": "^1.10",
-        "saschaegerer/phpstan-typo3": "^1.8",
         "seld/jsonlint": "^1.9",
-        "worlddirect/buildinfo": "^1.1"
+        "worlddirect/buildinfo": "^1.1",
+        "vimeo/psalm": "dev-master"
     },
     "replace": {
         "typo3-ter/healthcheck": "self.version"
@@ -73,18 +72,15 @@
         "post-install-cmd": [
             ".Build/bin/captainhook install --bootstrap .Build/vendor/autoload.php -f -s"
         ],
-        "ci:php:stan": [
-            ".Build/bin/phpstan analyze -c .phpstan.neon.dist Classes"
-        ],
         "ci:tests": [
             "@lint",
-            "@ci:php:stan",
+            "@php:psalm",
             "@php:md",
             "@php:scan"
         ],
         "git:pre-commit": [
             "@lint",
-            "@php:stan",
+            "@php:psalm",
             "@php:md",
             "@php:scan"
         ],
@@ -94,7 +90,6 @@
         "lint": [
             "@php:lint",
             "@json:lint",
-            "@ts:lint",
             "@yaml:lint"
         ],
         "loc": [
@@ -109,18 +104,14 @@
         "php:scan": [
             "php .Build/bin/typo3scan.phar scan ./Classes/"
         ],
-        "php:stan": [
-            ".Build/bin/phpstan analyze -c .phpstan.neon Classes"
-        ],
-        "ts:lint": [
-            ".Build/bin/typoscript-lint"
+        "php:psalm": [
+            ".Build/bin/psalm"
         ],
         "yaml:lint": [
             "find . ! -path '*.Build/*' -name '*.yaml' | xargs .Build/bin/yaml-lint"
         ]
     },
     "scripts-descriptions": {
-        "ci:php:stan": "CI GitHub script, which uses .phpstan.neon.dist, because .php.neon is not in Git repository",
         "ci:tests": "CI GitHub script, which runs the necessary scripts to test on GitHub",
         "git:pre-commit": "Execute these script before a Git 'pre-commit'",
         "json:lint": "Lint the JSON files",
@@ -128,8 +119,7 @@
         "php:lint": "Lint PHP files",
         "php:md": "Execute PHP Mess Detector",
         "php:scan": "Use typo3scan to scan code for deprecations or changed code",
-        "php:stan": "Run the PHP Static Code Analysis",
-        "ts:lint": "Lint TypoScript files",
+        "php:psalm": "Run the Psalm Static Code Analysis",
         "yaml:lint": "Lint YAML files"
     }
 }

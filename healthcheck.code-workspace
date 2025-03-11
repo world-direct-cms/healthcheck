@@ -7,10 +7,6 @@
     ],
     "settings": {
         
-        // PHPstan
-        "phpstan.configFile": ".phpstan.neon",
-        "phpstan.binPath": ".Build/bin/phpstan",
-
         // PHPmd
         "phpmd.rules": ".phpmd.xml",
     
@@ -39,6 +35,10 @@
                 }
             ]
         },
+
+        // PSALM
+        "psalm.configPaths": ["psalm.xml"],
+        "psalm.psalmScriptPath": ".Build/bin/psalm-language-server",
 
         // Todo tree
         "todo-tree.highlights.customHighlight": {
