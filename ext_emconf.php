@@ -19,7 +19,7 @@ $EM_CONF[$_EXTKEY] = [
         'conflicts' => [],
         'suggests' => [
             // Suggest "buildinfo" extension
-            'buildinfo' => '1.0.0-1.99.99'
+            'buildinfo' => '2.0.0-2.99.99'
         ],
     ],
 ];
