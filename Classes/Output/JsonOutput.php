@@ -35,14 +35,7 @@ class JsonOutput extends OutputBase implements OutputInterface
      */
     public function getContent(HealthcheckResult $result): string
     {
-        // TODO: JsonOutput: Build JSON from healthcheck result object
-
-        // Dummy content
-        $array = ['test' => 'Hello World'];
-
-        $json = json_encode($array);
-
-        return strval($json);
+        return $result->toJson();
     }
 
     /**

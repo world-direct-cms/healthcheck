@@ -99,4 +99,71 @@ class HealthcheckResult
             }
         }
     }
+
+    /**
+     * Convert the HealthcheckResult to JSON format.
+     *
+     * @return string JSON representation of the HealthcheckResult
+     */
+    public function toJson(): string
+    {
+        $data = $this->toArray();
+        return json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+    }
+
+    /**
+     * Convert the HealthcheckResult to array format.
+     *
+     * @return array Array representation of the HealthcheckResult
+     */
+    public function toArray(): array
+    {
+        $data = [
+            'status' => $this->status->name,
+            'probes' => []
+        ];
+
+        foreach ($this->probes as $probe) {
+            // Cast to ProbeBase to access the required methods
+            /** @var ProbeBase $probeBase */
+            $probeBase = $probe;
+            
+            $probeData = [
+                'title' => $probeBase->getTitle(),
+                'fqcn' => $probeBase->getFqcn(),
+                'paused' => $probeBase->isPaused(),
+                'result' => $this->serializeProbeResult($probeBase->getResult())
+            ];
+            
+            $data['probes'][] = $probeData;
+        }
+
+        return $data;
+    }
+
+    /**
+     * Serialize ProbeResult to array for JSON conversion.
+     *
+     * @param ProbeResult $probeResult The ProbeResult to serialize
+     *
+     * @return array Serialized probe result data
+     */
+    private function serializeProbeResult(ProbeResult $probeResult): array
+    {
+        $messages = [];
+        if ($probeResult->getMessages()) {
+            foreach ($probeResult->getMessages() as $message) {
+                $messages[] = [
+                    'status' => $message->getStatus()->name,
+                    'message' => $message->getMessage()
+                ];
+            }
+        }
+
+        return [
+            'status' => $probeResult->getStatus()->name,
+            'duration' => $probeResult->getDuration(),
+            'messages' => $messages
+        ];
+    }
 }
