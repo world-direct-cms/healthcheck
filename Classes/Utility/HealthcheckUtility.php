@@ -282,7 +282,7 @@ class HealthcheckUtility
     {
         try {
             // Try to get the third part of the url
-            return $this->getPartOfRequestTarget($request, 3);
+            return $this->getPartOfRequestTarget($request, 2);
         } catch (\Throwable $throwable) {
             // If there is no third part of the url return a "default" value: html
             // Or any other exception
