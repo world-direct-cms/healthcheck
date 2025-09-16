@@ -43,8 +43,11 @@ class HealthcheckUtility
 
     /**
      * The error response http status code
+     * We also return a http status code 200 for an error.
+     * This is in order for an application to fetch the content, otherwise 
+     * we would not get the JSON content back.
      */
-    const ERROR_RESPONSE_HTTP_STATUS = 503;
+    const ERROR_RESPONSE_HTTP_STATUS = 200;
 
     /**
      * The success response http status code
