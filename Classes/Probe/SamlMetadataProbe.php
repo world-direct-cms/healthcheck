@@ -36,6 +36,11 @@ class SamlMetadataProbe extends ProbeBase implements ProbeInterface
     const SIMPLESAMLPHP_METAREFRESH_CONFIG_FILE = 'config-metarefresh.php';
 
     /**
+     * This is the "new" filename of the metarefresh filename
+     */
+    const SIMPLESAMLPHP_METAREFRESH_CONFIG_FILE_ALTERNATIVE = 'module_metarefresh.php';
+
+    /**
      * Constant for the SimpleSAMLphp idp remote file
      */
     const SIMPLESAMLPHP_METAREFRESH_IDP_REMOTE_FILE = 'saml20-idp-remote.php';
@@ -144,9 +149,12 @@ class SamlMetadataProbe extends ProbeBase implements ProbeInterface
                 // Include the metarefresh config here (yields $config variable)
                 include_once $configPath . self::SIMPLESAMLPHP_METAREFRESH_CONFIG_FILE;
 
-                if (is_array($config)) {
-                    return $config;
-                }
+            } elseif (file_exists($configPath . self::SIMPLESAMLPHP_METAREFRESH_CONFIG_FILE_ALTERNATIVE)) {
+                // Include the metarefresh config here (yields $config variable)
+                include_once $configPath . self::SIMPLESAMLPHP_METAREFRESH_CONFIG_FILE_ALTERNATIVE;
+            }
+            if (is_array($config)) {
+                return $config;
             }
         }
 
