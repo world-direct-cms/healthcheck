@@ -79,6 +79,11 @@ class HealthcheckMiddleware implements MiddlewareInterface
     {
         // Check if the pathSegment (route) is relevant for the Healthcheck
         if (str_starts_with($request->getRequestTarget(), '/' . $this->utility->config->getPathSegment())) {
+            // Check for possible "trustedHostsPattern" errors
+            if ($response = $this->utility->checkTrustedHostsPattern($request)) {
+                return $response;
+            }
+
             // Check for possible "allowedIps" errors
             if ($response = $this->utility->checkAllowedIps()) {
                 return $response;

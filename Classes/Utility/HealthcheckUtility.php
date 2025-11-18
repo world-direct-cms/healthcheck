@@ -92,6 +92,35 @@ class HealthcheckUtility
     }
 
     /**
+     * Check if the current HTTP host matches the configured trustedHostsPattern.
+     *
+     * @param ServerRequestInterface $request The server request
+     * @return null|ResponseInterface A response when the host doesn't match the trustedHostsPattern or when an error has occured, or null when ok.
+     */
+    public function checkTrustedHostsPattern(ServerRequestInterface $request): ?ResponseInterface
+    {
+        $trustedHostsPattern = $this->config->getTrustedHostsPattern();
+
+        // Check if the trustedHostsPattern is set in the extension configuration
+        if (empty($trustedHostsPattern)) {
+            $errorMessage = $this->langService->sL(self::LANG_PREFIX . 'error.trustedHostsPattern.isEmpty');
+            return $this->getResponse($errorMessage, self::ERROR_RESPONSE_HTTP_STATUS);
+        }
+
+        $serverParams = $request->getServerParams();
+        $httpHost = $serverParams['HTTP_HOST'] ?? '';
+
+        // Check if the trustedHostPattern matches the current request HTTP host
+        $hostMatch = (bool)preg_match('/^' . $trustedHostsPattern . '$/i', $httpHost);
+        if (!$hostMatch) {
+            return $this->getResponse('', 403);
+        }
+
+        // Everything is OK
+        return null;
+    }
+
+    /**
      * Method check if the current requesting IP address is allowed according to the
      * extension configuration.
      *
