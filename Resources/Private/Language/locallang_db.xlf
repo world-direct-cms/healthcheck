@@ -13,6 +13,9 @@
             <trans-unit id="extConf.pathSegment.description">
                 <source>Path segment:The segment of the path the Middleware should use to show the healthcheck result.</source>
             </trans-unit>
+            <trans-unit id="extConf.trustedHostsPattern.description">
+                <source>Allowed HTTP hosts: Allow configured HTTP hosts to access the healthcheck. RegEx pattern.</source>
+            </trans-unit>
             <trans-unit id="extConf.allowedIps.description">
                 <source>Allowed IPs:Restrict the endpoint to specific IPs. Comma separated lists are possible.</source>
             </trans-unit>

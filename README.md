@@ -60,6 +60,8 @@ The extension configuration holds various settings, which need to be set in orde
 
 **pathSegment:** This setting sets the 1. part of the "path" used to access the healthcheck. It's default setting is **"healthcheck"** and may be adapted by the user.
 
+**trustedHostsPattern:** Defines which hosts are allowed to access the healthcheck using a RegEx pattern. **This setting must be configured in order to access the healthcheck.** Default value is **""** (blocks all requests). Use **".*"** to allow all hosts.
+
 **allowedIps:** It is possible to limit the allowedIps which may view the healthcheck. Default value is **"*"** (every IP address).
 
 **enableDebug:** This setting allows to output some more debugging information. If you enable the **"enableDebug"** setting you will at least see a short message about the current error. Default value is **"off"** (0).

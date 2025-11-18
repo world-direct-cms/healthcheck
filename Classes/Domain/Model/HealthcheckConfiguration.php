@@ -57,6 +57,13 @@ class HealthcheckConfiguration
     protected $pathSegment = 'healthcheck';
 
     /**
+     * The configuration for trusted hosts which permit access to the healthcheck.
+     *
+     * @var string
+     */
+    protected $trustedHostsPattern = '';
+
+    /**
      * The allowedIps setting is default empty, therefore we enforce the user to set it.
      *
      * @var string
@@ -147,6 +154,7 @@ class HealthcheckConfiguration
             'logoImage' => 'logoImage',
             'backgroundImage' => 'backgroundImage',
             'pathSegment' => 'pathSegment',
+            'trustedHostsPattern' => 'trustedHostsPattern',
             'allowedIps' => 'allowedIps',
             'enableDebug' => 'enableDebug',
             'enableBuildinfo' => 'enableBuildinfo',
@@ -216,6 +224,16 @@ class HealthcheckConfiguration
     public function getPathSegment(): string
     {
         return $this->pathSegment;
+    }
+
+    /**
+     * Returns the configured trusted hosts pattern.
+     *
+     * @return string Trusted hosts pattern
+     */
+    public function getTrustedHostsPattern(): string
+    {
+        return $this->trustedHostsPattern;
     }
 
     /**

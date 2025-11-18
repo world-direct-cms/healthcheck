@@ -67,6 +67,11 @@ class ProbePauseMiddleware implements MiddlewareInterface
         // Check for "pause" or "play" request target urls
         if (str_starts_with($request->getRequestTarget(), '/' . $this->utility->config->getPathSegment() . '-pause' . '/') ||
             str_starts_with($request->getRequestTarget(), '/' . $this->utility->config->getPathSegment() . '-play' . '/')) {
+            // Check for possible "trustedHostsPattern" errors
+            if ($response = $this->utility->checkTrustedHostsPattern($request)) {
+                return $response;
+            }
+
             // Check for possible "allowedIps" errors
             if ($response = $this->utility->checkAllowedIps()) {
                 return $response;
