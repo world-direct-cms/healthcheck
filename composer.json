@@ -23,9 +23,9 @@
         "source": "https://github.com/world-direct/healthcheck/"
     },
     "require": {
-        "php": "^8.3",
-        "typo3/cms-core": "^13",
-        "typo3/cms-fluid": "^13"
+        "php": "^8.3 || ^8.4",
+        "typo3/cms-core": "^12 || ^13",
+        "typo3/cms-fluid": "^12 || ^13"
     },
     "require-dev": {
         "captainhook/captainhook": "^5.16",
