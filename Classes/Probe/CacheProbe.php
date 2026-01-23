@@ -71,7 +71,6 @@ class CacheProbe extends ProbeBase implements ProbeInterface
 
             /** @var CacheManager $cacheManager */
             $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
-            $cacheManager->setCacheConfigurations($cacheConfigs);
             $cacheKey = md5(microtime() . '.healthcheck');
 
             // TODO: Check for backend of frontend cache, NullBackend
