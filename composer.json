@@ -1,125 +1,125 @@
 {
-    "name": "worlddirect/healthcheck",
-    "description": "Check the health of your TYPO3 installation.",
-    "license": "GPL-2.0-only",
-    "type": "typo3-cms-extension",
-    "keywords": [
-        "healthcheck",
-        "probes",
-        "buildinfo",
-        "monitoring",
-        "outputs"
-    ],
-    "authors": [
-        {
-            "name": "Klaus Hörmann-Engl",
-            "email": "kho@world-direct.at",
-            "homepage": "https://www.world-direct.at",
-            "role": "Developer"
-        }
-    ],
-    "support": {
-        "issues": "https://github.com/world-direct/healthcheck/issues/",
-        "source": "https://github.com/world-direct/healthcheck/"
-    },
-    "require": {
-        "php": "^8.3 || ^8.4",
-        "typo3/cms-core": "^12 || ^13",
-        "typo3/cms-fluid": "^12 || ^13"
-    },
-    "require-dev": {
-        "captainhook/captainhook": "^5.16",
-        "ergebnis/composer-normalize": "^2.30",
-        "friendsofphp/php-cs-fixer": "*",
-        "helmich/typo3-typoscript-lint": "^3.1",
-        "michielroos/typo3scan": "^1.7",
-        "phpmd/phpmd": "^2.13",
-        "seld/jsonlint": "^1.9",
-        "worlddirect/buildinfo": "^1.1",
-        "vimeo/psalm": "dev-master"
-    },
-    "replace": {
-        "typo3-ter/healthcheck": "self.version"
-    },
-    "autoload": {
-        "psr-4": {
-            "WorldDirect\\Healthcheck\\": "Classes"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "WorldDirect\\Healthcheck\\Tests\\": "Tests"
-        }
-    },
-    "config": {
-        "allow-plugins": {
-            "typo3/cms-composer-installers": true,
-            "typo3/class-alias-loader": true,
-            "ergebnis/composer-normalize": true
-        },
-        "bin-dir": ".Build/bin",
-        "sort-packages": true,
-        "vendor-dir": ".Build/vendor"
-    },
-    "extra": {
-        "typo3/cms": {
-            "cms-package-dir": "{$vendor-dir}/typo3/cms",
-            "extension-key": "healthcheck",
-            "web-dir": ".Build/public"
-        }
-    },
-    "scripts": {
-        "post-install-cmd": [
-            ".Build/bin/captainhook install --bootstrap .Build/vendor/autoload.php -f -s"
-        ],
-        "ci:tests": [
-            "@lint",
-            "@php:psalm",
-            "@php:md",
-            "@php:scan"
-        ],
-        "git:pre-commit": [
-            "@lint",
-            "@php:psalm",
-            "@php:md",
-            "@php:scan"
-        ],
-        "json:lint": [
-            "find . ! -path '*.Build/*' -name '*.json' | xargs .Build/bin/jsonlint"
-        ],
-        "lint": [
-            "@php:lint",
-            "@json:lint",
-            "@yaml:lint"
-        ],
-        "loc": [
-            "find Classes -name '*.php' | xargs wc -l"
-        ],
-        "php:lint": [
-            "find *.php Classes -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l"
-        ],
-        "php:md": [
-            ".Build/bin/phpmd ./Classes/ ansi .phpmd.xml"
-        ],
-        "php:scan": [
-            "php .Build/bin/typo3scan.phar scan ./Classes/"
-        ],
-        "php:psalm": [
-            ".Build/bin/psalm"
-        ],
-        "yaml:lint": [
-            "find . ! -path '*.Build/*' -name '*.yaml' | xargs .Build/bin/yaml-lint"
-        ]
-    },
-    "scripts-descriptions": {
-        "ci:tests": "CI GitHub script, which runs the necessary scripts to test on GitHub",
-        "git:pre-commit": "Execute these script before a Git 'pre-commit'",
-        "json:lint": "Lint the JSON files",
-        "lint": "Execute all lint commands",
-        "php:lint": "Lint PHP files",
-        "php:md": "Execute PHP Mess Detector",
-        "php:scan": "Use typo3scan to scan code for deprecations or changed code",
-        "php:psalm": "Run the Psalm Static Code Analysis",
-        "yaml:lint": "Lint YAML files"
+  "name": "worlddirect/healthcheck",
+  "description": "Check the health of your TYPO3 installation.",
+  "license": "GPL-2.0-only",
+  "type": "typo3-cms-extension",
+  "keywords": [
+    "healthcheck",
+    "probes",
+    "buildinfo",
+    "monitoring",
+    "outputs"
+  ],
+  "authors": [
+    {
+      "name": "Klaus Hörmann-Engl",
+      "email": "kho@world-direct.at",
+      "homepage": "https://www.world-direct.at",
+      "role": "Developer"
     }
+  ],
+  "support": {
+    "issues": "https://github.com/world-direct/healthcheck/issues/",
+    "source": "https://github.com/world-direct/healthcheck/"
+  },
+  "require": {
+    "php": "^8.3 || ^8.4",
+    "typo3/cms-core": "^12 || ^13 || ^14",
+    "typo3/cms-fluid": "^12 || ^13 || ^14"
+  },
+  "require-dev": {
+    "captainhook/captainhook": "^5.16",
+    "ergebnis/composer-normalize": "^2.30",
+    "friendsofphp/php-cs-fixer": "*",
+    "helmich/typo3-typoscript-lint": "^3.1",
+    "michielroos/typo3scan": "^1.7",
+    "phpmd/phpmd": "^2.13",
+    "seld/jsonlint": "^1.9",
+    "worlddirect/buildinfo": "^1.1",
+    "vimeo/psalm": "dev-master"
+  },
+  "replace": {
+    "typo3-ter/healthcheck": "self.version"
+  },
+  "autoload": {
+    "psr-4": {
+      "WorldDirect\\Healthcheck\\": "Classes"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "WorldDirect\\Healthcheck\\Tests\\": "Tests"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "typo3/cms-composer-installers": true,
+      "typo3/class-alias-loader": true,
+      "ergebnis/composer-normalize": true
+    },
+    "bin-dir": ".Build/bin",
+    "sort-packages": true,
+    "vendor-dir": ".Build/vendor"
+  },
+  "extra": {
+    "typo3/cms": {
+      "cms-package-dir": "{$vendor-dir}/typo3/cms",
+      "extension-key": "healthcheck",
+      "web-dir": ".Build/public"
+    }
+  },
+  "scripts": {
+    "post-install-cmd": [
+      ".Build/bin/captainhook install --bootstrap .Build/vendor/autoload.php -f -s"
+    ],
+    "ci:tests": [
+      "@lint",
+      "@php:psalm",
+      "@php:md",
+      "@php:scan"
+    ],
+    "git:pre-commit": [
+      "@lint",
+      "@php:psalm",
+      "@php:md",
+      "@php:scan"
+    ],
+    "json:lint": [
+      "find . ! -path '*.Build/*' -name '*.json' | xargs .Build/bin/jsonlint"
+    ],
+    "lint": [
+      "@php:lint",
+      "@json:lint",
+      "@yaml:lint"
+    ],
+    "loc": [
+      "find Classes -name '*.php' | xargs wc -l"
+    ],
+    "php:lint": [
+      "find *.php Classes -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l"
+    ],
+    "php:md": [
+      ".Build/bin/phpmd ./Classes/ ansi .phpmd.xml"
+    ],
+    "php:scan": [
+      "php .Build/bin/typo3scan.phar scan ./Classes/"
+    ],
+    "php:psalm": [
+      ".Build/bin/psalm"
+    ],
+    "yaml:lint": [
+      "find . ! -path '*.Build/*' -name '*.yaml' | xargs .Build/bin/yaml-lint"
+    ]
+  },
+  "scripts-descriptions": {
+    "ci:tests": "CI GitHub script, which runs the necessary scripts to test on GitHub",
+    "git:pre-commit": "Execute these script before a Git 'pre-commit'",
+    "json:lint": "Lint the JSON files",
+    "lint": "Execute all lint commands",
+    "php:lint": "Lint PHP files",
+    "php:md": "Execute PHP Mess Detector",
+    "php:scan": "Use typo3scan to scan code for deprecations or changed code",
+    "php:psalm": "Run the Psalm Static Code Analysis",
+    "yaml:lint": "Lint YAML files"
+  }
 }
