@@ -2,8 +2,11 @@
 
 namespace WorldDirect\Healthcheck\Output;
 
-use TYPO3\CMS\Fluid\View\StandaloneView;
+use TYPO3\CMS\Core\View\ViewFactoryInterface;
+use TYPO3\CMS\Core\View\ViewFactoryData;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Information\Typo3Version;
+use TYPO3\CMS\Fluid\View\StandaloneView;
 use WorldDirect\Healthcheck\Output\OutputInterface;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use WorldDirect\Healthcheck\Domain\Model\HealthcheckResult;
@@ -25,6 +28,11 @@ use WorldDirect\Buildinfo\Utility\BuildinfoUtility;
 
 class HtmlOutput extends OutputBase implements OutputInterface
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     /**
      * The content type of the rendered content.
      *
@@ -44,22 +52,45 @@ class HtmlOutput extends OutputBase implements OutputInterface
      */
     public function getContent(HealthcheckResult $result): string
     {
-        /** @var StandaloneView $view */
-        $view = GeneralUtility::makeInstance(StandaloneView::class);
-
+        $typo3Version = GeneralUtility::makeInstance(Typo3Version::class);
+        $templateName = 'HtmlOutput';
+        
         try {
-            $view->setLayoutRootPaths([
-                GeneralUtility::getFileAbsFileName('EXT:healthcheck/Resources/Private/Layouts/')
-            ]);
-            $view->setTemplateRootPaths([
-                GeneralUtility::getFileAbsFileName('EXT:healthcheck/Resources/Private/Templates/')
-            ]);
-            $view->setPartialRootPaths([
-                GeneralUtility::getFileAbsFileName('EXT:healthcheck/Resources/Private/Partials/')
-            ]);
-            $view->setFormat('html');
-            $view->setTemplate('HtmlOutput');
+            // Create view based on TYPO3 version
+            if ($typo3Version->getMajorVersion() === 12) {
+                // Use StandaloneView for TYPO3 v12
+                /** @var StandaloneView $view */
+                $view = GeneralUtility::makeInstance(StandaloneView::class);
+                $view->setLayoutRootPaths([
+                    GeneralUtility::getFileAbsFileName('EXT:healthcheck/Resources/Private/Layouts/')
+                ]);
+                $view->setTemplateRootPaths([
+                    GeneralUtility::getFileAbsFileName('EXT:healthcheck/Resources/Private/Templates/')
+                ]);
+                $view->setPartialRootPaths([
+                    GeneralUtility::getFileAbsFileName('EXT:healthcheck/Resources/Private/Partials/')
+                ]);
+                $view->setFormat('html');
+                $view->setTemplate($templateName);
+            } else {
+                // Use ViewFactoryInterface for TYPO3 v13+
+                $viewFactory = GeneralUtility::makeInstance(ViewFactoryInterface::class);
+                $viewFactoryData = new ViewFactoryData(
+                    templateRootPaths: [
+                        GeneralUtility::getFileAbsFileName('EXT:healthcheck/Resources/Private/Templates/')
+                    ],
+                    partialRootPaths: [
+                        GeneralUtility::getFileAbsFileName('EXT:healthcheck/Resources/Private/Partials/')
+                    ],
+                    layoutRootPaths: [
+                        GeneralUtility::getFileAbsFileName('EXT:healthcheck/Resources/Private/Layouts/')
+                    ],
+                    format: 'html'
+                );
+                $view = $viewFactory->create($viewFactoryData);
+            }
 
+            // Assign base variables to view
             $view->assignMultiple(
                 [
                     'result' => $result,
@@ -96,8 +127,12 @@ class HtmlOutput extends OutputBase implements OutputInterface
                 );
             }
 
-            // Return the rendered view
-            return $view->render();
+            // Return the rendered view (different method signature for v12 vs v13+)
+            if ($typo3Version->getMajorVersion() === 12) {
+                return $view->render();
+            } else {
+                return $view->render($templateName);
+            }
         } catch (InvalidTemplateResourceException $e) {
             // TODO: Show error message or something similar
             return '';
