@@ -31,7 +31,7 @@ use WorldDirect\Healthcheck\Domain\Model\HealthcheckConfiguration;
  * @author Klaus Hörmann-Engl
  * @package WorldDirect\Healthcheck\Probe
  */
-class SolrProbe extends ProbeBase implements ProbeInterface
+class SolrIndexErrorProbe extends ProbeBase implements ProbeInterface
 {
     /**
      * The solr index queue table
