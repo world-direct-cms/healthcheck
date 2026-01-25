@@ -44,6 +44,16 @@ class SolrIndexErrorProbe extends ProbeBase implements ProbeInterface
     }
 
     /**
+     * Get the title of the probe.
+     *
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return 'Solr Index Errors';
+    }
+
+    /**
      *
      * @return void The probes result
      */
@@ -89,7 +99,7 @@ class SolrIndexErrorProbe extends ProbeBase implements ProbeInterface
                     )
                 );
             }
-        } catch(\Throwable $throwable) {
+        } catch (\Throwable $throwable) {
             // Handle no connection error
             $this->result->addErrorMessage($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.solr.error.noDatabase'));
         }

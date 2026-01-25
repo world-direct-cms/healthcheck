@@ -49,6 +49,16 @@ class DatabaseProbe extends ProbeBase implements ProbeInterface
     }
 
     /**
+     * Get the title of the probe.
+     *
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return 'Database Connection';
+    }
+
+    /**
      * Run the database probe. Check if all connection can make queries to the
      * database. If not an error is returned.
      *
@@ -72,7 +82,7 @@ class DatabaseProbe extends ProbeBase implements ProbeInterface
 
                 // Add success message
                 $this->result->addSuccessMessage(sprintf($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.database.success'), $name));
-            } catch(\Throwable $throwable) {
+            } catch (\Throwable $throwable) {
                 // Handle error
                 $this->result->addErrorMessage($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.database.error.notConnected'));
             }

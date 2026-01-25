@@ -54,6 +54,16 @@ class CacheProbe extends ProbeBase implements ProbeInterface
     }
 
     /**
+     * Get the title of the probe.
+     *
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return 'Cache System';
+    }
+
+    /**
      * Run the cache probe. Check if caches can be written.
      *
      * @return void The probes result
@@ -103,7 +113,7 @@ class CacheProbe extends ProbeBase implements ProbeInterface
                     }
                 }
             }
-        } catch(\Throwable $throwable) {
+        } catch (\Throwable $throwable) {
             // Error message
             $this->result->addErrorMessage(
                 $this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.cache.error')

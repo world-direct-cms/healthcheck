@@ -52,6 +52,16 @@ class ExternalImportProbe extends ProbeBase implements ProbeInterface
     }
 
     /**
+     * Get the title of the probe.
+     *
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return 'External Import';
+    }
+
+    /**
      * Run the probe and check for externalImport logs.
      *
      * @return void

@@ -40,4 +40,10 @@ interface ProbeInterface
      */
     public function run(): void;
 
+    /**
+     * Get the title of the probe for display purposes.
+     *
+     * @return string The title of the probe.
+     */
+    public function getTitle(): string;
 }

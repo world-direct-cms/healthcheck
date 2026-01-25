@@ -48,6 +48,16 @@ class SchedulerProbe extends ProbeBase implements ProbeInterface
     }
 
     /**
+     * Get the title of the probe.
+     *
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return 'Scheduler Tasks';
+    }
+
+    /**
      * Run the scheduler probe. Check if there are any scheduled tasks
      * which are in a error state.
      *
@@ -118,10 +128,9 @@ class SchedulerProbe extends ProbeBase implements ProbeInterface
                     $this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.scheduler.notasks')
                 );
             }
-        } catch(\Throwable $throwable) {
+        } catch (\Throwable $throwable) {
             // Handle no connection error
-            $this->result->addErrorMessage($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.scheduler.error.noDatabase'));
-            ;
+            $this->result->addErrorMessage($this->langService->sL(HealthcheckUtility::LANG_PREFIX . 'probe.scheduler.error.noDatabase'));;
         }
 
         // Stop the probe

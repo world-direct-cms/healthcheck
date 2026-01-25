@@ -38,6 +38,16 @@ class DummyProbe extends ProbeBase implements ProbeInterface
     }
 
     /**
+     * Get the title of the probe.
+     *
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return 'Dummy Probe';
+    }
+
+    /**
      * Probe run function
      *
      * @return void
