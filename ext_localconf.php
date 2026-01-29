@@ -9,7 +9,7 @@ $GLOBALS['TYPO3_CONF_VARS']['EXT']['healthcheck']['probe'][] = \WorldDirect\Heal
 $GLOBALS['TYPO3_CONF_VARS']['EXT']['healthcheck']['probe'][] = \WorldDirect\Healthcheck\Probe\ExternalImportProbe::class;
 $GLOBALS['TYPO3_CONF_VARS']['EXT']['healthcheck']['probe'][] = \WorldDirect\Healthcheck\Probe\SolrIndexErrorProbe::class;
 $GLOBALS['TYPO3_CONF_VARS']['EXT']['healthcheck']['probe'][] = \WorldDirect\Healthcheck\Probe\SolrCoreProbe::class;
-$GLOBALS['TYPO3_CONF_VARS']['EXT']['healthcheck']['probe'][] = \WorldDirect\Healthcheck\Probe\SamlMetadataProbe::class;
+$GLOBALS['TYPO3_CONF_VARS']['EXT']['healthcheck']['probe'][] = \WorldDirect\Healthcheck\Probe\SamlMetadataExpirationProbe::class;
 
 // Set outputs
 $GLOBALS['TYPO3_CONF_VARS']['EXT']['healthcheck']['output'][] = \WorldDirect\Healthcheck\Output\HtmlOutput::class;

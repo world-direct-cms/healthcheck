@@ -26,7 +26,7 @@ use WorldDirect\Healthcheck\Utility\HealthcheckUtility;
  * @author Klaus Hörmann-Engl 
  * @package WorldDirect\Healthcheck\Probe
  */
-class SamlMetadataProbe extends ProbeBase implements ProbeInterface
+class SamlMetadataExpirationProbe extends ProbeBase implements ProbeInterface
 {
     /**
      * Constant for the SimpleSAMLphp metarefresh module configuration filename
@@ -69,6 +69,16 @@ class SamlMetadataProbe extends ProbeBase implements ProbeInterface
 
         // Probe not relevant
         return false;
+    }
+
+    /**
+     * Get the title of the probe.
+     *
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return 'SAML Metadata Expiration Probe';
     }
 
     /**
