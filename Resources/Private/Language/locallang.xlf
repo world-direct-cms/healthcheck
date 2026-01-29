@@ -1,175 +1,194 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2023-04-06T08:27:11Z" product-name="healthcheck">
-		<header />
-		<body>
-			<!-- ############################################################### -->
-			<!-- DEBUGGING -->
-			<!-- trustedHostsPattern -->
-			<trans-unit id="error.trustedHostsPattern.isEmpty">
-				<source>
-					You need to configure the trustedHostsPattern in the extension configuration in order for this to work. This setting is mandatory.
-				</source>
-			</trans-unit>
-			<!-- allowedIps -->
-			<trans-unit id="error.allowedIps.isEmpty">
-				<source>
-					You need to set allowedIps in the extension configuration in order for this to work. This setting is mandatory.
-				</source>
-			</trans-unit>
-			<trans-unit id="error.allowedIps.dontMatch">
-				<source>
-					The allowed IPs entered in the extension configuration do not match with the current IP.
-				</source>
-			</trans-unit>
-			<!-- probes -->
-			<trans-unit id="error.probes.isEmpty">
-				<source>
-					There are no probes configured. You need to set probes for this to work.
-				</source>
-			</trans-unit>
-			<trans-unit id="error.probes.wrongInterface">
-				<source>
-					There is at least one configured Probe, which does not implement the ProbeInterface.
-				</source>
-			</trans-unit>
-			<!-- outputs -->
-			<trans-unit id="error.outputs.isEmpty">
-				<source>
-					There are no outputs configured. You need to set at least the "html" output, as this is the default output.
-				</source>
-			</trans-unit>
-			<trans-unit id="error.outputs.wrongInterface">
-				<source>
-					There is at least one configured Output, which does not implement the OutputInterface.
-				</source>
-			</trans-unit>
-			<trans-unit id="error.outputs.notPresent">
-				<source>
-					There is no output format given like requested. Sorry.
-				</source>
-			</trans-unit>
-			<!-- ############################################################### -->
-			<!-- PROBES -->
-			<!-- Database probe -->
-			<trans-unit id="probe.database.success">
-				<source>
-					<![CDATA[The database connection named <span class="badge bg-primary">%s</span> operates as expected.]]>
-				</source>
-			</trans-unit>
-			<trans-unit id="probe.database.error.notConnected">
-				<source>
-					Cannot connect to the database. Maybe check the database credentials?
-				</source>
-			</trans-unit>
-			<!-- Scheduler probe -->
-			<trans-unit id="probe.scheduler.success">
-				<source>
-					<![CDATA[The task with the uid <span class="badge bg-primary">%s</span> last run sucessfully. <span class="badge bg-secondary">Description</span> "%s"]]>
-				</source>
-			</trans-unit>
-			<trans-unit id="probe.scheduler.error.noDatabase">
-				<source>
-					The database is not accessible. Not possible to fetch Scheduled Tasks. Maybe check the database credentials?
-				</source>
-			</trans-unit>
-			<trans-unit id="probe.scheduler.error.executionFailure">
-				<source>
-					<![CDATA[The task with the uid <span class="badge bg-primary">%s</span> has failures. <span class="badge bg-secondary">Description</span> "%s"]]>
-				</source>
-			</trans-unit>
-			<trans-unit id="probe.scheduler.error.executionLate">
-				<source>
-					<![CDATA[The task with the uid <span class="badge bg-primary">%s</span> is <span class="badge bg-secondary">%s</span> or more minutes late. <span class="badge bg-secondary">Description</span> "%s"]]>
-				</source>
-			</trans-unit>
-			<trans-unit id="probe.scheduler.notasks">
-				<source>
-					There are no scheduled tasks configured.
-				</source>
-			</trans-unit>
-			<!-- Cache probe -->
-			<trans-unit id="probe.cache.success">
-				<source>
-					<![CDATA[Writing the cache configuration named <span class="badge bg-primary">%s</span> was successful.]]>
-				</source>
-			</trans-unit>
-			<trans-unit id="probe.cache.error">
-				<source>
-					There was an error trying to test the cache configurations.
-				</source>
-			</trans-unit>
-			<trans-unit id="probe.cache.error.notWriteable">
-				<source>
-					<![CDATA[The cache configuration named <span class="badge bg-primary">%s</span> is NOT writeable.]]>
-				</source>
-			</trans-unit>
-			<!-- External Import -->
-			<trans-unit id="probe.externalimport.success">
-				<source>
-					<![CDATA[The latest ExternalImport log entry with the configuration <span class="badge bg-primary">%s</span> and the message "%s" was a success.]]>
-				</source>
-			</trans-unit>
-			<trans-unit id="probe.externalimport.error">
-				<source>
-					<![CDATA[The latest ExternalImport log entry with the configuration <span class="badge bg-primary">%s</span> and the message "%s" was a warning/error.]]>
-				</source>
-			</trans-unit>
-			<trans-unit id="probe.externalimport.error.database">
-				<source>
-					There was an error while trying to fetch the ExternalImport log entries from the database.
-				</source>
-			</trans-unit>
-			<!-- Solr -->
-			<trans-unit id="probe.solr.error.noDatabase">
-				<source>
-					The database is not accessible. Not possible to fetch Solr index queue items. Maybe check the database credentials?
-				</source>
-			</trans-unit>
-			<trans-unit id="probe.solr.error.maxErrors">
-				<source>
-					<![CDATA[There are currently <span class="badge text-bg-danger">%s</span> Solr indexing errors, but only <span class="badge text-bg-warning">%s</span> are allowed!]]>
-				</source>
-			</trans-unit>
-			<trans-unit id="probe.solr.success">
-				<source>
-					<![CDATA[There are currently <span class="badge text-bg-primary">%s</span> Solr indexing errors, which is less than the allowed <span class="badge text-bg-warning">%s</span>!]]>
-				</source>
-			</trans-unit>
-			<!-- Solr Core probe -->
-			<trans-unit id="probe.solrcore.error.noSites">
-				<source>
-					No sites configured in TYPO3. Cannot check Solr cores.
-				</source>
-			</trans-unit>
-			<trans-unit id="probe.solrcore.error.noCoresConfigured">
-				<source>
-					No Solr cores are configured in any site configuration.
-				</source>
-			</trans-unit>
-			<trans-unit id="probe.solrcore.error.exception">
-				<source>
-					<![CDATA[Exception occurred while checking Solr cores: <span class="badge text-bg-danger">%s</span>]]>
-				</source>
-			</trans-unit>
-			<trans-unit id="probe.solrcore.error.connectionFailed">
-				<source>
-					<![CDATA[Failed to connect to Solr core for site <span class="badge bg-primary">%s</span> language <span class="badge bg-secondary">%s</span>: Core <span class="badge bg-info">%s</span> at <span class="badge bg-warning">%s:%s</span> is not reachable.]]>
-				</source>
-			</trans-unit>
-			<trans-unit id="probe.solrcore.success">
-				<source>
-					<![CDATA[Successfully connected to Solr core for site <span class="badge bg-primary">%s</span> language <span class="badge bg-secondary">%s</span>: Core <span class="badge bg-info">%s</span> at <span class="badge bg-warning">%s:%s</span> is operational.]]>
-				</source>
-			</trans-unit>
-			<trans-unit id="probe.solrcore.error.invalidResponse">
-				<source>
-					<![CDATA[Solr core for site <span class="badge bg-primary">%s</span> language <span class="badge bg-secondary">%s</span> returned an invalid response. Core: <span class="badge bg-info">%s</span>]]>
-				</source>
-			</trans-unit>
-			<!-- ############################################################### -->
-			<!-- OUTPUTS -->
-			<!-- HTML -->
-		</body>
-	</file>
+    <file source-language="en" datatype="plaintext" original="messages" date="2023-04-06T08:27:11Z" product-name="healthcheck">
+        <header />
+        <body>
+            <!-- ############################################################### -->
+            <!-- DEBUGGING -->
+            
+            <!-- trustedHostsPattern -->
+            <trans-unit id="error.trustedHostsPattern.isEmpty">
+                <source>
+                    You need to configure the trustedHostsPattern in the extension configuration in order for this to work. This setting is mandatory.
+                </source>
+            </trans-unit>
+            
+            <!-- allowedIps -->
+            <trans-unit id="error.allowedIps.isEmpty">
+                <source>
+                    You need to set allowedIps in the extension configuration in order for this to work. This setting is mandatory.
+                </source>
+            </trans-unit>
+            <trans-unit id="error.allowedIps.dontMatch">
+                <source>
+                    The allowed IPs entered in the extension configuration do not match with the current IP.
+                </source>
+            </trans-unit>
+            <!-- probes -->
+            <trans-unit id="error.probes.isEmpty">
+                <source>
+                    There are no probes configured. You need to set probes for this to work.
+                </source>
+            </trans-unit>
+            <trans-unit id="error.probes.wrongInterface">
+                <source>
+                    There is at least one configured Probe, which does not implement the ProbeInterface.
+                </source>
+            </trans-unit>
+            
+            <!-- outputs -->
+            <trans-unit id="error.outputs.isEmpty">
+                <source>
+                    There are no outputs configured. You need to set at least the "html" output, as this is the default output.
+                </source>
+            </trans-unit>
+            <trans-unit id="error.outputs.wrongInterface">
+                <source>
+                    There is at least one configured Output, which does not implement the OutputInterface.
+                </source>
+            </trans-unit>
+            <trans-unit id="error.outputs.notPresent">
+                <source>
+                    There is no output format given like requested. Sorry.
+                </source>
+            </trans-unit>
+            
+            <!-- ############################################################### -->
+            <!-- PROBES -->
+            
+            <!-- Database probe -->
+            <trans-unit id="probe.database.success">
+                <source>
+                    <![CDATA[The database connection named <span class="badge bg-primary">%s</span> operates as expected.]]>
+                </source>
+            </trans-unit>
+            <trans-unit id="probe.database.error.notConnected">
+                <source>
+                    Cannot connect to the database. Maybe check the database credentials?
+                </source>
+            </trans-unit>
+            
+            <!-- Scheduler probe -->
+            <trans-unit id="probe.scheduler.success">
+                <source>
+                    <![CDATA[The task with the uid <span class="badge bg-primary">%s</span> last run sucessfully. <span class="badge bg-secondary">Description</span> "%s"]]>
+                </source>
+            </trans-unit>
+            <trans-unit id="probe.scheduler.error.noDatabase">
+                <source>
+                    The database is not accessible. Not possible to fetch Scheduled Tasks. Maybe check the database credentials?
+                </source>
+            </trans-unit>
+            <trans-unit id="probe.scheduler.error.executionFailure">
+                <source>
+                    <![CDATA[The task with the uid <span class="badge bg-primary">%s</span> has failures. <span class="badge bg-secondary">Description</span> "%s"]]>
+                </source>
+            </trans-unit>
+            <trans-unit id="probe.scheduler.error.executionLate">
+                <source>
+                    <![CDATA[The task with the uid <span class="badge bg-primary">%s</span> is <span class="badge bg-secondary">%s</span> or more minutes late. <span class="badge bg-secondary">Description</span> "%s"]]>
+                </source>
+            </trans-unit>
+            <trans-unit id="probe.scheduler.notasks">
+                <source>
+                    There are no scheduled tasks configured.
+                </source>
+            </trans-unit>
+            
+            <!-- Cache probe -->
+            <trans-unit id="probe.cache.success">
+                <source>
+                    <![CDATA[Writing the cache configuration named <span class="badge bg-primary">%s</span> was successful.]]>
+                </source>
+            </trans-unit>
+            <trans-unit id="probe.cache.error">
+                <source>
+                    There was an error trying to test the cache configurations.
+                </source>
+            </trans-unit>
+            <trans-unit id="probe.cache.error.notWriteable">
+                <source>
+                    <![CDATA[The cache configuration named <span class="badge bg-primary">%s</span> is NOT writeable.]]>
+                </source>
+            </trans-unit>
+            
+            <!-- External Import -->
+            <trans-unit id="probe.externalimport.success">
+                <source>
+                    <![CDATA[The latest ExternalImport log entry with the configuration <span class="badge bg-primary">%s</span> and the message "%s" was a success.]]>
+                </source>
+            </trans-unit>
+            <trans-unit id="probe.externalimport.error">
+                <source>
+                    <![CDATA[The latest ExternalImport log entry with the configuration <span class="badge bg-primary">%s</span> and the message "%s" was a warning/error.]]>
+                </source>
+            </trans-unit>
+            <trans-unit id="probe.externalimport.error.database">
+                <source>
+                    There was an error while trying to fetch the ExternalImport log entries from the database.
+                </source>
+            </trans-unit>
+            
+            <!-- Solr -->
+            <trans-unit id="probe.solr.error.noDatabase">
+                <source>
+                    The database is not accessible. Not possible to fetch Solr index queue items. Maybe check the database credentials?
+                </source>
+            </trans-unit>
+            <trans-unit id="probe.solr.error.maxErrors">
+                <source>
+                    <![CDATA[There are currently <span class="badge text-bg-danger">%s</span> Solr indexing errors, but only <span class="badge text-bg-warning">%s</span> are allowed!]]>
+                </source>
+            </trans-unit>
+            <trans-unit id="probe.solr.success">
+                <source>
+                    <![CDATA[There are currently <span class="badge text-bg-primary">%s</span> Solr indexing errors, which is less than the allowed <span class="badge text-bg-warning">%s</span>!]]>
+                </source>
+            </trans-unit>
+            
+            <!-- Solr Core probe -->
+            <trans-unit id="probe.solrcore.error.noSites">
+                <source>
+                    No sites configured in TYPO3. Cannot check Solr cores.
+                </source>
+            </trans-unit>
+            <trans-unit id="probe.solrcore.error.noCoresConfigured">
+                <source>
+                    No Solr cores are configured in any site configuration.
+                </source>
+            </trans-unit>
+            <trans-unit id="probe.solrcore.error.exception">
+                <source>
+                    <![CDATA[Exception occurred while checking Solr cores: <span class="badge text-bg-danger">%s</span>]]>
+                </source>
+            </trans-unit>
+            <trans-unit id="probe.solrcore.error.connectionFailed">
+                <source>
+                    <![CDATA[Failed to connect to Solr core for site <span class="badge bg-primary">%s</span> language <span class="badge bg-secondary">%s</span>: Core <span class="badge bg-info">%s</span> at <span class="badge bg-warning">%s:%s</span> is not reachable.]]>
+                </source>
+            </trans-unit>
+            <trans-unit id="probe.solrcore.success">
+                <source>
+                    <![CDATA[Successfully connected to Solr core for site <span class="badge bg-primary">%s</span> language <span class="badge bg-secondary">%s</span>: Core <span class="badge bg-info">%s</span> at <span class="badge bg-warning">%s:%s</span> is operational.]]>
+                </source>
+            </trans-unit>
+            <trans-unit id="probe.solrcore.error.invalidResponse">
+                <source>
+                    <![CDATA[Solr core for site <span class="badge bg-primary">%s</span> language <span class="badge bg-secondary">%s</span> returned an invalid response. Core: <span class="badge bg-info">%s</span>]]>
+                </source>
+            </trans-unit>
+
+            <!-- Samlmetadata -->
+            <trans-unit id="probe.samlmetadata.error">
+                <source><![CDATA[The metadata expiration date is <span class="badge text-bg-danger">%s</span>. This was <span class="badge bg-secondary">%s minutes</span> ago. Tolerance is set to <span class="badge bg-secondary">%s minutes</span>.]]></source>
+            </trans-unit>
+            <trans-unit id="probe.samlmetadata.success">
+                <source><![CDATA[The metadata is still fresh! Expires at <span class="badge bg-primary">%s</span> (this is in in <span class="badge bg-primary">%s minutes</span>). Tolerance is set to <span class="badge bg-secondary">%s minutes</span>.]]></source>
+            </trans-unit>
+
+            <!-- ############################################################### -->
+            <!-- OUTPUTS -->
+            <!-- HTML -->
+        </body>
+    </file>
 </xliff>
