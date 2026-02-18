@@ -757,22 +757,18 @@ fi
 
 ## Support
 
-For issues, questions, or contributions:
-- **GitHub Issues**: [github.com/world-direct-cms/wd-ext-healthcheck](https://github.com/world-direct-cms/wd-ext-healthcheck)
-- **Documentation**: This README
-- **Extensions**: Requires TYPO3 11-13
+- **Issues**: [GitHub Issues](https://github.com/world-direct-cms/wd-ext-healthcheck/issues)
+- **Source Code**: [GitHub Repository](https://github.com/world-direct-cms/wd-ext-healthcheck)
+- **Author**: Klaus Hörmann-Engl <kho@world-direct.at>
+- **Company**: [World-Direct eBusiness solutions GmbH](https://www.world-direct.at)
 
 ## License
 
-This extension is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License, either version 2 of the License, or any later version.
-
-For the full copyright and license information, please read the [LICENSE](LICENSE) file that was distributed with this source code.
+This extension is licensed under GPL-2.0-only. See [LICENSE](LICENSE) file for details.
 
 ## Credits
 
-### Development
-
-**Klaus Hörmann-Engl** - World-Direct
+Developed and maintained by **Klaus Hörmann-Engl** at [World-Direct eBusiness solutions GmbH](https://www.world-direct.at).
 
 ### Inspiration
 
