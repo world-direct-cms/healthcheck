@@ -57,8 +57,8 @@ class HtmlOutput extends OutputBase implements OutputInterface
         
         try {
             // Create view based on TYPO3 version
-            if ($typo3Version->getMajorVersion() === 12) {
-                // Use StandaloneView for TYPO3 v12
+            if ($typo3Version->getMajorVersion() <= 12) {
+                // Use StandaloneView for TYPO3 v11 and v12
                 /** @var StandaloneView $view */
                 $view = GeneralUtility::makeInstance(StandaloneView::class);
                 $view->setLayoutRootPaths([
@@ -127,8 +127,8 @@ class HtmlOutput extends OutputBase implements OutputInterface
                 );
             }
 
-            // Return the rendered view (different method signature for v12 vs v13+)
-            if ($typo3Version->getMajorVersion() === 12) {
+            // Return the rendered view (different method signature for v11-v12 vs v13+)
+            if ($typo3Version->getMajorVersion() <= 12) {
                 return $view->render();
             } else {
                 return $view->render($templateName);
