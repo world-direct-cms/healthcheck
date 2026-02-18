@@ -340,16 +340,4 @@ class HealthcheckUtility
             return '';
         }
     }
-
-    /**
-     * Return a full url to the healthcheck of the current TYPO3 installation.
-     *
-     * @return string The healthcheck url
-     * @SuppressWarnings(PHPMD.StaticAccess)
-     */
-    public function getHealthcheckLink(): string
-    {
-        // Return the url of the healthcheck with the current domain
-        return BasicUtility::getCurrentDomain() . $this->config->getPathSegment();
-    }
 }
