@@ -22,6 +22,7 @@ use WorldDirect\Healthcheck\Domain\Model\HealthcheckResult;
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
+
 /**
  * The HealthcheckMiddleware intercepts the requests depending on the set path
  * and returns a Healthcheck frontend holding the done checks and each state.
@@ -78,7 +79,14 @@ class HealthcheckMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         // Check if the pathSegment (route) is relevant for the Healthcheck
-        if (str_starts_with($request->getRequestTarget(), '/' . $this->utility->config->getPathSegment())) {
+        $pathSegment = '/' . $this->utility->config->getPathSegment();
+        $requestTarget = $request->getRequestTarget();
+
+        // Ensure exact match: path must be exactly the segment or followed by /
+        $isHealthcheckPath = $requestTarget === $pathSegment
+            || str_starts_with($requestTarget, $pathSegment . '/');
+
+        if ($isHealthcheckPath) {
             // Check for possible "trustedHostsPattern" errors
             if ($response = $this->utility->checkTrustedHostsPattern($request)) {
                 return $response;
