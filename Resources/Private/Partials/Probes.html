@@ -17,7 +17,7 @@
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed bg-{bgClass}" style="--bs-bg-opacity: .25; text-decoration: none;" type="buton" data-bs-toggle="collapse" data-bs-target="#collapse-{i.index}" aria-expanded="true" aria-controls="collapse-{i.index}">
                             <div class="d-flex justify-content-between align-items-center w-100 me-1 me-lg-5">
-                                <span style="width: 200px;">
+                                <span style="flex: 1; min-width: 0; word-wrap: break-word;">
                                     <f:render partial="StatusIcon" arguments="{status: probe.result.status, margin: 'e', size: '24'}" />
                                     {probe.title}
                                 </span>
