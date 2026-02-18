@@ -1,19 +1,21 @@
-# TYPO3 Healthcheck Extension
+# TYPO3 Extension: Healthcheck
 
-[![TYPO3](https://img.shields.io/badge/TYPO3-v11%20%7C%20v12%20%7C%20v13-orange.svg)](https://typo3.org/)
-[![License](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](LICENSE)
+[![TYPO3](https://img.shields.io/badge/TYPO3-11%20|%2012%20|%2013-orange.svg)](https://typo3.org/)
+[![License](https://img.shields.io/badge/license-GPL--2.0-blue.svg)](LICENSE)
 
-> A comprehensive health monitoring extension for TYPO3 CMS that provides automated system checks and monitoring capabilities.
+A comprehensive health monitoring extension for TYPO3 CMS that provides automated system checks and monitoring capabilities.
 
 ## Table of Contents
 
-- [What Does It Do?](#what-does-it-do)
+- [Features](#features)
+- [Requirements](#requirements)
 - [Installation](#installation)
 - [Configuration](#configuration)
   - [Extension Configuration](#extension-configuration)
   - [TypoScript Configuration](#typoscript-configuration)
 - [Probes](#probes)
-  - [Available Probes](#available-probes)
+  - [Core Probes](#core-probes)
+  - [Extension-Specific Probes](#extension-specific-probes)
   - [Creating Custom Probes](#creating-custom-probes)
 - [Output Formats](#output-formats)
   - [HTML Output](#html-output)
@@ -22,34 +24,37 @@
 - [Accessing the Healthcheck](#accessing-the-healthcheck)
 - [Pausing Probes](#pausing-probes)
 - [HTTP Status Codes](#http-status-codes)
+- [Troubleshooting](#troubleshooting)
+- [Support](#support)
+- [License](#license)
 - [Credits](#credits)
 
----
-
-## What Does It Do?
-
-The **TYPO3 Healthcheck Extension** is a powerful monitoring tool designed to continuously assess the health and operational status of your TYPO3 installation. Think of it as a digital doctor for your website that regularly checks vital signs and reports any issues.
-
-### Key Benefits
+## Features
 
 - **Proactive Monitoring**: Automatically detects issues before they impact your users
 - **System Overview**: Provides a quick snapshot of your TYPO3 system's health status
-- **Integration Ready**: Works seamlessly with monitoring tools like PRTG, Nagios, and other monitoring solutions
-- **Customizable**: Easily extend with your own checks specific to your needs
+- **Integration Ready**: Works seamlessly with monitoring tools like PRTG, Nagios, Zabbix, and other monitoring solutions
+- **Extensible Architecture**: Easily extend with custom probes specific to your needs
 - **Visual Feedback**: Beautiful HTML interface showing all check results at a glance
 - **API Access**: JSON output for programmatic access and automated monitoring
+- **Flexible Probes**: Built-in checks for databases, caches, scheduler, Solr, email delivery, and more
+- **Pause Controls**: Temporarily disable probes during maintenance without affecting monitoring
+- **Security First**: IP and host-based access restrictions
 
-The extension runs various diagnostic checks (called "probes") on critical system components like databases, caches, scheduled tasks, and search indices. Each probe reports success or failure, and if any probe fails, the entire healthcheck status reflects this, making it easy for monitoring systems to detect problems.
+## Requirements
 
----
+- TYPO3 11.0 - 13.9
+- PHP 8.1 or higher
 
 ## Installation
 
-Install the extension via Composer:
+### Via Composer (recommended)
 
 ```bash
 composer require worlddirect/healthcheck
 ```
+
+### Activation
 
 After installation, activate the extension in the TYPO3 Extension Manager or via CLI:
 
@@ -57,38 +62,36 @@ After installation, activate the extension in the TYPO3 Extension Manager or via
 php vendor/bin/typo3 extension:activate healthcheck
 ```
 
----
-
 ## Configuration
 
 ### Extension Configuration
 
-Configure the extension through the TYPO3 Extension Manager or by editing your site's configuration. The following settings are available:
+Configure the extension through the TYPO3 Extension Manager or by editing your site's configuration.
 
 #### Security Settings
 
-| Setting | Description | Default | Required |
-|---------|-------------|---------|----------|
-| `pathSegment` | The URL path segment used to access the healthcheck (e.g., "healthcheck") | `healthcheck` | Yes |
-| `trustedHostsPattern` | Regular expression pattern defining which hosts can access the healthcheck. **Must be configured!** Use `.*` to allow all hosts or a specific pattern like `^(localhost\|monitoring\.example\.com)$` | _(empty)_ | **Yes** |
-| `allowedIps` | Comma-separated list of IP addresses allowed to access the healthcheck. Use `*` to allow all IPs | `*` | No |
+| Setting                 | Description                                                                                                                                          | Default       | Required |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | -------- |
+| **pathSegment**         | The URL path segment used to access the healthcheck (e.g., "healthcheck")                                                                            | `healthcheck` | Yes      |
+| **trustedHostsPattern** | Regular expression pattern defining which hosts can access the healthcheck. Use `.*` to allow all hosts or `^(localhost\|monitoring\.example\.com)$` | _(empty)_     | **Yes**  |
+| **allowedIps**          | Comma-separated list of IP addresses allowed to access. Use `*` to allow all IPs                                                                     | `*`           | No       |
 
 #### Display Settings
 
-| Setting | Description | Default |
-|---------|-------------|---------|
-| `logoImage` | Path to the logo image displayed in HTML output | `EXT:healthcheck/Resources/Public/Icons/healthreport.png` |
-| `backgroundImage` | Path to the background image for HTML output | `EXT:healthcheck/Resources/Public/Images/background.png` |
-| `enableBuildinfo` | Show build information (requires `buildinfo` extension) | `1` (enabled) |
-| `enableAdditionalInfo` | Show additional information like IP address and timestamp | `1` (enabled) |
-| `enableDebug` | Enable debug mode to show detailed error messages | `0` (disabled) |
+| Setting                  | Description                                               | Default                                                   |
+| ------------------------ | --------------------------------------------------------- | --------------------------------------------------------- |
+| **logoImage**            | Path to the logo image displayed in HTML output           | `EXT:healthcheck/Resources/Public/Icons/healthreport.png` |
+| **backgroundImage**      | Path to the background image for HTML output              | `EXT:healthcheck/Resources/Public/Images/background.png`  |
+| **enableBuildinfo**      | Show build information (requires `buildinfo` extension)   | `1` (enabled)                                             |
+| **enableAdditionalInfo** | Show additional information like IP address and timestamp | `1` (enabled)                                             |
+| **enableDebug**          | Enable debug mode to show detailed error messages         | `0` (disabled)                                            |
 
 #### Probe-Specific Settings
 
-| Setting | Description | Default |
-|---------|-------------|---------|
-| `schedulerMaxMinutesLate` | Maximum minutes a scheduler task can be late before being considered failed | `10` |
-| `solrMaxErrorCount` | Maximum number of Solr indexing errors before probe fails | `50` |
+| Setting                     | Description                                                 | Default |
+| --------------------------- | ----------------------------------------------------------- | ------- |
+| **schedulerMaxMinutesLate** | Maximum minutes a scheduler task can be late before failing | `10`    |
+| **solrMaxErrorCount**       | Maximum number of Solr indexing errors before probe fails   | `50`    |
 
 ### TypoScript Configuration
 
@@ -103,24 +106,24 @@ plugin.tx_healthcheck {
 }
 ```
 
----
-
 ## Probes
 
 Probes are the heart of the healthcheck system. Each probe checks a specific aspect of your TYPO3 installation and reports whether it's functioning correctly.
 
-### Available Probes
+### Core Probes
+
+These probes are always available and check fundamental TYPO3 system components.
 
 #### Database Connection
 
 **Class**: `DatabaseProbe`  
-**Title**: "Database Connection"  
+**Title**: Database Connection  
 **Always Active**: Yes
 
-Checks if the TYPO3 application can connect to all configured databases. This probe attempts a simple query on each database connection to verify accessibility.
+Checks if the TYPO3 application can connect to all configured databases.
 
 **What it checks:**
-- All database connections defined in your TYPO3 configuration
+- All database connections defined in your configuration
 - Basic query execution capability
 - Connection availability
 
@@ -133,10 +136,10 @@ Checks if the TYPO3 application can connect to all configured databases. This pr
 #### Cache System
 
 **Class**: `CacheProbe`  
-**Title**: "Cache System"  
+**Title**: Cache System  
 **Always Active**: Yes (except in Development context)
 
-Verifies that all configured caches are writable and functioning correctly. This ensures your TYPO3 instance can properly store and retrieve cached data.
+Verifies that all configured caches are writable and functioning correctly.
 
 **What it checks:**
 - All configured cache backends
@@ -152,13 +155,17 @@ Verifies that all configured caches are writable and functioning correctly. This
 
 ---
 
+### Extension-Specific Probes
+
+These probes require specific TYPO3 extensions to be installed and activated.
+
 #### Scheduler Tasks
 
 **Class**: `SchedulerProbe`  
-**Title**: "Scheduler Tasks"  
+**Title**: Scheduler Tasks  
 **Requires**: EXT:scheduler
 
-Monitors TYPO3 scheduler tasks for failures and delays. This ensures your automated tasks are running on schedule.
+Monitors TYPO3 scheduler tasks for failures and delays.
 
 **What it checks:**
 - Failed scheduler tasks
@@ -169,17 +176,17 @@ Monitors TYPO3 scheduler tasks for failures and delays. This ensures your automa
 - Any scheduler task has a failure status
 - Tasks are running later than the configured maximum delay
 
-**Configuration**: Set `schedulerMaxMinutesLate` in extension configuration to adjust delay tolerance.
+**Configuration**: Set `schedulerMaxMinutesLate` in extension configuration to adjust delay tolerance (default: 10 minutes).
 
 ---
 
 #### Solr Core Connectivity
 
 **Class**: `SolrCoreProbe`  
-**Title**: "Solr Core Connectivity"  
+**Title**: Solr Core Connectivity  
 **Requires**: EXT:solr
 
-Tests connectivity to all configured Solr cores across all site languages. Ensures your search functionality is operational.
+Tests connectivity to all configured Solr cores across all site languages.
 
 **What it checks:**
 - Connection to each configured Solr core
@@ -198,7 +205,7 @@ Tests connectivity to all configured Solr cores across all site languages. Ensur
 #### Solr Index Errors
 
 **Class**: `SolrIndexErrorProbe`  
-**Title**: "Solr Index Errors"  
+**Title**: Solr Index Errors  
 **Requires**: EXT:solr
 
 Monitors the Solr indexing queue for errors that prevent content from being indexed.
@@ -210,14 +217,14 @@ Monitors the Solr indexing queue for errors that prevent content from being inde
 **Fails when:**
 - Number of index errors exceeds `solrMaxErrorCount`
 
-**Configuration**: Set `solrMaxErrorCount` in extension configuration to adjust error tolerance.
+**Configuration**: Set `solrMaxErrorCount` in extension configuration to adjust error tolerance (default: 50 errors).
 
 ---
 
 #### External Import
 
 **Class**: `ExternalImportProbe`  
-**Title**: "External Import"  
+**Title**: External Import  
 **Requires**: EXT:external_import
 
 Checks the status of the latest External Import extension log entry to detect import failures.
@@ -228,6 +235,76 @@ Checks the status of the latest External Import extension log entry to detect im
 
 **Fails when:**
 - Latest import log entry has a non-zero (error) status
+
+---
+
+#### Mailjet Email Delivery
+
+**Class**: `MailjetDeliveryProbe`  
+**Title**: Mailjet Delivery Success Rate  
+**Requires**: EXT:mailjet
+
+Monitors email delivery success rate from the Mailjet extension, analyzing emails sent in the last 24 hours.
+
+**What it checks:**
+- Total number of emails sent in the last 24 hours
+- Number of failed email deliveries
+- Failure rate percentage
+
+**Behavior:**
+
+- **No emails**: Reports success if no emails were sent
+- **Low volume** (< 10 emails): Reports error only if ALL emails failed
+- **Normal volume** (≥ 10 emails): Calculates failure rate percentage
+  - ≥ 20% failure rate: **Critical** error
+  - ≥ 5% failure rate: **Warning** error  
+  - < 5% failure rate: Success
+
+**Fails when:**
+- All emails in low-volume scenarios failed
+- Failure rate ≥ 5% in normal-volume scenarios
+- Cannot access the email log database table
+
+**Database**: Queries `tx_mailjet_domain_model_emaillog` table for delivery statistics.
+
+**Thresholds:**
+- Time window: 24 hours (86,400 seconds)
+- Minimum sample size: 10 emails
+- Warning threshold: 5% failure rate
+- Critical threshold: 20% failure rate
+
+---
+
+#### SAML Metadata Expiration
+
+**Class**: `SamlMetadataExpirationProbe`  
+**Title**: SAML Metadata Expiration Probe  
+**Requires**: SimpleSAMLphp with metarefresh module
+
+Checks SimpleSAMLphp SAML metadata expiration to ensure federation metadata remains valid.
+
+**What it checks:**
+- Metadata expiration timestamp from SimpleSAMLphp metarefresh configuration
+- Time remaining until metadata expires
+- Whether metadata has already expired
+
+**Fails when:**
+- Metadata has expired (expiration timestamp is in the past)
+- Metadata will expire within the tolerance window
+
+**Configuration:**
+- **Environment variable**: `SIMPLESAMLPHP_CONFIG_DIR` must point to SimpleSAMLphp config directory
+- **Config files**: Looks for `config-metarefresh.php` or `module_metarefresh.php`
+- **Metadata file**: Reads from `saml20-idp-remote.php` in the metarefresh output directory
+- **Tolerance**: 30 minutes before expiration (configurable via constant)
+
+**Requirements:**
+- SimpleSAMLphp must be installed and configured
+- `SIMPLESAMLPHP_CONFIG_DIR` environment variable must be set
+- Metarefresh module must be active with valid configuration
+- Output directory must use absolute paths
+
+**Note**: This probe automatically activates only if SimpleSAMLphp metarefresh configuration is detected with a valid expiration timestamp.
 
 ---
 
@@ -348,8 +425,6 @@ Your probe **must** implement these three methods:
 - Use `$this->langService` to access translation services
 - Access configuration via `$this->getExtensionConfiguration()`
 
----
-
 ## Output Formats
 
 The healthcheck can return results in different formats depending on your needs.
@@ -365,7 +440,7 @@ A beautiful, responsive HTML interface built with Bootstrap 5 that provides:
 - **Probe Details**: Expandable accordion panels showing each probe's results
 - **Color-Coded Status**: Green for success, red for errors
 - **Execution Time**: Shows how long each probe took to execute
-- **Pause/Play Controls**: Ability to temporarily disable probes (see [Pausing Probes](#pausing-probes))
+- **Pause/Play Controls**: Ability to temporarily disable probes
 - **System Information**: Optional display of build info, IP address, and timestamp
 - **Responsive Design**: Works on desktop, tablet, and mobile devices
 
@@ -426,6 +501,30 @@ Returns a structured JSON representation of all probe results.
 - Programmatic access
 - Integration with other tools
 - Logging and analytics
+
+**Example Response:**
+
+```json
+{
+  "status": "SUCCESS",
+  "duration": 0.453,
+  "probes": [
+    {
+      "title": "Database Connection",
+      "status": "SUCCESS",
+      "duration": 0.023,
+      "messages": [
+        {
+          "status": "SUCCESS",
+          "message": "Database connection 'Default' is working"
+        }
+      ],
+      "paused": false,
+      "fqcn": "WorldDirect\\Healthcheck\\Probe\\DatabaseProbe"
+    }
+  ]
+}
+```
 
 ---
 
@@ -502,33 +601,30 @@ https://your-domain.com/{pathSegment}/{output}/
 ```
 
 **Components:**
-
 1. **pathSegment**: The base path configured in extension settings (default: `healthcheck`)
 2. **output**: The output format to use (optional, defaults to `html`)
 
 ### Examples
 
-| URL | Description |
-|-----|-------------|
-| `https://example.com/healthcheck/` | HTML output (default) |
-| `https://example.com/healthcheck/html/` | HTML output (explicit) |
-| `https://example.com/healthcheck/json/` | JSON output |
-| `https://example.com/mycheck/html/` | HTML output with custom pathSegment |
+| URL                                     | Description                         |
+| --------------------------------------- | ----------------------------------- |
+| `https://example.com/healthcheck/`      | HTML output (default)               |
+| `https://example.com/healthcheck/html/` | HTML output (explicit)              |
+| `https://example.com/healthcheck/json/` | JSON output                         |
+| `https://example.com/mycheck/html/`     | HTML output with custom pathSegment |
 
-### Security
+### Security Configuration
 
-Before accessing the healthcheck, ensure you've configured:
+Before accessing the healthcheck, ensure proper configuration:
 
-1. **trustedHostsPattern**: Set to `.*` for all hosts or a specific pattern
-2. **allowedIps**: Configure if you want to restrict by IP address
+1. **trustedHostsPattern**: Set to `.*` for all hosts or a specific pattern like `^(localhost|monitoring\.example\.com)$`
+2. **allowedIps**: Configure if you want to restrict by IP address (default: `*` allows all)
 
-Without proper configuration, access will be denied with appropriate error messages.
-
----
+**Important**: Without proper configuration, access will be denied with error messages indicating the issue.
 
 ## Pausing Probes
 
-During maintenance or when dealing with known issues, you can temporarily pause individual probes to prevent false alerts.
+During maintenance or when dealing with known issues, temporarily pause individual probes to prevent false alerts.
 
 ### How Pausing Works
 
@@ -539,22 +635,21 @@ When a probe is paused:
 - ✅ Other probes continue to run normally
 - ✅ No false alerts are sent to monitoring systems
 
-### Using Pause Controls
+### Pause Controls
 
-#### In the HTML Interface
+#### HTML Interface
 
 Each probe has pause/play buttons:
+- **Pause Button** (▶️): Click to pause a failing probe
+- **Play Button** (⏸️): Click to resume a paused probe
 
-1. **Pause Button** (▶️ icon): Click to pause a failing probe
-2. **Play Button** (⏸️ icon): Click to resume a paused probe
+Visual indicators show probe status:
+- Paused probes: "⏸️ PAUSED" indicator
+- Active probes: "▶️ ACTIVE" indicator
 
-The interface provides immediate visual feedback:
-- Paused probes show a "⏸️ PAUSED" indicator
-- Active probes show a "▶️ ACTIVE" indicator
+#### API Endpoints
 
-#### Via API
-
-You can also pause/play probes programmatically:
+Pause/play probes programmatically:
 
 **Pause a probe:**
 ```
@@ -581,37 +676,33 @@ GET /healthcheck-play/?className=WorldDirect\Healthcheck\Probe\DatabaseProbe
 - **External Dependencies**: Pause probes when external services are down
 - **Gradual Rollout**: Pause probes during deployments to avoid false positives
 
-### Technical Details
-
-Paused probes are stored in the database table `tx_healthcheck_domain_model_probe_pause`. Each entry records:
-- Probe class name (FQCN - Fully Qualified Class Name)
-- Pause timestamp
-- Automatic cleanup when probe is resumed
-
----
+**Technical Details**: Paused probes are stored in `tx_healthcheck_domain_model_probe_pause` table with probe class name and timestamp.
 
 ## HTTP Status Codes
 
 The healthcheck uses HTTP status codes to indicate system health, making it easy for monitoring tools to detect issues.
 
-| Status Code | Meaning | When Returned |
-|-------------|---------|---------------|
-| `200 OK` | System healthy | All probes passed successfully |
-| `503 Service Unavailable` | System has issues | At least one probe failed |
-| `403 Forbidden` | Access denied | IP or host not allowed |
-| `404 Not Found` | Invalid output | Requested output format doesn't exist |
+| Status Code                 | Meaning           | When Returned                         |
+| --------------------------- | ----------------- | ------------------------------------- |
+| **200 OK**                  | System healthy    | All probes passed successfully        |
+| **503 Service Unavailable** | System has issues | At least one probe failed             |
+| **403 Forbidden**           | Access denied     | IP or host not allowed                |
+| **404 Not Found**           | Invalid output    | Requested output format doesn't exist |
 
-### Monitoring Integration
+### Monitoring Integration Examples
 
-Most monitoring tools can check HTTP status codes:
+#### PRTG
+Use HTTP sensor checking for status code 200
 
-**PRTG**: Use HTTP sensor checking for status code 200
+#### Nagios
+```bash
+./check_http -H example.com -u /healthcheck/json/ --expect 200
+```
 
-**Nagios**: Use `check_http` with `--expect 200`
+#### Uptime Robot
+Configure HTTP(s) monitoring with keyword checking
 
-**Uptime Robot**: Configure HTTP(s) monitoring with keyword checking
-
-**Custom Scripts**:
+#### Custom Script
 ```bash
 #!/bin/bash
 response=$(curl -s -o /dev/null -w "%{http_code}" https://example.com/healthcheck/json/)
@@ -624,13 +715,64 @@ else
 fi
 ```
 
----
+## Troubleshooting
+
+### Access Denied (403 Forbidden)
+
+**Problem**: Cannot access healthcheck endpoint
+
+**Solutions:**
+- Check `trustedHostsPattern` is configured (set to `.*` for all hosts)
+- Verify your IP is in `allowedIps` (set to `*` to allow all)
+- Review extension configuration in Extension Manager
+
+### Probe Always Failing
+
+**Problem**: A specific probe consistently fails
+
+**Solutions:**
+- Check probe-specific requirements (e.g., required extensions installed)
+- Review probe configuration settings (e.g., `schedulerMaxMinutesLate`)
+- Enable debug mode (`enableDebug = 1`) for detailed error messages
+- Temporarily pause the probe during troubleshooting
+
+### JSON Output Not Working
+
+**Problem**: JSON endpoint returns 404
+
+**Solutions:**
+- Verify URL format: `/healthcheck/json/` (with trailing slash)
+- Check that custom output class is properly registered in `Services.yaml`
+- Clear TYPO3 caches
+
+### Probes Not Running
+
+**Problem**: No probes appear in output
+
+**Solutions:**
+- Verify probe services are registered in `Configuration/Services.yaml`
+- Check if probes have `useProbe()` returning false due to missing dependencies
+- Clear all TYPO3 caches
+- Check PHP error logs for exceptions
+
+## Support
+
+For issues, questions, or contributions:
+- **GitHub Issues**: [github.com/world-direct-cms/wd-ext-healthcheck](https://github.com/world-direct-cms/wd-ext-healthcheck)
+- **Documentation**: This README
+- **Extensions**: Requires TYPO3 11-13
+
+## License
+
+This extension is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License, either version 2 of the License, or any later version.
+
+For the full copyright and license information, please read the [LICENSE](LICENSE) file that was distributed with this source code.
 
 ## Credits
 
 ### Development
 
-Created by **Klaus Hörmann-Engl** (World-Direct)
+**Klaus Hörmann-Engl** - World-Direct
 
 ### Inspiration
 
@@ -646,17 +788,5 @@ Created by **Klaus Hörmann-Engl** (World-Direct)
 - **Play Icon**: [Play icons by Freepik - Flaticon](https://www.flaticon.com/free-icons/play)
 
 ---
-
-## License
-
-This extension is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License, either version 2 of the License, or any later version.
-
-For the full copyright and license information, please read the [LICENSE](LICENSE) file that was distributed with this source code.
-
----
-
-## Support
-
-For issues, questions, or contributions, please visit the [GitHub repository](https://github.com/world-direct-cms/healthcheck).
 
 **Happy Monitoring! 🏥✨**
